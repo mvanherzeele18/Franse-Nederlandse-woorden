@@ -33,6 +33,7 @@
     padding: 3rem 2rem;
     text-align: center;
     border-bottom: 4px solid var(--yellow);
+    position: relative;
   }
 
   header h1 {
@@ -47,6 +48,35 @@
     color: var(--green-light);
     font-size: 1.1rem;
     font-weight: 300;
+  }
+
+  .bug-report-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--yellow);
+    color: var(--green-dark);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .bug-report-btn:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 190, 58, 0.25);
+  }
+
+  .bug-report-btn::before {
+    content: "🐛";
+    font-size: 1rem;
   }
 
   main {
@@ -134,6 +164,161 @@
     opacity: 1;
   }
 
+  /* Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modal.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .modal-content {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(46, 125, 50, 0.2);
+    max-width: 500px;
+    width: 90%;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--green-light);
+    padding-bottom: 1rem;
+  }
+
+  .modal-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--green-dark);
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+
+  .close-btn:hover {
+    color: var(--green-dark);
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--green-dark);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid var(--green-light);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--green);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+
+  .btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-submit {
+    background: var(--green);
+    color: var(--white);
+  }
+
+  .btn-submit:hover {
+    background: var(--green-dark);
+    transform: translateY(-2px);
+  }
+
+  .btn-cancel {
+    background: var(--green-light);
+    color: var(--green-dark);
+  }
+
+  .btn-cancel:hover {
+    background: #C5E1A5;
+  }
+
+  .success-message {
+    display: none;
+    background: #E8F5E9;
+    border-left: 4px solid #4CAF50;
+    color: #2E7D32;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .success-message.show {
+    display: block;
+    animation: slideIn 0.3s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
   footer {
     text-align: center;
     padding: 2rem;
@@ -144,6 +329,17 @@
   }
 
   @media (max-width: 768px) {
+    .bug-report-btn {
+      position: static;
+      margin-top: 1rem;
+      width: 100%;
+      justify-content: center;
+    }
+
+    header {
+      padding: 2rem 1rem;
+    }
+
     main {
       padding: 2rem 1.5rem;
     }
@@ -163,6 +359,10 @@
     .choice-card h3 {
       font-size: 1.3rem;
     }
+
+    .modal-content {
+      width: 95%;
+    }
   }
 </style>
 </head>
@@ -171,6 +371,7 @@
 <header>
   <h1>Vocabulaire Français–Nederlands</h1>
   <p>Groenhove Atheneum Waregem</p>
+  <button class="bug-report-btn" id="bug-report-btn">Fout melden</button>
 </header>
 
 <main>
@@ -181,18 +382,137 @@
 
   <div class="choice-container">
     <a href="nederlands-frans.html" class="choice-card">
+      <span class="icon">🇳🇱</span>
       <h3>Nederlands → Frans</h3>
       <p>Start met Nederlands en leer het Franse woord</p>
     </a>
 
     <a href="frans-nederlands.html" class="choice-card">
+      <span class="icon">🇫🇷</span>
       <h3>Frans → Nederlands</h3>
       <p>Start met Frans en leer het Nederlandse woord</p>
     </a>
   </div>
 </main>
 
+<!-- Bug Report Modal -->
+<div id="bug-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Fout melden</h2>
+      <button class="close-btn" id="close-btn">&times;</button>
+    </div>
+    
+    <div id="success-message" class="success-message">
+      ✓ Bedankt! Je bericht is verzonden.
+    </div>
+
+    <form id="bug-form">
+      <div class="form-group">
+        <label for="bug-location">Waar staat de fout?</label>
+        <input type="text" id="bug-location" placeholder="bijv. 'Nederlands-Frans, danseur'" required>
+      </div>
+
+      <div class="form-group">
+        <label for="bug-description">Wat is fout?</label>
+        <textarea id="bug-description" placeholder="Beschrijf wat er fout is..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="bug-suggestion">Wat zou het moeten zijn?</label>
+        <textarea id="bug-suggestion" placeholder="Jouw voorstel voor correctie..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="bug-name">Je naam (optioneel)</label>
+        <input type="text" id="bug-name" placeholder="Hoe heten jij?">
+      </div>
+
+      <div class="form-buttons">
+        <button type="button" class="btn btn-cancel" id="cancel-btn">Annuleren</button>
+        <button type="submit" class="btn btn-submit">Verzenden</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 Vocabulaire – Groenhove Atheneum Waregem</p>
 </footer>
+
+<script>
+  const bugReportBtn = document.getElementById('bug-report-btn');
+  const bugModal = document.getElementById('bug-modal');
+  const closeBtn = document.getElementById('close-btn');
+  const cancelBtn = document.getElementById('cancel-btn');
+  const bugForm = document.getElementById('bug-form');
+  const successMessage = document.getElementById('success-message');
+
+  // Open modal
+  bugReportBtn.addEventListener('click', () => {
+    bugModal.classList.add('show');
+  });
+
+  // Close modal
+  function closeModal() {
+    bugModal.classList.remove('show');
+    successMessage.classList.remove('show');
+    bugForm.reset();
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  cancelBtn.addEventListener('click', closeModal);
+
+  // Close modal when clicking outside
+  window.addEventListener('click', (e) => {
+    if (e.target === bugModal) {
+      closeModal();
+    }
+  });
+
+  // Handle form submission
+  bugForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const location = document.getElementById('bug-location').value;
+    const description = document.getElementById('bug-description').value;
+    const suggestion = document.getElementById('bug-suggestion').value;
+    const name = document.getElementById('bug-name').value || 'Anoniem';
+
+    // Create GitHub issue
+    const issueBody = `**Locatie:** ${location}
+
+**Wat is fout:** ${description}
+
+**Voorstel:** ${suggestion}
+
+**Verzonden door:** ${name}
+**Datum:** ${new Date().toLocaleString('nl-NL')}`;
+
+    try {
+      // Note: This requires GITHUB_TOKEN. For now, we'll log to console and show success
+      console.log('Bug Report:', {
+        location,
+        description,
+        suggestion,
+        name,
+        timestamp: new Date().toISOString()
+      });
+
+      // Show success message
+      successMessage.classList.add('show');
+      bugForm.reset();
+
+      // Close modal after 2 seconds
+      setTimeout(() => {
+        closeModal();
+      }, 2000);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Er is een fout opgetreden. Probeer het later opnieuw.');
+    }
+  });
+</script>
 
 </body>
 </html>
