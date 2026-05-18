@@ -366,41 +366,8 @@
 </main>
 
 <script>
-  // Extract words from the word cards in the Dutch page
-  async function loadWerkwoorden() {
-    try {
-      const response = await fetch('nederlands-frans.html');
-      const html = await response.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      
-      const words = [];
-      const cards = doc.querySelectorAll('.section-title');
-      
-      // Find the werkwoorden section
-      let werkwoordenSection = null;
-      for (let card of cards) {
-        if (card.textContent.includes('Werkwoorden')) {
-          werkwoordenSection = card.nextElementSibling;
-          break;
-        }
-      }
-      
-      if (werkwoordenSection) {
-        const wordCards = werkwoordenSection.querySelectorAll('.word-card');
-        wordCards.forEach(card => {
-          const nl = card.querySelector('.nl').textContent.trim();
-          const fr = card.querySelector('.fr').textContent.trim();
-          words.push({ nl, fr });
-        });
-      }
-      
-      return words;
-    } catch (error) {
-      console.error('Error loading words:', error);
-      return [];
-    }
-  }
+  // EMBEDDED WORD DATA - Werkwoorden
+  const werkwoordenData = [{"nl":"aanvaarden","fr":"accepter"},{"nl":"aanzetten","fr":"allumer"},{"nl":"annuleren","fr":"annuler"},{"nl":"bijwonen","fr":"assister à"},{"nl":"chatten","fr":"chatter"},{"nl":"communiceren","fr":"communiquer"},{"nl":"vergelijken","fr":"comparer"},{"nl":"controleren","fr":"contrôler"},{"nl":"geloven","fr":"croire"},{"nl":"ontdekken","fr":"découvrir"},{"nl":"verspreiden","fr":"diffuser"},{"nl":"lastigvallen","fr":"embêter"},{"nl":"sturen","fr":"envoyer"},{"nl":"experimenteren","fr":"expérimenter"},{"nl":"uitzetten","fr":"éteindre"},{"nl":"flirten","fr":"flirter"},{"nl":"pesten","fr":"harceler"},{"nl":"aanzetten tot","fr":"inciter à"},{"nl":"beledigen","fr":"insulter"},{"nl":"bedreigen","fr":"menacer"},{"nl":"kiezen voor","fr":"opter pour"},{"nl":"delen","fr":"partager"},{"nl":"posten","fr":"poster"},{"nl":"beschermen","fr":"protéger"},{"nl":"nadenken","fr":"réfléchir"},{"nl":"weigeren","fr":"refuser"},{"nl":"betreuren, spijt hebben van","fr":"regretter"},{"nl":"respecteren","fr":"respecter"},{"nl":"heruitzenden","fr":"retransmettre"},{"nl":"leunen op / zich baseren op","fr":"s'appuyer sur"},{"nl":"zich excuseren","fr":"s'excuser"},{"nl":"opgelicht worden","fr":"se faire escroquer"},{"nl":"uitlachen, spotten met","fr":"se mocker de"},{"nl":"aandacht schenken aan","fr":"se préoccuper de"},{"nl":"beseffen","fr":"se rendre compte"},{"nl":"een bijnaam geven","fr":"surnommer"},{"nl":"surfen","fr":"surfer"},{"nl":"downloaden","fr":"télécharger"},{"nl":"trukeren","fr":"truquer"},{"nl":"controleren","fr":"vérifier"},{"nl":"stemmen","fr":"voter"}];
 
   class ExerciseManager {
     constructor(words) {
@@ -620,7 +587,7 @@
         return;
       }
 
-      // Split multiple answers by "/" or "," 
+      // Split multiple answers by "/" or ","
       const correctAnswers = word.fr.split('/').map(a => a.trim());
 
       const result = this.manager.checkAnswer(userAnswer, correctAnswers);
@@ -644,19 +611,11 @@
     }
   }
 
-  // Initialize
-  loadWerkwoorden().then(words => {
-    if (words.length === 0) {
-      document.body.innerHTML = '<p style="text-align: center; padding: 2rem;">Kan woorden niet laden. Controleer of nederlands-frans.html beschikbaar is.</p>';
-      return;
-    }
-
-    const manager = new ExerciseManager(words);
-    const ui = new UIManager();
-    const app = new App(manager, ui);
-
-    app.start();
-  });
+  // Initialize with embedded data
+  const manager = new ExerciseManager(werkwoordenData);
+  const ui = new UIManager();
+  const app = new App(manager, ui);
+  app.start();
 </script>
 
 </body>

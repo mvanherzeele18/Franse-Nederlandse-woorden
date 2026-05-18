@@ -366,41 +366,8 @@
 </main>
 
 <script>
-  // Extract words from the word cards in the Dutch page
-  async function loadAdjectieven() {
-    try {
-      const response = await fetch('nederlands-frans.html');
-      const html = await response.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      
-      const words = [];
-      const cards = doc.querySelectorAll('.section-title');
-      
-      // Find the adjectieven section
-      let adjectievenSection = null;
-      for (let card of cards) {
-        if (card.textContent.includes('Bijvoeglijke naamwoorden')) {
-          adjectievenSection = card.nextElementSibling;
-          break;
-        }
-      }
-      
-      if (adjectievenSection) {
-        const wordCards = adjectievenSection.querySelectorAll('.word-card');
-        wordCards.forEach(card => {
-          const nl = card.querySelector('.nl').textContent.trim();
-          const fr = card.querySelector('.fr').textContent.trim();
-          words.push({ nl, fr });
-        });
-      }
-      
-      return words;
-    } catch (error) {
-      console.error('Error loading words:', error);
-      return [];
-    }
-  }
+  // EMBEDDED WORD DATA - Adjectieven
+  const adjectievenData = [{"nl":"verliefd","fr":"amoureux / amoureuse"},{"nl":"arrogant","fr":"arrogant(e)"},{"nl":"aandachtig","fr":"attentif / attentive"},{"nl":"geen enkele","fr":"aucun + ne /n'"},{"nl":"kwetsend","fr":"blessant(e)"},{"nl":"bepaalde","fr":"certain(e)"},{"nl":"elk(e)","fr":"chaque"},{"nl":"choquerend","fr":"choquant(e)"},{"nl":"commercieel","fr":"commercial(e)"},{"nl":"kritisch","fr":"critique"},{"nl":"ontgoocheld","fr":"déçu(e)"},{"nl":"direct, rechtstreeks","fr":"direct(e)"},{"nl":"beschikbaar","fr":"disponible"},{"nl":"ontroerend","fr":"émouvant(e)"},{"nl":"emotioneel","fr":"émotionnel / émotionnelle"},{"nl":"opgewonden","fr":"excité(e)"},{"nl":"exclusief","fr":"exclusif / exclusive"},{"nl":"vals, niet echt","fr":"faux / fausse"},{"nl":"vrouwelijk","fr":"féminin(e)"},{"nl":"betrouwbaar","fr":"fiable"},{"nl":"Franstalig","fr":"francophone"},{"nl":"gênant","fr":"gênant(e)"},{"nl":"gratis","fr":"gratuit(e)"},{"nl":"vernederend","fr":"humiliant(e)"},{"nl":"indrukwekkend","fr":"impressionnant(e)"},{"nl":"tussenliggend, overgangs-","fr":"intermédiaire"},{"nl":"traag","fr":"lent(e)"},{"nl":"prachtig","fr":"magnifique"},{"nl":"melodieus","fr":"mélodieux / mélodieuse"},{"nl":"bedreigend","fr":"menaçant(e)"},{"nl":"muzikaal","fr":"musical(e)"},{"nl":"objectief","fr":"objectif / objective"},{"nl":"afkomstig (van)","fr":"originaire (de)"},{"nl":"betalend","fr":"payant(e)"},{"nl":"persoonlijk","fr":"personnel / personnelle"},{"nl":"fenomenaal, schitterend","fr":"phénoménal(e)"},{"nl":"meerdere","fr":"plusieurs"},{"nl":"provocerend","fr":"provocateur / provocatrice"},{"nl":"voorzichtig","fr":"prudent(e)"},{"nl":"enkele","fr":"quelques"},{"nl":"snel","fr":"rapide"},{"nl":"gesloten","fr":"renfermé(e)"},{"nl":"ritmisch","fr":"rythmique"},{"nl":"sentimenteel","fr":"sentimental(e)"},{"nl":"sympathiek","fr":"sympa"},{"nl":"talentvol, getalenteerd","fr":"talentueux / talentueuse"},{"nl":"ontroerend","fr":"touchant(e)"},{"nl":"al(le)","fr":"tout(e)"},{"nl":"uniek","fr":"unique"},{"nl":"gewelddadig","fr":"violent(e)"},{"nl":"virtueel","fr":"virtuel / virtuelle"},{"nl":"waar, echt","fr":"vrai(e)"}];
 
   class ExerciseManager {
     constructor(words) {
@@ -620,7 +587,7 @@
         return;
       }
 
-      // Split multiple answers by "/" or "," 
+      // Split multiple answers by "/" or ","
       const correctAnswers = word.fr.split('/').map(a => a.trim());
 
       const result = this.manager.checkAnswer(userAnswer, correctAnswers);
@@ -644,19 +611,11 @@
     }
   }
 
-  // Initialize
-  loadAdjectieven().then(words => {
-    if (words.length === 0) {
-      document.body.innerHTML = '<p style="text-align: center; padding: 2rem;">Kan woorden niet laden. Controleer of nederlands-frans.html beschikbaar is.</p>';
-      return;
-    }
-
-    const manager = new ExerciseManager(words);
-    const ui = new UIManager();
-    const app = new App(manager, ui);
-
-    app.start();
-  });
+  // Initialize with embedded data
+  const manager = new ExerciseManager(adjectievenData);
+  const ui = new UIManager();
+  const app = new App(manager, ui);
+  app.start();
 </script>
 
 </body>
