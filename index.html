@@ -506,18 +506,13 @@
 
 fetch(url, {
   method: 'POST',
-  mode: 'cors', // Belangrijk voor Google Apps Script
+  mode: 'cors',
   headers: {
     'Content-Type': 'application/json',
   },
-  body: JSON.stringify({
-  location,
-  description,
-  suggestion,
-  name,
-  timestamp: new Date().toISOString()
+  body: JSON.stringify("YES")
 })
-.then(response => response.json())
+.then(response => response.text())
 .then(result => console.log('Succes:', result))
 .catch(error => console.error('Fout:', error));
 
