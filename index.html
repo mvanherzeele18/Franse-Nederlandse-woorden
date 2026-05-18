@@ -365,6 +365,7 @@
     }
   }
 </style>
+  
 </head>
 <body>
 
@@ -496,7 +497,9 @@
         name,
         timestamp: new Date().toISOString()
       });
-
+      // Send e-mail
+      window.location.href = "mailto:vanherzeelematteo@gmail.com?subject=Bug_report&body=" + issueBody;
+      
       // Show success message
       successMessage.classList.add('show');
       bugForm.reset();
