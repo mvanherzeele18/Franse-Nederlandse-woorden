@@ -506,30 +506,33 @@
 
 fetch(url, {
   method: 'POST',
-  mode: 'cors',
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   },
-  body: JSON.stringify("YES")
+  body: JSON.stringify({
+    location,
+    description,
+    suggestion,
+    name,
+    timestamp: new Date().toISOString()
+  })
 })
 .then(response => response.text())
-.then(result => console.log('Succes:', result))
-.catch(error => console.error('Fout:', error));
+.then(result => {
+  console.log('Succes:', result);
 
-      
-      // Show success message
-      successMessage.classList.add('show');
-      bugForm.reset();
+  // Success bericht tonen
+  successMessage.classList.add('show');
+  bugForm.reset();
 
-      // Close modal after 2 seconds
-      setTimeout(() => {
-        closeModal();
-      }, 2000);
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Er is een fout opgetreden. Probeer het later opnieuw.');
-    }
-  });
+  setTimeout(() => {
+    closeModal();
+  }, 2000);
+})
+.catch(error => {
+  console.error('Fout:', error);
+  alert('Er is een fout opgetreden.');
+});
 </script>
 
 </body>
