@@ -105,14 +105,6 @@
     margin-bottom: 1.5rem;
   }
 
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-  }
-
   .section-title {
     font-size: 0.72rem;
     font-weight: 700;
@@ -123,35 +115,7 @@
     display: inline-block;
     padding: 0.3rem 0.9rem;
     border-radius: 4px;
-  }
-
-  .exercise-btn {
-    background: var(--green);
-    color: var(--white);
-    border: none;
-    padding: 0.3rem 0.9rem;
-    border-radius: 4px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .exercise-btn:hover {
-    background: var(--green-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
-  }
-
-  .exercise-btn::before {
-    content: "✎";
-    font-size: 0.9rem;
+    margin: 1.2rem 0 0.75rem;
   }
 
   .word-grid {
@@ -221,16 +185,6 @@
       flex: 1;
       text-align: center;
     }
-
-    .section-header {
-      gap: 0.5rem;
-    }
-
-    .section-title,
-    .exercise-btn {
-      font-size: 0.65rem;
-      padding: 0.25rem 0.7rem;
-    }
   }
 </style>
 </head>
@@ -252,10 +206,7 @@
 <section class="chapter" id="all-words">
   <h2 class="chapter-title">Alle woorden – Alfabetisch</h2>
 
-  <div class="section-header">
-    <div class="section-title">Zelfstandige naamwoorden</div>
-    <a href="oef-nl-fr-substantieven.html" class="exercise-btn">Oefenen</a>
-  </div>
+  <div class="section-title">Zelfstandige naamwoorden</div>
   <div class="word-grid">
     <div class="word-card"><span class="nl">een toestemming</span><div class="divider"></div><span class="fr">un accord</span></div>
     <div class="word-card"><span class="nl">een e-mailadres</span><div class="divider"></div><span class="fr">une adresse e-mail</span></div>
@@ -356,10 +307,7 @@
     <div class="word-card"><span class="nl">een persoon</span><div class="divider"></div><span class="fr">une personne</span></div>
   </div>
 
-  <div class="section-header">
-    <div class="section-title">Bijvoeglijke naamwoorden</div>
-    <a href="oef-nl-fr-adjectieven.html" class="exercise-btn">Oefenen</a>
-  </div>
+  <div class="section-title">Bijvoeglijke naamwoorden</div>
   <div class="word-grid">
     <div class="word-card"><span class="nl">verliefd</span><div class="divider"></div><span class="fr">amoureux / amoureuse</span></div>
     <div class="word-card"><span class="nl">arrogant</span><div class="divider"></div><span class="fr">arrogant(e)</span></div>
@@ -415,10 +363,7 @@
     <div class="word-card"><span class="nl">waar, echt</span><div class="divider"></div><span class="fr">vrai(e)</span></div>
   </div>
 
-  <div class="section-header">
-    <div class="section-title">Werkwoorden</div>
-    <a href="oef-nl-fr-werkwoorden.html" class="exercise-btn">Oefenen</a>
-  </div>
+  <div class="section-title">Werkwoorden</div>
   <div class="word-grid">
     <div class="word-card"><span class="nl">aanvaarden</span><div class="divider"></div><span class="fr">accepter</span></div>
     <div class="word-card"><span class="nl">aanzetten</span><div class="divider"></div><span class="fr">allumer</span></div>
@@ -463,9 +408,7 @@
     <div class="word-card"><span class="nl">stemmen</span><div class="divider"></div><span class="fr">voter</span></div>
   </div>
 
-  <div class="section-header">
-    <div class="section-title">Uitdrukkingen</div>
-  </div>
+  <div class="section-title">Uitdrukkingen</div>
   <div class="word-grid">
     <div class="word-card"><span class="nl">het was te gek</span><div class="divider"></div><span class="fr">c'était terrible</span></div>
     <div class="word-card"><span class="nl">het was zo goed</span><div class="divider"></div><span class="fr">c'était trop bien</span></div>
@@ -484,7 +427,7 @@
     <div class="word-card"><span class="nl">klacht neerleggen tegen iemand</span><div class="divider"></div><span class="fr">porter plainte contre quelqu'un</span></div>
     <div class="word-card"><span class="nl">als doelwit nemen</span><div class="divider"></div><span class="fr">prendre pour cible</span></div>
     <div class="word-card"><span class="nl">genieten van, plezier beleven aan</span><div class="divider"></div><span class="fr">prendre plaisir à</span></div>
-    <div class="word-card"><span class="nl" style="flex:1;">iets wat ik niet verwachtte</span><div class="divider"></div><span class="fr" style="flex:1;">quelque chose à quoi je ne m'attendais p[...]
+    <div class="word-card"><span class="nl" style="flex:1;">iets wat ik niet verwachtte</span><div class="divider"></div><span class="fr" style="flex:1;">quelque chose à quoi je ne m'attendais pas</span></div>    <div class="word-card"><span class="nl">uit de kosten geraken</span><div class="divider"></div><span class="fr">rentrer dans ses frais</span></div>
     <div class="word-card"><span class="nl">ruzie maken met iemand</span><div class="divider"></div><span class="fr">se disputer avec quelqu'un</span></div>
     <div class="word-card"><span class="nl">met iemand spotten</span><div class="divider"></div><span class="fr">se mocker de quelqu'un</span></div>
   </div>
