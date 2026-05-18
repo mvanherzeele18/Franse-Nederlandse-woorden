@@ -28,7 +28,7 @@
 
   header {
     background: var(--green-dark);
-    padding: 1.5rem 2rem;
+    padding: 2.5rem 2rem 2rem;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -38,38 +38,46 @@
     align-items: center;
   }
 
-  header h1 {
+  .header-left h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-size: clamp(1.4rem, 3vw, 2rem);
     color: var(--yellow);
     letter-spacing: 0.02em;
   }
 
-  .header-links {
+  .header-left p {
+    color: var(--green-light);
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    font-weight: 300;
+  }
+
+  .header-nav {
     display: flex;
     gap: 1rem;
-    align-items: center;
   }
 
-  .header-links a {
-    color: var(--white);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-  }
-
-  .header-links a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--yellow);
-  }
-
-  .header-links a.active {
+  .nav-btn {
     background: var(--yellow);
     color: var(--green-dark);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .nav-btn:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+  }
+
+  .nav-btn.active {
+    background: var(--white);
   }
 
   main {
@@ -137,7 +145,6 @@
     font-weight: 500;
     color: var(--text);
     font-size: 0.9rem;
-    flex: 1;
   }
 
   .fr {
@@ -161,16 +168,36 @@
     font-size: 0.78rem;
     border-top: 1px solid var(--green-light);
   }
+
+  @media (max-width: 768px) {
+    header {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .header-nav {
+      width: 100%;
+      gap: 0.5rem;
+    }
+
+    .nav-btn {
+      flex: 1;
+      text-align: center;
+    }
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Woordenschat Nederlands → Frans</h1>
-  <div class="header-links">
-    <a href="index.html">← Terug</a>
-    <a href="frans-nederlands.html">FR→NL</a>
-    <a href="nederlands-frans.html" class="active">NL→FR</a>
+  <div class="header-left">
+    <h1>Nederlands → Frans</h1>
+    <p>Woordenschat Nederlands–Frans</p>
+  </div>
+  <div class="header-nav">
+    <a href="index.html" class="nav-btn">← Terug</a>
+    <a href="frans-nederlands.html" class="nav-btn">FR → NL</a>
   </div>
 </header>
 
@@ -370,7 +397,7 @@
     <div class="word-card"><span class="nl">leunen op / zich baseren op</span><div class="divider"></div><span class="fr">s'appuyer sur</span></div>
     <div class="word-card"><span class="nl">zich excuseren</span><div class="divider"></div><span class="fr">s'excuser</span></div>
     <div class="word-card"><span class="nl">opgelicht worden</span><div class="divider"></div><span class="fr">se faire escroquer</span></div>
-    <div class="word-card"><span class="nl">uitlachen, spotten met</span><div class="divider"></div><span class="fr">se moquer de</span></div>
+    <div class="word-card"><span class="nl">uitlachen, spotten met</span><div class="divider"></div><span class="fr">se mocker de</span></div>
     <div class="word-card"><span class="nl">aandacht schenken aan</span><div class="divider"></div><span class="fr">se préoccuper de</span></div>
     <div class="word-card"><span class="nl">beseffen</span><div class="divider"></div><span class="fr">se rendre compte</span></div>
     <div class="word-card"><span class="nl">een bijnaam geven</span><div class="divider"></div><span class="fr">surnommer</span></div>
@@ -386,8 +413,6 @@
     <div class="word-card"><span class="nl">het was te gek</span><div class="divider"></div><span class="fr">c'était terrible</span></div>
     <div class="word-card"><span class="nl">het was zo goed</span><div class="divider"></div><span class="fr">c'était trop bien</span></div>
     <div class="word-card"><span class="nl">thuis</span><div class="divider"></div><span class="fr">chez soi</span></div>
-    <div class="word-card"><span class="nl">vergelijken</span><div class="divider"></div><span class="fr">comparer</span></div>
-    <div class="word-card"><span class="nl">controleren</span><div class="divider"></div><span class="fr">contrôler</span></div>
     <div class="word-card"><span class="nl">zijn kritische geest ontwikkelen</span><div class="divider"></div><span class="fr">développer son esprit critique</span></div>
     <div class="word-card"><span class="nl">het geluid minder hard zetten</span><div class="divider"></div><span class="fr">diminuer le son</span></div>
     <div class="word-card"><span class="nl">rechtstreeks, live</span><div class="divider"></div><span class="fr">en direct</span></div>
@@ -405,13 +430,15 @@
     <div class="word-card"><span class="nl">iets wat ik niet verwachtte</span><div class="divider"></div><span class="fr">quelque chose à quoi je ne m'attendais pas</span></div>
     <div class="word-card"><span class="nl">uit de kosten geraken</span><div class="divider"></div><span class="fr">rentrer dans ses frais</span></div>
     <div class="word-card"><span class="nl">ruzie maken met iemand</span><div class="divider"></div><span class="fr">se disputer avec quelqu'un</span></div>
-    <div class="word-card"><span class="nl">met iemand spotten</span><div class="divider"></div><span class="fr">se moquer de quelqu'un</span></div>
+    <div class="word-card"><span class="nl">met iemand spotten</span><div class="divider"></div><span class="fr">se mocker de quelqu'un</span></div>
   </div>
 
 </section>
 
 </main>
 
+<footer>
+  Woordenschat Nederlands–Frans · Samenvatting woordenlijst
 </footer>
 
 </body>
