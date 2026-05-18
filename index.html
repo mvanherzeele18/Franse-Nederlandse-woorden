@@ -510,7 +510,12 @@ fetch(url, {
   headers: {
     'Content-Type': 'application/json',
   },
-  body: JSON.stringify("YES")
+  body: JSON.stringify({
+  location,
+  description,
+  suggestion,
+  name,
+  timestamp: new Date().toISOString()
 })
 .then(response => response.json())
 .then(result => console.log('Succes:', result))
