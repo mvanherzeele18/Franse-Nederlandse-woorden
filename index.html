@@ -498,7 +498,24 @@
         timestamp: new Date().toISOString()
       });
       // Send e-mail
-      window.location.href = "mailto:vanherzeelematteo@gmail.com?subject=Bug_report&body=" + issueBody;
+      //window.location.href = "mailto:vanherzeelematteo@gmail.com?subject=Bug_report&body=" + issueBody;
+
+      // Invoegen in Google sheet
+      const url = 'https://script.google.com/macros/s/AKfycbyDIH73X5ue9BgSwJKmfKJhr_Iu18TtMdsBP6JMJAJYKfJH1iIZRdrpbU8EFcimXRIq/exec';
+
+
+fetch(url, {
+  method: 'POST',
+  mode: 'cors', // Belangrijk voor Google Apps Script
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(issueBody)
+})
+.then(response => response.json())
+.then(result => console.log('Succes:', result))
+.catch(error => console.error('Fout:', error));
+
       
       // Show success message
       successMessage.classList.add('show');
