@@ -342,7 +342,7 @@
 <body>
 
 <header>
-  <h1>📖 Dossier 3 Oefenen</h1>
+  <h1>Dossier 3 Oefenen</h1>
   <a href="nederlands-frans.html" class="nav-btn">← Terug</a>
 </header>
 
@@ -385,7 +385,7 @@
     </div>
 
     <div class="completion-message" id="completionMessage">
-      <h2>🎉 Geweldig!</h2>
+      <h2>Geweldig!</h2>
       <p>Je hebt alle woorden van dit dossier geoefend!</p>
       <p>Succes: <strong id="finalScore">0%</strong></p>
     </div>
@@ -473,10 +473,10 @@
 
     if (userAnswer === correctAnswer) {
       score++;
-      feedback.textContent = '✅ Juist! Goed gedaan!';
+      feedback.textContent = 'Juist! Goed gedaan!';
       feedback.className = 'feedback correct';
     } else {
-      feedback.textContent = `❌ Niet juist. Het juiste antwoord is: "${words[currentIndex].fr}"`;
+      feedback.textContent = `Niet juist. Het juiste antwoord is: "${words[currentIndex].fr}"`;
       feedback.className = 'feedback incorrect';
     }
 
