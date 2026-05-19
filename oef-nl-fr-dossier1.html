@@ -166,113 +166,126 @@ Score:
 
 <script>
 
-const woorden=[
-
-{
-nl:"evenement",
-fr:"un événement"
-},
-
-{
-nl:"idee",
-fr:"une idée"
-},
-
-{
-nl:"festival",
-fr:"un festival"
-},
-
-{
-nl:"project",
-fr:"un projet"
-},
-
-{
-nl:"talent",
-fr:"un talent"
-},
-
-{
-nl:"bezoek",
-fr:"la visite"
-},
-
-{
-nl:"activiteit",
-fr:"une activité"
-},
-
-{
-nl:"Engels",
-fr:"l'anglais"
-},
-
-{
-nl:"gebouw",
-fr:"un bâtiment"
-},
-
-{
-nl:"biologie",
-fr:"la biologie"
-}
-
-];
-
+let woorden=[];
 let huidig;
 let punten=0;
 
+async function laadWoorden(){
+
+    const response=await fetch("nederlands-frans.html");
+
+    const html=await response.text();
+
+    const parser=new DOMParser();
+
+    const doc=parser.parseFromString(
+        html,
+        "text/html"
+    );
+
+    // Dossier 1 zoeken
+    const dossier=
+    doc.querySelector(
+        '.dossier-section[data-dossier="1"]'
+    );
+
+    // Alle woordkaartjes ophalen
+    const kaarten=
+    dossier.querySelectorAll(".word-card");
+
+    kaarten.forEach(kaart=>{
+
+        const nl=
+        kaart.querySelector(".nl")
+        ?.textContent.trim();
+
+        const fr=
+        kaart.querySelector(".fr")
+        ?.textContent.trim();
+
+        if(nl && fr){
+
+            woorden.push({
+                nl:nl,
+                fr:fr
+            });
+
+        }
+
+    });
+
+    volgendeWoord();
+
+}
+
 function volgendeWoord(){
 
-document.getElementById("answer").value="";
-document.getElementById("result").innerHTML="";
+    document.getElementById(
+        "answer"
+    ).value="";
 
-huidig=
-woorden[Math.floor(
-Math.random()*woorden.length
-)];
+    document.getElementById(
+        "result"
+    ).innerHTML="";
 
-document.getElementById("word")
-.innerHTML=huidig.nl;
+    huidig=
+    woorden[
+        Math.floor(
+            Math.random()*woorden.length
+        )
+    ];
+
+    document.getElementById(
+        "word"
+    ).innerHTML=
+    huidig.nl;
 
 }
 
 function controleer(){
 
-const antwoord=
-document.getElementById("answer")
-.value
-.toLowerCase()
-.trim();
+    const antwoord=
+    document.getElementById(
+        "answer"
+    )
+    .value
+    .toLowerCase()
+    .trim();
 
-const juist=
-huidig.fr
-.toLowerCase();
+    const juist=
+    huidig.fr
+    .toLowerCase()
+    .trim();
 
-if(antwoord===juist){
+    if(antwoord===juist){
 
-document.getElementById("result")
-.innerHTML=
-"✅ Juist";
+        document.getElementById(
+            "result"
+        ).innerHTML=
+        "✅ Juist";
 
-punten++;
+        punten++;
 
-document.getElementById("score")
-.innerHTML=punten;
+        document.getElementById(
+            "score"
+        ).innerHTML=
+        punten;
+
+    }
+
+    else{
+
+        document.getElementById(
+            "result"
+        ).innerHTML=
+        "❌ Juist antwoord: "
+        +huidig.fr;
+
+    }
 
 }
-else{
 
-document.getElementById("result")
-.innerHTML=
-"❌ Juist antwoord: "+huidig.fr;
-
-}
-
-}
-
-volgendeWoord();
+laadWoorden();
 
 </script>
 
