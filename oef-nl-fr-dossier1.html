@@ -3,19 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Oefening Dossier 1</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
-    --green:#6BBE3A;
-    --green-light:#D4E8B8;
-    --green-dark:#2E7D32;
-    --yellow:#FDD835;
-    --text:#1B5E20;
-    --bg:#F1F8E9;
-    --white:#FFF;
+--green:#6BBE3A;
+--green-light:#D4E8B8;
+--green-dark:#2E7D32;
+--yellow:#FDD835;
+--text:#1B5E20;
+--bg:#F1F8E9;
+--white:#fff;
 }
 
 *{
@@ -28,16 +30,16 @@ body{
 font-family:'DM Sans',sans-serif;
 background:var(--bg);
 color:var(--text);
-padding-bottom:50px;
+min-height:100vh;
 }
 
 header{
 background:var(--green-dark);
 padding:2rem;
+border-bottom:4px solid var(--yellow);
 display:flex;
 justify-content:space-between;
 align-items:center;
-border-bottom:4px solid var(--yellow);
 }
 
 h1{
@@ -65,7 +67,7 @@ background:white;
 padding:2rem;
 border-radius:12px;
 margin-top:2rem;
-box-shadow:0 4px 15px rgba(0,0,0,0.08);
+box-shadow:0 4px 15px rgba(0,0,0,.08);
 }
 
 .word{
@@ -77,15 +79,20 @@ margin-bottom:1rem;
 input{
 width:100%;
 padding:12px;
-border:2px solid var(--green-light);
 border-radius:8px;
+border:2px solid var(--green-light);
 font-size:1rem;
 margin-top:1rem;
 }
 
-button{
+.buttons{
 margin-top:1rem;
-padding:12px 20px;
+display:flex;
+gap:10px;
+}
+
+button{
+padding:12px 18px;
 border:none;
 border-radius:8px;
 cursor:pointer;
@@ -101,25 +108,51 @@ color:white;
 .next-btn{
 background:var(--yellow);
 color:var(--green-dark);
-margin-left:10px;
 }
 
 .result{
 margin-top:1rem;
-font-weight:bold;
 font-size:1.1rem;
+font-weight:bold;
 }
 
 .score{
 margin-top:1rem;
-font-size:1rem;
 }
+
+.progress-container{
+margin-top:2rem;
+}
+
+.progress-info{
+display:flex;
+justify-content:space-between;
+margin-bottom:8px;
+}
+
+.progress-bg{
+width:100%;
+height:20px;
+background:var(--green-light);
+border-radius:20px;
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:0%;
+background:var(--green);
+transition:.4s;
+}
+
 </style>
+
 </head>
 
 <body>
 
 <header>
+
 <h1>Dossier 1 oefenen</h1>
 
 <a href="nederlands-frans.html"
@@ -133,61 +166,78 @@ class="nav-btn">
 
 <div class="card">
 
-<div class="word" id="word"></div>
+<div class="word"
+id="word">
+Laden...
+</div>
 
-<label>Typ het Franse woord:</label>
+<label>
+Typ het Franse woord:
+</label>
 
-<input type="text" id="answer">
+<input
+type="text"
+id="answer"
+placeholder="Typ hier..."
+>
 
-<div>
+<div class="buttons">
 
-<button class="check-btn"
+<button
+class="check-btn"
 onclick="controleer()">
 Controleer
 </button>
 
-<button class="next-btn"
+<button
+class="next-btn"
 onclick="volgendeWoord()">
 Volgende
 </button>
 
 </div>
 
-<div class="result" id="result"></div>
+<div
+class="result"
+id="result">
+</div>
 
 <div class="score">
+
 Score:
-<span id="score">0</span>
-</div>
-
-<div style="margin-top:20px;">
-
-<div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-<span>Voortgang</span>
-<span id="progressText">0 / 0</span>
-</div>
-
-<div style="
-width:100%;
-height:20px;
-background:#D4E8B8;
-border-radius:20px;
-overflow:hidden;
-">
-
-<div id="progressBar"
-style="
-width:0%;
-height:100%;
-background:#6BBE3A;
-transition:0.4s;
-">
-</div>
+<span id="score">
+0
+</span>
 
 </div>
 
+<div class="progress-container">
+
+<div class="progress-info">
+
+<span>
+Voortgang
+</span>
+
+<span id="progressText">
+
+0 / 0
+
+</span>
+
 </div>
-    
+
+<div class="progress-bg">
+
+<div
+class="progress-bar"
+id="progressBar">
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </main>
@@ -195,186 +245,219 @@ transition:0.4s;
 <script>
 
 let woorden=[];
-let huidig;
-let punten=0;
-
 let resterendeWoorden=[];
+
+let huidig;
+
+let punten=0;
 let totaalWoorden=0;
-    
+
+
 async function laadWoorden(){
 
-    const response=await fetch("nederlands-frans.html");
+const response=
+await fetch(
+"nederlands-frans.html"
+);
 
-    const html=await response.text();
+const html=
+await response.text();
 
-    const parser=new DOMParser();
+const parser=
+new DOMParser();
 
-    const doc=parser.parseFromString(
-        html,
-        "text/html"
-    );
+const doc=
+parser.parseFromString(
+html,
+"text/html"
+);
 
-    // Dossier 1 zoeken
-    const dossier=
-    doc.querySelector(
-        '.dossier-section[data-dossier="1"]'
-    );
+const dossier=
+doc.querySelector(
+'.dossier-section[data-dossier="1"]'
+);
 
-    // Alle woordkaartjes ophalen
-    const kaarten=
-    dossier.querySelectorAll(".word-card");
+const kaarten=
+dossier.querySelectorAll(
+".word-card"
+);
 
-    kaarten.forEach(kaart=>{
+kaarten.forEach(kaart=>{
 
-        const nl=
-        kaart.querySelector(".nl")
-        ?.textContent.trim();
+const nl=
+kaart.querySelector(".nl")
+?.textContent.trim();
 
-        const fr=
-        kaart.querySelector(".fr")
-        ?.textContent.trim();
+const fr=
+kaart.querySelector(".fr")
+?.textContent.trim();
 
-        if(nl && fr){
+if(nl&&fr){
 
-            woorden.push({
-                nl:nl,
-                fr:fr
-            });
+woorden.push({
 
-        }
+nl:nl,
+fr:fr
 
-    });
-
-    function shuffle(array){
-
-    for(let i=array.length-1;i>0;i--){
-
-        const j=
-        Math.floor(
-            Math.random()*(i+1)
-        );
-
-        [array[i],array[j]]=
-        [array[j],array[i]];
-    }
+});
 
 }
+
+});
+
+totaalWoorden=
+woorden.length;
+
+resterendeWoorden=
+[...woorden];
+
+shuffle(
+resterendeWoorden
+);
+
+updateVoortgang();
+
+volgendeWoord();
+
+}
+
+
 
 function shuffle(array){
 
-    for(let i=array.length-1;i>0;i--){
+for(
+let i=array.length-1;
+i>0;
+i--
+){
 
-        const j=
-        Math.floor(
-            Math.random()*(i+1)
-        );
+const j=
+Math.floor(
+Math.random()*(i+1)
+);
 
-        [array[i],array[j]]=
-        [array[j],array[i]];
-    }
+[array[i],array[j]]=
+[array[j],array[i]];
 
 }
+
+}
+
+
 
 function volgendeWoord(){
 
-    document.getElementById(
-        "answer"
-    ).value="";
+document.getElementById(
+"answer"
+).value="";
 
-    document.getElementById(
-        "result"
-    ).innerHTML="";
+document.getElementById(
+"result"
+).innerHTML="";
 
-    if(resterendeWoorden.length===0){
 
-        resterendeWoorden=
-        [...woorden];
+if(
+resterendeWoorden.length===0
+){
 
-        shuffle(
-            resterendeWoorden
-        );
+resterendeWoorden=
+[...woorden];
 
-    }
-
-    huidig=
-    resterendeWoorden.pop();
-
-    updateVoortgang();
-
-    document.getElementById(
-        "word"
-    ).innerHTML=
-    huidig.nl;
+shuffle(
+resterendeWoorden
+);
 
 }
-}
 
-function volgendeWoord(){
 
-    document.getElementById(
-        "answer"
-    ).value="";
+huidig=
+resterendeWoorden.pop();
 
-    document.getElementById(
-        "result"
-    ).innerHTML="";
+updateVoortgang();
 
-    huidig=
-    woorden[
-        Math.floor(
-            Math.random()*woorden.length
-        )
-    ];
-
-    document.getElementById(
-        "word"
-    ).innerHTML=
-    huidig.nl;
+document.getElementById(
+"word"
+).innerHTML=
+huidig.nl;
 
 }
+
+
 
 function controleer(){
 
-    const antwoord=
-    document.getElementById(
-        "answer"
-    )
-    .value
-    .toLowerCase()
-    .trim();
+const antwoord=
+document.getElementById(
+"answer"
+)
+.value
+.toLowerCase()
+.trim();
 
-    const juist=
-    huidig.fr
-    .toLowerCase()
-    .trim();
+const juist=
+huidig.fr
+.toLowerCase()
+.trim();
 
-    if(antwoord===juist){
 
-        document.getElementById(
-            "result"
-        ).innerHTML=
-        "✅ Juist";
+if(
+antwoord===juist
+){
 
-        punten++;
+punten++;
 
-        document.getElementById(
-            "score"
-        ).innerHTML=
-        punten;
+document.getElementById(
+"score"
+).innerHTML=
+punten;
 
-    }
-
-    else{
-
-        document.getElementById(
-            "result"
-        ).innerHTML=
-        "❌ Juist antwoord: "
-        +huidig.fr;
-
-    }
+document.getElementById(
+"result"
+).innerHTML=
+"✅ Juist";
 
 }
+else{
+
+document.getElementById(
+"result"
+).innerHTML=
+"❌ Juist antwoord: "
++huidig.fr;
+
+}
+
+}
+
+
+
+function updateVoortgang(){
+
+const gedaan=
+totaalWoorden-
+resterendeWoorden.length;
+
+const percentage=
+(gedaan/totaalWoorden)
+*100;
+
+document.getElementById(
+"progressBar"
+)
+.style.width=
+percentage+"%";
+
+
+document.getElementById(
+"progressText"
+)
+.innerHTML=
+gedaan+
+" / "+
+totaalWoorden;
+
+}
+
 
 laadWoorden();
 
