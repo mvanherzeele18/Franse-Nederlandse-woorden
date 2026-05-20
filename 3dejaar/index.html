@@ -56,10 +56,17 @@
     font-weight: 300;
   }
 
-  .bug-report-btn {
+  .header-buttons {
     position: absolute;
     top: 1rem;
     right: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .back-btn,
+  .bug-report-btn {
     background: var(--yellow);
     color: var(--green-dark);
     border: none;
@@ -75,14 +82,11 @@
     text-decoration: none;
   }
 
+  .back-btn:hover,
   .bug-report-btn:hover {
     background: var(--green-light);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(107, 190, 58, 0.25);
-  }
-
-  .bug-report-btn::before {
-    font-size: 1rem;
   }
 
   main {
@@ -181,10 +185,18 @@
 
   @media (max-width: 768px) {
 
-    .bug-report-btn {
+    .header-buttons {
       position: static;
       margin-top: 1rem;
       width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .back-btn,
+    .bug-report-btn {
+      flex: 1;
+      min-width: 150px;
       justify-content: center;
     }
 
@@ -221,13 +233,22 @@
   <h1>Vocabulaire Français–Nederlands</h1>
   <p>Groenhove Atheneum Waregem</p>
 
-  <a 
-    href="https://docs.google.com/forms/d/e/1FAIpQLSdJUHf3tuMiZtz2If9wSjU9XPaIeX3EOMbBtBU_hFrOJbiw6Q/viewform?usp=publish-editor"
-    target="_blank"
-    class="bug-report-btn"
-  >
-    Fout melden
-  </a>
+  <div class="header-buttons">
+    <a 
+      href="https://mvanherzeele.github.io/Franse-Nederlandse-woorden/index.html"
+      class="back-btn"
+    >
+      ← Terug
+    </a>
+
+    <a 
+      href="https://docs.google.com/forms/d/e/1FAIpQLSdJUHf3tuMiZtz2If9wSjU9XPaIeX3EOMbBtBU_hFrOJbiw6Q/viewform?usp=publish-editor"
+      target="_blank"
+      class="bug-report-btn"
+    >
+      Fout melden
+    </a>
+  </div>
 </header>
 
 <main>
