@@ -248,6 +248,87 @@
     display: none;
   }
 
+  .search-bar-wrapper {
+    margin: 0 0 1.5rem;
+    position: relative;
+  }
+
+  .search-bar-wrapper input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.8rem;
+    border: 2px solid var(--green);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--white);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .search-bar-wrapper input:focus {
+    border-color: var(--green-dark);
+    box-shadow: 0 0 0 3px rgba(107, 190, 58, 0.18);
+  }
+
+  .search-bar-wrapper input::placeholder {
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--green);
+    pointer-events: none;
+    font-size: 1rem;
+  }
+
+  .search-clear {
+    position: absolute;
+    right: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1;
+    display: none;
+    padding: 0;
+  }
+
+  .search-clear:hover { color: var(--green-dark); }
+
+  .search-count {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    margin-left: 0.2rem;
+  }
+
+  .word-card.search-hidden {
+    display: none;
+  }
+
+  .word-card mark {
+    background: var(--yellow);
+    color: var(--text);
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  .no-results-msg {
+    display: none;
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 1rem 0 0.5rem;
+    font-style: italic;
+  }
+
   @media (max-width: 768px) {
     header {
       flex-direction: column;
@@ -288,6 +369,12 @@
 
 <main>
 
+<div class="search-bar-wrapper">
+  <input type="text" id="wordSearch" placeholder="Zoek op Nederlands woord…" oninput="handleSearch(this)">
+  <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Wissen">✕</button>
+  <div class="search-count" id="searchCount"></div>
+</div>
+
 <div class="dossier-filter">
   <button class="dossier-btn all-btn active" onclick="filterDossier('all', this)">Alle dossiers</button>
   <button class="dossier-btn" onclick="filterDossier('1', this)">Dossier 1</button>
@@ -309,33 +396,97 @@
       document.querySelectorAll('.dossier-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       sections.forEach(s => s.classList.remove('hidden'));
-      return;
-    }
-
-    // Deactivate "alle dossiers"
-    allBtn.classList.remove('active');
-
-    if (activeFilters.has(dossier)) {
-      activeFilters.delete(dossier);
-      btn.classList.remove('active');
     } else {
-      activeFilters.add(dossier);
-      btn.classList.add('active');
-    }
-
-    if (activeFilters.size === 0) {
-      allBtn.classList.add('active');
-      sections.forEach(s => s.classList.remove('hidden'));
-      return;
-    }
-
-    sections.forEach(s => {
-      if (activeFilters.has(s.dataset.dossier)) {
-        s.classList.remove('hidden');
+      allBtn.classList.remove('active');
+      if (activeFilters.has(dossier)) {
+        activeFilters.delete(dossier);
+        btn.classList.remove('active');
       } else {
-        s.classList.add('hidden');
+        activeFilters.add(dossier);
+        btn.classList.add('active');
+      }
+      if (activeFilters.size === 0) {
+        allBtn.classList.add('active');
+        sections.forEach(s => s.classList.remove('hidden'));
+      } else {
+        sections.forEach(s => {
+          if (activeFilters.has(s.dataset.dossier)) {
+            s.classList.remove('hidden');
+          } else {
+            s.classList.add('hidden');
+          }
+        });
+      }
+    }
+    // Re-apply search after dossier filter change
+    const q = document.getElementById('wordSearch').value.trim();
+    if (q) applySearch(q);
+  }
+
+  function handleSearch(input) {
+    const q = input.value.trim();
+    const clearBtn = document.getElementById('searchClear');
+    clearBtn.style.display = q ? 'block' : 'none';
+    applySearch(q);
+  }
+
+  function clearSearch() {
+    const input = document.getElementById('wordSearch');
+    input.value = '';
+    document.getElementById('searchClear').style.display = 'none';
+    applySearch('');
+    input.focus();
+  }
+
+  function applySearch(q) {
+    const cards = document.querySelectorAll('.word-card');
+    const countEl = document.getElementById('searchCount');
+    let totalVisible = 0;
+
+    cards.forEach(card => {
+      const nlSpan = card.querySelector('.nl');
+      if (!nlSpan) return;
+      const originalText = nlSpan.dataset.original || nlSpan.textContent;
+      if (!nlSpan.dataset.original) nlSpan.dataset.original = originalText;
+
+      if (!q) {
+        nlSpan.innerHTML = originalText;
+        card.classList.remove('search-hidden');
+      } else {
+        const lower = originalText.toLowerCase();
+        const qLower = q.toLowerCase();
+        if (lower.includes(qLower)) {
+          const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const regex = new RegExp('(' + escaped + ')', 'gi');
+          nlSpan.innerHTML = originalText.replace(regex, '<mark>$1</mark>');
+          card.classList.remove('search-hidden');
+          totalVisible++;
+        } else {
+          nlSpan.innerHTML = originalText;
+          card.classList.add('search-hidden');
+        }
       }
     });
+
+    // Show/hide empty-section messages and update count
+    document.querySelectorAll('.dossier-section').forEach(section => {
+      if (section.classList.contains('hidden')) return;
+      let msg = section.querySelector('.no-results-msg');
+      if (!msg) {
+        msg = document.createElement('p');
+        msg.className = 'no-results-msg';
+        msg.textContent = 'Geen resultaten gevonden in dit dossier.';
+        section.appendChild(msg);
+      }
+      const visibleInSection = [...section.querySelectorAll('.word-card')].some(c => !c.classList.contains('search-hidden'));
+      msg.style.display = (q && !visibleInSection) ? 'block' : 'none';
+    });
+
+    if (q) {
+      countEl.textContent = totalVisible + ' resultaat' + (totalVisible !== 1 ? 'en' : '') + ' gevonden';
+    } else {
+      countEl.textContent = '';
+    }
   }
 </script>
 
