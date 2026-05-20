@@ -1,1 +1,283 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulaire – Kies je richting</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --green: #6BBE3A;
+    --green-light: #D4E8B8;
+    --green-dark: #2E7D32;
+    --yellow: #FDD835;
+    --text: #1B5E20;
+    --muted: #558B2F;
+    --bg: #F1F8E9;
+    --white: #FFFFFF;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    background: var(--green-dark);
+    padding: 3rem 2rem;
+    text-align: center;
+    border-bottom: 4px solid var(--yellow);
+    position: relative;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--yellow);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  header p {
+    color: var(--green-light);
+    font-size: 1.1rem;
+    font-weight: 300;
+  }
+
+  .header-buttons {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .back-btn,
+  .bug-report-btn {
+    background: var(--yellow);
+    color: var(--green-dark);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+
+  .back-btn:hover,
+  .bug-report-btn:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 190, 58, 0.25);
+  }
+
+  main {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .intro {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .intro h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--green-dark);
+    margin-bottom: 1rem;
+  }
+
+  .intro p {
+    font-size: 1.1rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .choice-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .choice-card {
+    background: var(--white);
+    border: 3px solid var(--green);
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .choice-card:hover {
+    background: var(--green);
+    color: var(--white);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(107, 190, 58, 0.3);
+  }
+
+  .choice-card:hover .icon {
+    transform: scale(1.1);
+  }
+
+  .icon {
+    font-size: 3.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .choice-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin: 0.5rem 0;
+  }
+
+  .choice-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .choice-card:hover p {
+    opacity: 1;
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--green-light);
+    margin-top: auto;
+  }
+
+  @media (max-width: 768px) {
+
+    .header-buttons {
+      position: static;
+      margin-top: 1rem;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .back-btn,
+    .bug-report-btn {
+      flex: 1;
+      min-width: 150px;
+      justify-content: center;
+    }
+
+    header {
+      padding: 2rem 1rem;
+    }
+
+    main {
+      padding: 2rem 1.5rem;
+    }
+
+    .choice-container {
+      gap: 1.5rem;
+    }
+
+    .choice-card {
+      padding: 2rem 1.5rem;
+    }
+
+    .icon {
+      font-size: 2.5rem;
+    }
+
+    .choice-card h3 {
+      font-size: 1.3rem;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Vocabulaire Français–Nederlands</h1>
+  <p>Groenhove Atheneum Waregem</p>
+
+  <div class="header-buttons">
+    <a 
+      href="https://mvanherzeele.github.io/Franse-Nederlandse-woorden/index.html"
+      class="back-btn"
+    >
+      ← Terug
+    </a>
+
+    <a 
+      href="https://docs.google.com/forms/d/e/1FAIpQLSdJUHf3tuMiZtz2If9wSjU9XPaIeX3EOMbBtBU_hFrOJbiw6Q/viewform?usp=publish-editor"
+      target="_blank"
+      class="bug-report-btn"
+    >
+      Fout melden
+    </a>
+  </div>
+</header>
+
+<main>
+
+  <div class="intro">
+    <h2>Kies je richting</h2>
+    <p>Selecteer de taalcombinatie die je wilt studeren</p>
+  </div>
+
+  <div class="choice-container">
+
+    <a href="nederlands-frans.html" class="choice-card">
+      <h3>Nederlands → Frans</h3>
+      <p>Start met Nederlands en leer het Franse woord</p>
+    </a>
+
+    <a href="frans-nederlands.html" class="choice-card">
+      <h3>Frans → Nederlands</h3>
+      <p>Start met Frans en leer het Nederlandse woord</p>
+      <p>Tijdelijk niet beschikbaar</p>
+    </a>
+
+  </div>
+
+</main>
+
+<footer>
+  © 2026 Vanherzeele Matteo
+</footer>
+
+</body>
+</html>
