@@ -1,1 +1,682 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frans-Nederlands</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #6BBE3A;
+    --green-light: #D4E8B8;
+    --green-dark: #2E7D32;
+    --yellow: #FDD835;
+    --text: #1B5E20;
+    --muted: #558B2F;
+    --bg: #F1F8E9;
+    --white: #FFFFFF;
+  }
 
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--green-dark);
+    padding: 2.5rem 2rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 4px solid var(--yellow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-left h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: var(--yellow);
+    letter-spacing: 0.02em;
+  }
+
+  .header-left p {
+    color: var(--green-light);
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+    font-weight: 300;
+  }
+
+  .header-nav {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .nav-btn {
+    background: var(--yellow);
+    color: var(--green-dark);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .nav-btn:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+  }
+
+  .nav-btn.active {
+    background: var(--white);
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .chapter {
+    margin-bottom: 3.5rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--green-dark);
+    border-left: 5px solid var(--green);
+    padding-left: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.2rem 0 0.75rem;
+  }
+
+  .section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    background: var(--green);
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border-radius: 4px;
+  }
+
+  .exercise-btn {
+    background: var(--yellow);
+    color: var(--green-dark);
+    border: none;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .exercise-btn:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(107, 190, 58, 0.2);
+  }
+
+  .word-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.6rem;
+  }
+
+  .word-card {
+    background: var(--white);
+    border: 1.5px solid var(--green-light);
+    border-radius: 8px;
+    padding: 0.65rem 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .word-card:hover {
+    border-color: var(--green);
+    box-shadow: 0 2px 12px rgba(107, 190, 58, 0.18);
+  }
+
+  .nl {
+    font-weight: 500;
+    color: var(--text);
+    font-size: 0.9rem;
+  }
+
+  .fr {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .divider {
+    width: 1px;
+    height: 18px;
+    background: var(--green-light);
+    flex-shrink: 0;
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    border-top: 1px solid var(--green-light);
+  }
+
+  .dossier-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5rem 0 2rem;
+  }
+
+  .dossier-btn {
+    background: var(--white);
+    color: var(--green-dark);
+    border: 2px solid var(--green);
+    padding: 0.45rem 1.1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .dossier-btn:hover {
+    background: var(--green-light);
+    transform: translateY(-1px);
+  }
+
+  .dossier-btn.active {
+    background: var(--green-dark);
+    color: var(--white);
+    border-color: var(--green-dark);
+  }
+
+  .dossier-btn.all-btn {
+    background: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--green-dark);
+  }
+
+  .dossier-btn.all-btn.active {
+    background: var(--green-dark);
+    border-color: var(--green-dark);
+    color: var(--white);
+  }
+
+  .dossier-section {
+    margin-bottom: 3.5rem;
+  }
+
+  .dossier-section.hidden {
+    display: none;
+  }
+
+  .search-bar-wrapper {
+    margin: 0 0 1.5rem;
+    position: relative;
+  }
+
+  .search-bar-wrapper input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.8rem;
+    border: 2px solid var(--green);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--white);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .search-bar-wrapper input:focus {
+    border-color: var(--green-dark);
+    box-shadow: 0 0 0 3px rgba(107, 190, 58, 0.18);
+  }
+
+  .search-bar-wrapper input::placeholder {
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--green);
+    pointer-events: none;
+    font-size: 1rem;
+  }
+
+  .search-clear {
+    position: absolute;
+    right: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1;
+    display: none;
+    padding: 0;
+  }
+
+  .search-clear:hover { color: var(--green-dark); }
+
+  .search-count {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    margin-left: 0.2rem;
+  }
+
+  .word-card.search-hidden {
+    display: none;
+  }
+
+  .word-card mark {
+    background: var(--yellow);
+    color: var(--text);
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  .no-results-msg {
+    display: none;
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 1rem 0 0.5rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    header {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .header-nav {
+      width: 100%;
+      gap: 0.5rem;
+    }
+
+    .nav-btn {
+      flex: 1;
+      text-align: center;
+    }
+
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>Frans → Nederlands</h1>
+    <p>Woordenschat Frans–Nederlands</p>
+  </div>
+  <div class="header-nav">
+    <a href="index.html" class="nav-btn">← Terug</a>
+    <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Wissen">✕</button>
+    <a href="nederlands-frans.html" class="nav-btn">NL → FR</a>
+  </div>
+</header>
+
+<main>
+
+<div class="search-bar-wrapper">
+  <input type="text" id="wordSearch" placeholder="Zoek op Nederlands woord…" oninput="handleSearch(this)">
+  <div class="search-count" id="searchCount"></div>
+</div>
+
+<div class="dossier-filter">
+  <button class="dossier-btn all-btn active" onclick="filterDossier('all', this)">Alle dossiers</button>
+  <button class="dossier-btn" onclick="filterDossier('1', this)">Dossier 1</button>
+  <button class="dossier-btn" onclick="filterDossier('2', this)">Dossier 2</button>
+  <button class="dossier-btn" onclick="filterDossier('3', this)">Dossier 3</button>
+  <button class="dossier-btn" onclick="filterDossier('4', this)">Dossier 4</button>
+  <button class="dossier-btn" onclick="filterDossier('5', this)">Dossier 5</button>
+</div>
+
+<script>
+  const activeFilters = new Set();
+
+  function filterDossier(dossier, btn) {
+    const allBtn = document.querySelector('.all-btn');
+    const sections = document.querySelectorAll('.dossier-section');
+
+    if (dossier === 'all') {
+      activeFilters.clear();
+      document.querySelectorAll('.dossier-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      sections.forEach(s => s.classList.remove('hidden'));
+    } else {
+      allBtn.classList.remove('active');
+      if (activeFilters.has(dossier)) {
+        activeFilters.delete(dossier);
+        btn.classList.remove('active');
+      } else {
+        activeFilters.add(dossier);
+        btn.classList.add('active');
+      }
+      if (activeFilters.size === 0) {
+        allBtn.classList.add('active');
+        sections.forEach(s => s.classList.remove('hidden'));
+      } else {
+        sections.forEach(s => {
+          if (activeFilters.has(s.dataset.dossier)) {
+            s.classList.remove('hidden');
+          } else {
+            s.classList.add('hidden');
+          }
+        });
+      }
+    }
+    // Re-apply search after dossier filter change
+    const q = document.getElementById('wordSearch').value.trim();
+    if (q) applySearch(q);
+  }
+
+  function handleSearch(input) {
+    const q = input.value.trim();
+    const clearBtn = document.getElementById('searchClear');
+    clearBtn.style.display = q ? 'block' : 'none';
+    applySearch(q);
+  }
+
+  function clearSearch() {
+    const input = document.getElementById('wordSearch');
+    input.value = '';
+    document.getElementById('searchClear').style.display = 'none';
+    applySearch('');
+    input.focus();
+  }
+
+  function applySearch(q) {
+    const cards = document.querySelectorAll('.word-card');
+    const countEl = document.getElementById('searchCount');
+    let totalVisible = 0;
+
+    cards.forEach(card => {
+      const nlSpan = card.querySelector('.nl');
+      if (!nlSpan) return;
+      const originalText = nlSpan.dataset.original || nlSpan.textContent;
+      if (!nlSpan.dataset.original) nlSpan.dataset.original = originalText;
+
+      if (!q) {
+        nlSpan.innerHTML = originalText;
+        card.classList.remove('search-hidden');
+      } else {
+        const lower = originalText.toLowerCase();
+        const qLower = q.toLowerCase();
+        if (lower.includes(qLower)) {
+          const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const regex = new RegExp('(' + escaped + ')', 'gi');
+          nlSpan.innerHTML = originalText.replace(regex, '<mark>$1</mark>');
+          card.classList.remove('search-hidden');
+          totalVisible++;
+        } else {
+          nlSpan.innerHTML = originalText;
+          card.classList.add('search-hidden');
+        }
+      }
+    });
+
+    // Show/hide empty-section messages and update count
+    document.querySelectorAll('.dossier-section').forEach(section => {
+      if (section.classList.contains('hidden')) return;
+      let msg = section.querySelector('.no-results-msg');
+      if (!msg) {
+        msg = document.createElement('p');
+        msg.className = 'no-results-msg';
+        msg.textContent = 'Geen resultaten gevonden in dit dossier.';
+        section.appendChild(msg);
+      }
+      const visibleInSection = [...section.querySelectorAll('.word-card')].some(c => !c.classList.contains('search-hidden'));
+      msg.style.display = (q && !visibleInSection) ? 'block' : 'none';
+    });
+
+    if (q) {
+      countEl.textContent = totalVisible + ' resultaat' + (totalVisible !== 1 ? 'en' : '') + ' gevonden';
+    } else {
+      countEl.textContent = '';
+    }
+  }
+</script>
+
+<!-- DOSSIER 1 -->
+<section class="dossier-section" data-dossier="1">
+
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
+  <h2 class="chapter-title" style="margin-bottom:0;">
+    Dossier 1
+  </h2>
+
+  <a href="oef-nl-fr-dossier1.html"
+     class="exercise-btn">
+     Oefenen
+  </a>
+</div>
+
+  <div class="section-header">
+    <div class="section-title">Zelfstandige naamwoorden</div>
+  </div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Adjectieven</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Werkwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Bijwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Uitdrukkingen</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">..</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+</section>
+
+<!-- DOSSIER 2 -->
+<section class="dossier-section" data-dossier="2">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
+  <h2 class="chapter-title" style="margin-bottom:0;">
+    Dossier 2
+  </h2>
+
+  <a href="oef-nl-fr-dossier2.html"
+     class="exercise-btn">
+     Oefenen
+  </a>
+</div>
+  <div class="section-header"><div class="section-title">Zelfstandige naamwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Adjectieven</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Werkwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Uitdrukkingen</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Voorzetsels</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+</section>
+
+<!-- DOSSIER 3 -->
+<section class="dossier-section" data-dossier="3">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
+  <h2 class="chapter-title" style="margin-bottom:0;">
+    Dossier 3
+  </h2>
+
+  <a href="oef-nl-fr-dossier3.html"
+     class="exercise-btn">
+     Oefenen
+  </a>
+</div>
+
+  <div class="section-header"><div class="section-title">Zelfstandige naamwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Adjectieven</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Werkwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+</section>
+
+<!-- DOSSIER 4 -->
+<section class="dossier-section" data-dossier="4">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
+  <h2 class="chapter-title" style="margin-bottom:0;">
+    Dossier 4
+  </h2>
+
+  <a href="oef-nl-fr-dossier4.html"
+     class="exercise-btn">
+     Oefenen
+  </a>
+</div>
+
+  <div class="section-header"><div class="section-title">Zelfstandige naamwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Adjectieven</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Werkwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Uitdrukkingen</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+</section>
+
+<!-- DOSSIER 5 -->
+<section class="dossier-section" data-dossier="5">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
+  <h2 class="chapter-title" style="margin-bottom:0;">
+    Dossier 5
+  </h2>
+
+  <a href="oef-nl-fr-dossier5.html"
+     class="exercise-btn">
+     Oefenen
+  </a>
+</div>
+  <div class="section-header"><div class="section-title">Zelfstandige naamwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Adjectieven</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Werkwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Uitdrukkingen</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
+
+  </div>
+</section>
+
+
+
+</main>
+
+<footer>
+  © 2026 Vanherzeele Matteo
+</footer>
+
+</body>
+</html>
+
+</body>
+</html>
