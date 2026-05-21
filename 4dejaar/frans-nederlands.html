@@ -6,6 +6,53 @@
 <title>Frans-Nederlands</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+
+/* Maintenance modus */
+body.maintenance {
+  overflow: hidden;
+}
+
+.maintenance-overlay {
+  position: fixed;
+  inset: 0;
+  top: var(--header-height);
+
+  background: rgba(241,248,233,0.97);
+  backdrop-filter: blur(8px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+
+  z-index: 99;
+}
+
+.maintenance-box {
+  max-width: 520px;
+  width: 100%;
+
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+
+  text-align: center;
+
+  border: 2px solid var(--green-light);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.maintenance-box h2{
+  font-family:'Playfair Display',serif;
+  color:var(--green-dark);
+  margin-bottom:1rem;
+}
+
+.maintenance-box p{
+  color:var(--muted);
+  line-height:1.6;
+}
+  
   :root {
     --green: #6BBE3A;
     --green-light: #D4E8B8;
@@ -357,6 +404,17 @@
 <body>
 
 <header>
+
+<div class="maintenance-overlay">
+  <div class="maintenance-box">
+    <h2>🚧 Onderhoud bezig 🚧</h2>
+    <p>
+      Deze pagina is momenteel tijdelijk niet beschikbaar.<br>
+      Kom later opnieuw terug.
+    </p>
+  </div>
+</div>
+  
   <div class="header-left">
     <h1>Frans → Nederlands</h1>
     <p>Woordenschat Frans–Nederlands</p>
@@ -671,6 +729,21 @@
 
 </main>
 
+<script>
+document.body.classList.add("maintenance");
+
+function setHeaderHeight() {
+    const header = document.querySelector("header");
+    document.documentElement.style.setProperty(
+        "--header-height",
+        header.offsetHeight + "px"
+    );
+}
+
+setHeaderHeight();
+window.addEventListener("resize", setHeaderHeight);
+</script>
+  
 <footer>
   © 2026 Vanherzeele Matteo
 </footer>
