@@ -730,7 +730,7 @@ body.maintenance {
 </main>
 
 <script>
-const maintenanceMode = true; // false = onderhoud uit
+const maintenanceMode = true; // true = aan, false = uit
 
 if (maintenanceMode) {
     document.body.classList.add("maintenance");
@@ -745,6 +745,8 @@ if (maintenanceMode) {
 
     setHeaderHeight();
     window.addEventListener("resize", setHeaderHeight);
+} else {
+    document.querySelector(".maintenance-overlay")?.remove();
 }
 </script>
   
