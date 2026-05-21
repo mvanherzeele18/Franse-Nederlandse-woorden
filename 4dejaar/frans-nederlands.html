@@ -730,18 +730,22 @@ body.maintenance {
 </main>
 
 <script>
-document.body.classList.add("maintenance");
+const maintenanceMode = true; // false = onderhoud uit
 
-function setHeaderHeight() {
-    const header = document.querySelector("header");
-    document.documentElement.style.setProperty(
-        "--header-height",
-        header.offsetHeight + "px"
-    );
+if (maintenanceMode) {
+    document.body.classList.add("maintenance");
+
+    function setHeaderHeight() {
+        const header = document.querySelector("header");
+        document.documentElement.style.setProperty(
+            "--header-height",
+            header.offsetHeight + "px"
+        );
+    }
+
+    setHeaderHeight();
+    window.addEventListener("resize", setHeaderHeight);
 }
-
-setHeaderHeight();
-window.addEventListener("resize", setHeaderHeight);
 </script>
   
 <footer>
