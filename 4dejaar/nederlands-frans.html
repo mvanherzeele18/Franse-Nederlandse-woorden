@@ -6,6 +6,49 @@
 <title>Nederlands-Frans</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+
+/* Maintenance modus */
+body.maintenance {
+  overflow: hidden; /* scroll volledig blokkeren */
+}
+
+.maintenance-overlay {
+  position: fixed;
+  top: calc(2.5rem + 2rem + 4px); /* start onder de header */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 100px);
+  background: rgba(241, 248, 233, 0.96);
+  backdrop-filter: blur(6px);
+  z-index: 99;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.maintenance-box {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 14px;
+  border: 2px solid var(--green-light);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  max-width: 500px;
+}
+
+.maintenance-box h2 {
+  color: var(--green-dark);
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.maintenance-box p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+  
   :root {
     --green: #6BBE3A;
     --green-light: #D4E8B8;
@@ -357,6 +400,17 @@
 <body>
 
 <header>
+
+<div class="maintenance-overlay">
+  <div class="maintenance-box">
+    <h2>🚧 Onderhoud bezig</h2>
+    <p>
+      Deze pagina is momenteel tijdelijk niet beschikbaar.
+      Kom later opnieuw terug.
+    </p>
+  </div>
+</div>
+  
   <div class="header-left">
     <h1>Nederlands → Frans</h1>
     <p>Woordenschat Nederlands–Frans</p>
@@ -675,6 +729,10 @@
   © 2026 Vanherzeele Matteo
 </footer>
 
+<script>
+  document.body.classList.add("maintenance");
+</script>
+  
 </body>
 </html>
 
