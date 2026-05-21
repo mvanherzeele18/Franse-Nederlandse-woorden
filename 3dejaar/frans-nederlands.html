@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -105,6 +105,13 @@
     margin-bottom: 1.5rem;
   }
 
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.2rem 0 0.75rem;
+  }
+
   .section-title {
     font-size: 0.72rem;
     font-weight: 700;
@@ -115,7 +122,28 @@
     display: inline-block;
     padding: 0.3rem 0.9rem;
     border-radius: 4px;
-    margin: 1.2rem 0 0.75rem;
+  }
+
+  .exercise-btn {
+    background: var(--yellow);
+    color: var(--green-dark);
+    border: none;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .exercise-btn:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(107, 190, 58, 0.2);
   }
 
   .word-grid {
@@ -141,13 +169,13 @@
     box-shadow: 0 2px 12px rgba(107, 190, 58, 0.18);
   }
 
-  .fr {
+  .nl {
     font-weight: 500;
     color: var(--text);
     font-size: 0.9rem;
   }
 
-  .nl {
+  .fr {
     font-size: 0.8rem;
     color: var(--muted);
     text-align: right;
@@ -169,6 +197,138 @@
     border-top: 1px solid var(--green-light);
   }
 
+  .dossier-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5rem 0 2rem;
+  }
+
+  .dossier-btn {
+    background: var(--white);
+    color: var(--green-dark);
+    border: 2px solid var(--green);
+    padding: 0.45rem 1.1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .dossier-btn:hover {
+    background: var(--green-light);
+    transform: translateY(-1px);
+  }
+
+  .dossier-btn.active {
+    background: var(--green-dark);
+    color: var(--white);
+    border-color: var(--green-dark);
+  }
+
+  .dossier-btn.all-btn {
+    background: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--green-dark);
+  }
+
+  .dossier-btn.all-btn.active {
+    background: var(--green-dark);
+    border-color: var(--green-dark);
+    color: var(--white);
+  }
+
+  .dossier-section {
+    margin-bottom: 3.5rem;
+  }
+
+  .dossier-section.hidden {
+    display: none;
+  }
+
+  .search-bar-wrapper {
+    margin: 0 0 1.5rem;
+    position: relative;
+  }
+
+  .search-bar-wrapper input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.8rem;
+    border: 2px solid var(--green);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--white);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .search-bar-wrapper input:focus {
+    border-color: var(--green-dark);
+    box-shadow: 0 0 0 3px rgba(107, 190, 58, 0.18);
+  }
+
+  .search-bar-wrapper input::placeholder {
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--green);
+    pointer-events: none;
+    font-size: 1rem;
+  }
+
+  .search-clear {
+    position: absolute;
+    right: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1;
+    display: none;
+    padding: 0;
+  }
+
+  .search-clear:hover { color: var(--green-dark); }
+
+  .search-count {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    margin-left: 0.2rem;
+  }
+
+  .word-card.search-hidden {
+    display: none;
+  }
+
+  .word-card mark {
+    background: var(--yellow);
+    color: var(--text);
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  .no-results-msg {
+    display: none;
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 1rem 0 0.5rem;
+    font-style: italic;
+  }
+
   @media (max-width: 768px) {
     header {
       flex-direction: column;
@@ -185,338 +345,807 @@
       flex: 1;
       text-align: center;
     }
-  }
 
-  /* Disable scroll when maintenance overlay is active */
-  body.maintenance-active {
-    overflow: hidden;
-  }
-
-  /* Maintenance overlay — sits below the sticky header (z-index 100) */
-  #maintenance-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--green-dark);
-    z-index: 99;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  #maintenance-overlay .maintenance-icon {
-    font-size: 3.5rem;
-    animation: spin 3s linear infinite;
-  }
-
-  @keyframes spin {
-    0%   { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  #maintenance-overlay h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.6rem, 4vw, 2.4rem);
-    color: var(--yellow);
-    text-align: center;
-    padding: 0 1rem;
-  }
-
-  #maintenance-overlay p {
-    color: var(--green-light);
-    font-size: 1rem;
-    font-weight: 300;
-    text-align: center;
-    padding: 0 1rem;
-  }
-
-  #maintenance-overlay .maintenance-bar {
-    width: 220px;
-    height: 6px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 99px;
-    overflow: hidden;
-  }
-
-  #maintenance-overlay .maintenance-bar-inner {
-    height: 100%;
-    width: 40%;
-    background: var(--yellow);
-    border-radius: 99px;
-    animation: loading 1.8s ease-in-out infinite;
-  }
-
-  @keyframes loading {
-    0%   { transform: translateX(-100%); }
-    100% { transform: translateX(350%); }
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
   }
 </style>
 </head>
-<body class="maintenance-active">
-
-<div id="maintenance-overlay">
-  <div class="maintenance-icon">⚙️</div>
-  <h2>Frans → Nederlands in ontwikkeling</h2>
-  <p>Ga naar een ander deel van de website.</p>
-  <div class="maintenance-bar">
-    <div class="maintenance-bar-inner"></div>
-  </div>
-</div>
+<body>
 
 <header>
   <div class="header-left">
     <h1>Frans → Nederlands</h1>
-    <p>Vocabulaire Français-Néerlandais</p>
+    <p>Woordenschat Frans–Nederlands</p>
   </div>
   <div class="header-nav">
     <a href="index.html" class="nav-btn">← Terug</a>
+    <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Wissen">✕</button>
     <a href="nederlands-frans.html" class="nav-btn">NL → FR</a>
   </div>
 </header>
 
 <main>
 
-  <section class="chapter" id="all-words">
-    <h2 class="chapter-title">Tous les mots – Alphabétique</h2>
+<div class="search-bar-wrapper">
+  <input type="text" id="wordSearch" placeholder="Zoek op Frans woord…" oninput="handleSearch(this)">
+  <div class="search-count" id="searchCount"></div>
+</div>
 
-    <div class="section-title">Substantifs</div>
-    <div class="word-grid">
-      <div class="word-card"><span class="fr">un accord</span><div class="divider"></div><span class="nl">een toestemming</span></div>
-      <div class="word-card"><span class="fr">une adresse e-mail</span><div class="divider"></div><span class="nl">een e-mailadres</span></div>
-      <div class="word-card"><span class="fr">un adulte</span><div class="divider"></div><span class="nl">een volwassene</span></div>
-      <div class="word-card"><span class="fr">une anecdote</span><div class="divider"></div><span class="nl">een anekdote, grappig verhaaltje</span></div>
-      <div class="word-card"><span class="fr">une annulation</span><div class="divider"></div><span class="nl">een annulering</span></div>
-      <div class="word-card"><span class="fr">un auteur</span><div class="divider"></div><span class="nl">een auteur, schrijver</span></div>
-      <div class="word-card"><span class="fr">un avenir</span><div class="divider"></div><span class="nl">een toekomst</span></div>
-      <div class="word-card"><span class="fr">un avis</span><div class="divider"></div><span class="nl">een mening</span></div>
-      <div class="word-card"><span class="fr">une bêtise</span><div class="divider"></div><span class="nl">een stommigheid</span></div>
-      <div class="word-card"><span class="fr">une blague</span><div class="divider"></div><span class="nl">een grap, een mop</span></div>
-      <div class="word-card"><span class="fr">une cible</span><div class="divider"></div><span class="nl">een doelwit</span></div>
-      <div class="word-card"><span class="fr">une capture d'écran</span><div class="divider"></div><span class="nl">een schermafbeelding</span></div>
-      <div class="word-card"><span class="fr">une chorégraphie</span><div class="divider"></div><span class="nl">een choreografie</span></div>
-      <div class="word-card"><span class="fr">un commentaire</span><div class="divider"></div><span class="nl">een commentaar</span></div>
-      <div class="word-card"><span class="fr">un compte instagram</span><div class="divider"></div><span class="nl">een Instagramaccount</span></div>
-      <div class="word-card"><span class="fr">un concert</span><div class="divider"></div><span class="nl">een concert</span></div>
-      <div class="word-card"><span class="fr">un contact physique</span><div class="divider"></div><span class="nl">een fysiek contact</span></div>
-      <div class="word-card"><span class="fr">les coulisses (f.)</span><div class="divider"></div><span class="nl">de coulissen</span></div>
-      <div class="word-card"><span class="fr">le cyberharcèlement</span><div class="divider"></div><span class="nl">het cyberpesten</span></div>
-      <div class="word-card"><span class="fr">une danse</span><div class="divider"></div><span class="nl">een dans</span></div>
-      <div class="word-card"><span class="fr">un danseur / une danseuse</span><div class="divider"></div><span class="nl">een danser / danseres</span></div>
-      <div class="word-card"><span class="fr">une date de naissance</span><div class="divider"></div><span class="nl">een geboortedatum</span></div>
-      <div class="word-card"><span class="fr">une déception</span><div class="divider"></div><span class="nl">een ontgoocheling</span></div>
-      <div class="word-card"><span class="fr">un décor</span><div class="divider"></div><span class="nl">een decor</span></div>
-      <div class="word-card"><span class="fr">un disque</span><div class="divider"></div><span class="nl">een plaat</span></div>
-      <div class="word-card"><span class="fr">le dynamisme</span><div class="divider"></div><span class="nl">de dynamiek</span></div>
-      <div class="word-card"><span class="fr">un écran</span><div class="divider"></div><span class="nl">een scherm</span></div>
-      <div class="word-card"><span class="fr">un effet</span><div class="divider"></div><span class="nl">een effect</span></div>
-      <div class="word-card"><span class="fr">un esprit</span><div class="divider"></div><span class="nl">een geest</span></div>
-      <div class="word-card"><span class="fr">un évènement</span><div class="divider"></div><span class="nl">een gebeurtenis, evenement</span></div>
-      <div class="word-card"><span class="fr">un fait</span><div class="divider"></div><span class="nl">een feit</span></div>
-      <div class="word-card"><span class="fr">la fiabilité</span><div class="divider"></div><span class="nl">de betrouwbaarheid</span></div>
-      <div class="word-card"><span class="fr">une frontière</span><div class="divider"></div><span class="nl">een grens</span></div>
-      <div class="word-card"><span class="fr">la gratuité</span><div class="divider"></div><span class="nl">de kosteloosheid</span></div>
-      <div class="word-card"><span class="fr">le harcèlement</span><div class="divider"></div><span class="nl">het pesten</span></div>
-      <div class="word-card"><span class="fr">une identité</span><div class="divider"></div><span class="nl">een identiteit</span></div>
-      <div class="word-card"><span class="fr">un impact</span><div class="divider"></div><span class="nl">een invloed</span></div>
-      <div class="word-card"><span class="fr">un inconnu</span><div class="divider"></div><span class="nl">een onbekende</span></div>
-      <div class="word-card"><span class="fr">une interprétation</span><div class="divider"></div><span class="nl">een vertolking</span></div>
-      <div class="word-card"><span class="fr">un(e) journaliste</span><div class="divider"></div><span class="nl">een journalist(e)</span></div>
-      <div class="word-card"><span class="fr">un menteur</span><div class="divider"></div><span class="nl">een leugenaar</span></div>
-      <div class="word-card"><span class="fr">une menace</span><div class="divider"></div><span class="nl">een bedreiging</span></div>
-      <div class="word-card"><span class="fr">un message</span><div class="divider"></div><span class="nl">een bericht</span></div>
-      <div class="word-card"><span class="fr">un mot de passe</span><div class="divider"></div><span class="nl">een wachtwoord</span></div>
-      <div class="word-card"><span class="fr">un musicien / une musicienne</span><div class="divider"></div><span class="nl">een muzikant / muzikante</span></div>
-      <div class="word-card"><span class="fr">un nom</span><div class="divider"></div><span class="nl">een naam</span></div>
-      <div class="word-card"><span class="fr">une nouvelle</span><div class="divider"></div><span class="nl">een nieuwsje</span></div>
-      <div class="word-card"><span class="fr">une nouveauté</span><div class="divider"></div><span class="nl">een nieuwigheid</span></div>
-      <div class="word-card"><span class="fr">une page de profil</span><div class="divider"></div><span class="nl">een profielpagina</span></div>
-      <div class="word-card"><span class="fr">une parole</span><div class="divider"></div><span class="nl">een woord</span></div>
-      <div class="word-card"><span class="fr">le partage</span><div class="divider"></div><span class="nl">het delen</span></div>
-      <div class="word-card"><span class="fr">une photo de profil</span><div class="divider"></div><span class="nl">een profielfoto</span></div>
-      <div class="word-card"><span class="fr">la plateforme</span><div class="divider"></div><span class="nl">een platform</span></div>
-      <div class="word-card"><span class="fr">la popularité</span><div class="divider"></div><span class="nl">de populariteit</span></div>
-      <div class="word-card"><span class="fr">un podium</span><div class="divider"></div><span class="nl">een podium</span></div>
-      <div class="word-card"><span class="fr">la peur</span><div class="divider"></div><span class="nl">de angst</span></div>
-      <div class="word-card"><span class="fr">la pression</span><div class="divider"></div><span class="nl">de druk</span></div>
-      <div class="word-card"><span class="fr">une prestation</span><div class="divider"></div><span class="nl">een prestatie</span></div>
-      <div class="word-card"><span class="fr">une preuve</span><div class="divider"></div><span class="nl">een bewijs</span></div>
-      <div class="word-card"><span class="fr">un prénom</span><div class="divider"></div><span class="nl">een voornaam</span></div>
-      <div class="word-card"><span class="fr">un pseudo(nyme)</span><div class="divider"></div><span class="nl">een pseudoniem, schuilnaam</span></div>
-      <div class="word-card"><span class="fr">un public</span><div class="divider"></div><span class="nl">een publiek</span></div>
-      <div class="word-card"><span class="fr">une publicité</span><div class="divider"></div><span class="nl">een reclame</span></div>
-      <div class="word-card"><span class="fr">une publication</span><div class="divider"></div><span class="nl">een publicatie</span></div>
-      <div class="word-card"><span class="fr">un rappeur</span><div class="divider"></div><span class="nl">een rapper</span></div>
-      <div class="word-card"><span class="fr">la réalité</span><div class="divider"></div><span class="nl">de realiteit</span></div>
-      <div class="word-card"><span class="fr">une réputation</span><div class="divider"></div><span class="nl">een reputatie</span></div>
-      <div class="word-card"><span class="fr">une réussite</span><div class="divider"></div><span class="nl">het slagen, een succes</span></div>
-      <div class="word-card"><span class="fr">les réseaux sociaux (m.)</span><div class="divider"></div><span class="nl">de sociale media</span></div>
-      <div class="word-card"><span class="fr">un secret</span><div class="divider"></div><span class="nl">een geheim</span></div>
-      <div class="word-card"><span class="fr">le sexting</span><div class="divider"></div><span class="nl">de sexting</span></div>
-      <div class="word-card"><span class="fr">un sexto</span><div class="divider"></div><span class="nl">een seksueel getint bericht</span></div>
-      <div class="word-card"><span class="fr">un site</span><div class="divider"></div><span class="nl">een (web)site</span></div>
-      <div class="word-card"><span class="fr">une sono</span><div class="divider"></div><span class="nl">een geluidsinstallatie</span></div>
-      <div class="word-card"><span class="fr">une source</span><div class="divider"></div><span class="nl">een bron</span></div>
-      <div class="word-card"><span class="fr">un spectacle</span><div class="divider"></div><span class="nl">een spektakel</span></div>
-      <div class="word-card"><span class="fr">un spectateur</span><div class="divider"></div><span class="nl">een toeschouwer</span></div>
-      <div class="word-card"><span class="fr">un succès</span><div class="divider"></div><span class="nl">een succes</span></div>
-      <div class="word-card"><span class="fr">une surprise</span><div class="divider"></div><span class="nl">een verrassing</span></div>
-      <div class="word-card"><span class="fr">un talent</span><div class="divider"></div><span class="nl">een talent</span></div>
-      <div class="word-card"><span class="fr">le téléchargement</span><div class="divider"></div><span class="nl">het downloaden</span></div>
-      <div class="word-card"><span class="fr">un télespectateur</span><div class="divider"></div><span class="nl">een televisiekijker</span></div>
-      <div class="word-card"><span class="fr">un témoignage</span><div class="divider"></div><span class="nl">een getuigenis</span></div>
-      <div class="word-card"><span class="fr">un témoin</span><div class="divider"></div><span class="nl">een getuige</span></div>
-      <div class="word-card"><span class="fr">une tenue</span><div class="divider"></div><span class="nl">een outfit</span></div>
-      <div class="word-card"><span class="fr">un ticket</span><div class="divider"></div><span class="nl">een ticket</span></div>
-      <div class="word-card"><span class="fr">une tournée</span><div class="divider"></div><span class="nl">een tournee</span></div>
-      <div class="word-card"><span class="fr">un tube</span><div class="divider"></div><span class="nl">een hit</span></div>
-      <div class="word-card"><span class="fr">un technicien / une technicienne</span><div class="divider"></div><span class="nl">een technicus / technica</span></div>
-      <div class="word-card"><span class="fr">une valeur</span><div class="divider"></div><span class="nl">een waarde</span></div>
-      <div class="word-card"><span class="fr">la vente</span><div class="divider"></div><span class="nl">de verkoop</span></div>
-      <div class="word-card"><span class="fr">une victime</span><div class="divider"></div><span class="nl">een slachtoffer</span></div>
-      <div class="word-card"><span class="fr">une vidéo</span><div class="divider"></div><span class="nl">een video</span></div>
-      <div class="word-card"><span class="fr">la vie privée</span><div class="divider"></div><span class="nl">het privéleven</span></div>
-      <div class="word-card"><span class="fr">une voix</span><div class="divider"></div><span class="nl">een stem</span></div>
-      <div class="word-card"><span class="fr">une webcam</span><div class="divider"></div><span class="nl">een webcam</span></div>
-      <div class="word-card"><span class="fr">une personne</span><div class="divider"></div><span class="nl">een persoon</span></div>
-    </div>
+<div class="dossier-filter">
+  <button class="dossier-btn all-btn active" onclick="filterDossier('all', this)">Alle dossiers</button>
+  <button class="dossier-btn" onclick="filterDossier('1', this)">Dossier 1</button>
+  <button class="dossier-btn" onclick="filterDossier('2', this)">Dossier 2</button>
+  <button class="dossier-btn" onclick="filterDossier('3', this)">Dossier 3</button>
+  <button class="dossier-btn" onclick="filterDossier('4', this)">Dossier 4</button>
+  <button class="dossier-btn" onclick="filterDossier('5', this)">Dossier 5</button>
+</div>
 
-    <div class="section-title">Adjectifs</div>
-    <div class="word-grid">
-      <div class="word-card"><span class="fr">amoureux / amoureuse</span><div class="divider"></div><span class="nl">verliefd</span></div>
-      <div class="word-card"><span class="fr">arrogant(e)</span><div class="divider"></div><span class="nl">arrogant</span></div>
-      <div class="word-card"><span class="fr">attentif / attentive</span><div class="divider"></div><span class="nl">aandachtig</span></div>
-      <div class="word-card"><span class="fr">aucun + ne /n'</span><div class="divider"></div><span class="nl">geen enkele</span></div>
-      <div class="word-card"><span class="fr">blessant(e)</span><div class="divider"></div><span class="nl">kwetsend</span></div>
-      <div class="word-card"><span class="fr">certain(e)</span><div class="divider"></div><span class="nl">bepaalde</span></div>
-      <div class="word-card"><span class="fr">chaque</span><div class="divider"></div><span class="nl">elk(e)</span></div>
-      <div class="word-card"><span class="fr">choquant(e)</span><div class="divider"></div><span class="nl">choquerend</span></div>
-      <div class="word-card"><span class="fr">commercial(e)</span><div class="divider"></div><span class="nl">commercieel</span></div>
-      <div class="word-card"><span class="fr">critique</span><div class="divider"></div><span class="nl">kritisch</span></div>
-      <div class="word-card"><span class="fr">déçu(e)</span><div class="divider"></div><span class="nl">ontgoocheld</span></div>
-      <div class="word-card"><span class="fr">direct(e)</span><div class="divider"></div><span class="nl">direct, rechtstreeks</span></div>
-      <div class="word-card"><span class="fr">disponible</span><div class="divider"></div><span class="nl">beschikbaar</span></div>
-      <div class="word-card"><span class="fr">émouvant(e)</span><div class="divider"></div><span class="nl">ontroerend</span></div>
-      <div class="word-card"><span class="fr">émotionnel / émotionnelle</span><div class="divider"></div><span class="nl">emotioneel</span></div>
-      <div class="word-card"><span class="fr">excité(e)</span><div class="divider"></div><span class="nl">opgewonden</span></div>
-      <div class="word-card"><span class="fr">exclusif / exclusive</span><div class="divider"></div><span class="nl">exclusief</span></div>
-      <div class="word-card"><span class="fr">faux / fausse</span><div class="divider"></div><span class="nl">vals, niet echt</span></div>
-      <div class="word-card"><span class="fr">féminin(e)</span><div class="divider"></div><span class="nl">vrouwelijk</span></div>
-      <div class="word-card"><span class="fr">fiable</span><div class="divider"></div><span class="nl">betrouwbaar</span></div>
-      <div class="word-card"><span class="fr">francophone</span><div class="divider"></div><span class="nl">Franstalig</span></div>
-      <div class="word-card"><span class="fr">gênant(e)</span><div class="divider"></div><span class="nl">gênant</span></div>
-      <div class="word-card"><span class="fr">gratuit(e)</span><div class="divider"></div><span class="nl">gratis</span></div>
-      <div class="word-card"><span class="fr">humiliant(e)</span><div class="divider"></div><span class="nl">vernederend</span></div>
-      <div class="word-card"><span class="fr">impressionnant(e)</span><div class="divider"></div><span class="nl">indrukwekkend</span></div>
-      <div class="word-card"><span class="fr">intermédiaire</span><div class="divider"></div><span class="nl">tussenliggend, overgangs-</span></div>
-      <div class="word-card"><span class="fr">lent(e)</span><div class="divider"></div><span class="nl">traag</span></div>
-      <div class="word-card"><span class="fr">magnifique</span><div class="divider"></div><span class="nl">prachtig</span></div>
-      <div class="word-card"><span class="fr">mélodieux / mélodieuse</span><div class="divider"></div><span class="nl">melodieus</span></div>
-      <div class="word-card"><span class="fr">menaçant(e)</span><div class="divider"></div><span class="nl">bedreigend</span></div>
-      <div class="word-card"><span class="fr">musical(e)</span><div class="divider"></div><span class="nl">muzikaal</span></div>
-      <div class="word-card"><span class="fr">objectif / objective</span><div class="divider"></div><span class="nl">objectief</span></div>
-      <div class="word-card"><span class="fr">originaire (de)</span><div class="divider"></div><span class="nl">afkomstig (van)</span></div>
-      <div class="word-card"><span class="fr">payant(e)</span><div class="divider"></div><span class="nl">betalend</span></div>
-      <div class="word-card"><span class="fr">personnel / personnelle</span><div class="divider"></div><span class="nl">persoonlijk</span></div>
-      <div class="word-card"><span class="fr">phénoménal(e)</span><div class="divider"></div><span class="nl">fenomenaal, schitterend</span></div>
-      <div class="word-card"><span class="fr">plusieurs</span><div class="divider"></div><span class="nl">meerdere</span></div>
-      <div class="word-card"><span class="fr">provocateur / provocatrice</span><div class="divider"></div><span class="nl">provocerend</span></div>
-      <div class="word-card"><span class="fr">prudent(e)</span><div class="divider"></div><span class="nl">voorzichtig</span></div>
-      <div class="word-card"><span class="fr">quelques</span><div class="divider"></div><span class="nl">enkele</span></div>
-      <div class="word-card"><span class="fr">rapide</span><div class="divider"></div><span class="nl">snel</span></div>
-      <div class="word-card"><span class="fr">renfermé(e)</span><div class="divider"></div><span class="nl">gesloten</span></div>
-      <div class="word-card"><span class="fr">rythmique</span><div class="divider"></div><span class="nl">ritmisch</span></div>
-      <div class="word-card"><span class="fr">sentimental(e)</span><div class="divider"></div><span class="nl">sentimenteel</span></div>
-      <div class="word-card"><span class="fr">sympa</span><div class="divider"></div><span class="nl">sympathiek</span></div>
-      <div class="word-card"><span class="fr">talentueux / talentueuse</span><div class="divider"></div><span class="nl">talentvol, getalenteerd</span></div>
-      <div class="word-card"><span class="fr">touchant(e)</span><div class="divider"></div><span class="nl">ontroerend</span></div>
-      <div class="word-card"><span class="fr">tout(e)</span><div class="divider"></div><span class="nl">al(le)</span></div>
-      <div class="word-card"><span class="fr">unique</span><div class="divider"></div><span class="nl">uniek</span></div>
-      <div class="word-card"><span class="fr">violent(e)</span><div class="divider"></div><span class="nl">gewelddadig</span></div>
-      <div class="word-card"><span class="fr">virtuel / virtuelle</span><div class="divider"></div><span class="nl">virtueel</span></div>
-      <div class="word-card"><span class="fr">vrai(e)</span><div class="divider"></div><span class="nl">waar, echt</span></div>
-    </div>
+<script>
+  const activeFilters = new Set();
 
-    <div class="section-title">Verbes</div>
-    <div class="word-grid">
-      <div class="word-card"><span class="fr">accepter</span><div class="divider"></div><span class="nl">aanvaarden</span></div>
-      <div class="word-card"><span class="fr">allumer</span><div class="divider"></div><span class="nl">aanzetten</span></div>
-      <div class="word-card"><span class="fr">annuler</span><div class="divider"></div><span class="nl">annuleren</span></div>
-      <div class="word-card"><span class="fr">assister à</span><div class="divider"></div><span class="nl">bijwonen</span></div>
-      <div class="word-card"><span class="fr">chatter</span><div class="divider"></div><span class="nl">chatten</span></div>
-      <div class="word-card"><span class="fr">communiquer</span><div class="divider"></div><span class="nl">communiceren</span></div>
-      <div class="word-card"><span class="fr">comparer</span><div class="divider"></div><span class="nl">vergelijken</span></div>
-      <div class="word-card"><span class="fr">contrôler</span><div class="divider"></div><span class="nl">controleren</span></div>
-      <div class="word-card"><span class="fr">croire</span><div class="divider"></div><span class="nl">geloven</span></div>
-      <div class="word-card"><span class="fr">découvrir</span><div class="divider"></div><span class="nl">ontdekken</span></div>
-      <div class="word-card"><span class="fr">diffuser</span><div class="divider"></div><span class="nl">verspreiden</span></div>
-      <div class="word-card"><span class="fr">embêter</span><div class="divider"></div><span class="nl">lastigvallen</span></div>
-      <div class="word-card"><span class="fr">envoyer</span><div class="divider"></div><span class="nl">sturen</span></div>
-      <div class="word-card"><span class="fr">expérimenter</span><div class="divider"></div><span class="nl">experimenteren</span></div>
-      <div class="word-card"><span class="fr">éteindre</span><div class="divider"></div><span class="nl">uitzetten</span></div>
-      <div class="word-card"><span class="fr">flirter</span><div class="divider"></div><span class="nl">flirten</span></div>
-      <div class="word-card"><span class="fr">harceler</span><div class="divider"></div><span class="nl">pesten</span></div>
-      <div class="word-card"><span class="fr">inciter à</span><div class="divider"></div><span class="nl">aanzetten tot</span></div>
-      <div class="word-card"><span class="fr">insulter</span><div class="divider"></div><span class="nl">beledigen</span></div>
-      <div class="word-card"><span class="fr">menacer</span><div class="divider"></div><span class="nl">bedreigen</span></div>
-      <div class="word-card"><span class="fr">opter pour</span><div class="divider"></div><span class="nl">kiezen voor</span></div>
-      <div class="word-card"><span class="fr">partager</span><div class="divider"></div><span class="nl">delen</span></div>
-      <div class="word-card"><span class="fr">poster</span><div class="divider"></div><span class="nl">posten</span></div>
-      <div class="word-card"><span class="fr">protéger</span><div class="divider"></div><span class="nl">beschermen</span></div>
-      <div class="word-card"><span class="fr">réfléchir</span><div class="divider"></div><span class="nl">nadenken</span></div>
-      <div class="word-card"><span class="fr">refuser</span><div class="divider"></div><span class="nl">weigeren</span></div>
-      <div class="word-card"><span class="fr">regretter</span><div class="divider"></div><span class="nl">betreuren, spijt hebben van</span></div>
-      <div class="word-card"><span class="fr">respecter</span><div class="divider"></div><span class="nl">respecteren</span></div>
-      <div class="word-card"><span class="fr">retransmettre</span><div class="divider"></div><span class="nl">heruitzenden</span></div>
-      <div class="word-card"><span class="fr">s'appuyer sur</span><div class="divider"></div><span class="nl">leunen op / zich baseren op</span></div>
-      <div class="word-card"><span class="fr">s'excuser</span><div class="divider"></div><span class="nl">zich excuseren</span></div>
-      <div class="word-card"><span class="fr">se faire escroquer</span><div class="divider"></div><span class="nl">opgelicht worden</span></div>
-      <div class="word-card"><span class="fr">se moquer de</span><div class="divider"></div><span class="nl">uitlachen, spotten met</span></div>
-      <div class="word-card"><span class="fr">se préoccuper de</span><div class="divider"></div><span class="nl">aandacht schenken aan</span></div>
-      <div class="word-card"><span class="fr">se rendre compte</span><div class="divider"></div><span class="nl">beseffen</span></div>
-      <div class="word-card"><span class="fr">surnommer</span><div class="divider"></div><span class="nl">een bijnaam geven</span></div>
-      <div class="word-card"><span class="fr">surfer</span><div class="divider"></div><span class="nl">surfen</span></div>
-      <div class="word-card"><span class="fr">télécharger</span><div class="divider"></div><span class="nl">downloaden</span></div>
-      <div class="word-card"><span class="fr">truquer</span><div class="divider"></div><span class="nl">trukeren</span></div>
-      <div class="word-card"><span class="fr">vérifier</span><div class="divider"></div><span class="nl">controleren</span></div>
-      <div class="word-card"><span class="fr">voter</span><div class="divider"></div><span class="nl">stemmen</span></div>
-    </div>
+  function filterDossier(dossier, btn) {
+    const allBtn = document.querySelector('.all-btn');
+    const sections = document.querySelectorAll('.dossier-section');
 
-    <div class="section-title">Expressions</div>
-    <div class="word-grid">
-      <div class="word-card"><span class="fr">c'était terrible</span><div class="divider"></div><span class="nl">het was te gek</span></div>
-      <div class="word-card"><span class="fr">c'était trop bien</span><div class="divider"></div><span class="nl">het was zo goed</span></div>
-      <div class="word-card"><span class="fr">chez soi</span><div class="divider"></div><span class="nl">thuis</span></div>
-      <div class="word-card"><span class="fr">développer son esprit critique</span><div class="divider"></div><span class="nl">zijn kritische geest ontwikkelen</span></div>
-      <div class="word-card"><span class="fr">diminuer le son</span><div class="divider"></div><span class="nl">het geluid minder hard zetten</span></div>
-      <div class="word-card"><span class="fr">en direct</span><div class="divider"></div><span class="nl">rechtstreeks, live</span></div>
-      <div class="word-card"><span class="fr">en ligne</span><div class="divider"></div><span class="nl">online</span></div>
-      <div class="word-card"><span class="fr">en sortir</span><div class="divider"></div><span class="nl">eruit geraken</span></div>
-      <div class="word-card"><span class="fr">en streaming</span><div class="divider"></div><span class="nl">via streaming</span></div>
-      <div class="word-card"><span class="fr">être confronté à</span><div class="divider"></div><span class="nl">geconfronteerd worden met</span></div>
-      <div class="word-card"><span class="fr">faire une recherche</span><div class="divider"></div><span class="nl">een onderzoek doen</span></div>
-      <div class="word-card"><span class="fr">merci pour</span><div class="divider"></div><span class="nl">bedankt voor</span></div>
-      <div class="word-card"><span class="fr">mettre de l'ambiance</span><div class="divider"></div><span class="nl">het feest op gang brengen</span></div>
-      <div class="word-card"><span class="fr">passer un bon moment</span><div class="divider"></div><span class="nl">plezier hebben</span></div>
-      <div class="word-card"><span class="fr">porter plainte contre qn</span><div class="divider"></div><span class="nl">klacht neerleggen tegen iemand</span></div>
-      <div class="word-card"><span class="fr">prendre pour cible</span><div class="divider"></div><span class="nl">als doelwit nemen</span></div>
-      <div class="word-card"><span class="fr">prendre plaisir à</span><div class="divider"></div><span class="nl">genieten van, plezier beleven aan</span></div>
-      <div class="word-card"><span class="fr">quelque chose à quoi je ne m'attendais pas</span><div class="divider"></div><span class="nl">iets wat ik niet verwachtte</span></div>
-      <div class="word-card"><span class="fr">rentrer dans ses frais</span><div class="divider"></div><span class="nl">uit de kosten geraken</span></div>
-      <div class="word-card"><span class="fr">se disputer avec qn</span><div class="divider"></div><span class="nl">ruzie maken met iemand</span></div>
-      <div class="word-card"><span class="fr">se moquer de quelqu'un</span><div class="divider"></div><span class="nl">met iemand spotten</span></div>
-    </div>
+    if (dossier === 'all') {
+      activeFilters.clear();
+      document.querySelectorAll('.dossier-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      sections.forEach(s => s.classList.remove('hidden'));
+    } else {
+      allBtn.classList.remove('active');
+      if (activeFilters.has(dossier)) {
+        activeFilters.delete(dossier);
+        btn.classList.remove('active');
+      } else {
+        activeFilters.add(dossier);
+        btn.classList.add('active');
+      }
+      if (activeFilters.size === 0) {
+        allBtn.classList.add('active');
+        sections.forEach(s => s.classList.remove('hidden'));
+      } else {
+        sections.forEach(s => {
+          if (activeFilters.has(s.dataset.dossier)) {
+            s.classList.remove('hidden');
+          } else {
+            s.classList.add('hidden');
+          }
+        });
+      }
+    }
+    // Re-apply search after dossier filter change
+    const q = document.getElementById('wordSearch').value.trim();
+    if (q) applySearch(q);
+  }
 
-  </section>
+  function handleSearch(input) {
+    const q = input.value.trim();
+    const clearBtn = document.getElementById('searchClear');
+    clearBtn.style.display = q ? 'block' : 'none';
+    applySearch(q);
+  }
+
+  function clearSearch() {
+    const input = document.getElementById('wordSearch');
+    input.value = '';
+    document.getElementById('searchClear').style.display = 'none';
+    applySearch('');
+    input.focus();
+  }
+
+  function applySearch(q) {
+    const cards = document.querySelectorAll('.word-card');
+    const countEl = document.getElementById('searchCount');
+    let totalVisible = 0;
+
+    cards.forEach(card => {
+      const nlSpan = card.querySelector('.nl');
+      if (!nlSpan) return;
+      const originalText = nlSpan.dataset.original || nlSpan.textContent;
+      if (!nlSpan.dataset.original) nlSpan.dataset.original = originalText;
+
+      if (!q) {
+        nlSpan.innerHTML = originalText;
+        card.classList.remove('search-hidden');
+      } else {
+        const lower = originalText.toLowerCase();
+        const qLower = q.toLowerCase();
+        if (lower.includes(qLower)) {
+          const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const regex = new RegExp('(' + escaped + ')', 'gi');
+          nlSpan.innerHTML = originalText.replace(regex, '<mark>$1</mark>');
+          card.classList.remove('search-hidden');
+          totalVisible++;
+        } else {
+          nlSpan.innerHTML = originalText;
+          card.classList.add('search-hidden');
+        }
+      }
+    });
+
+    // Show/hide empty-section messages and update count
+    document.querySelectorAll('.dossier-section').forEach(section => {
+      if (section.classList.contains('hidden')) return;
+      let msg = section.querySelector('.no-results-msg');
+      if (!msg) {
+        msg = document.createElement('p');
+        msg.className = 'no-results-msg';
+        msg.textContent = 'Geen resultaten gevonden in dit dossier.';
+        section.appendChild(msg);
+      }
+      const visibleInSection = [...section.querySelectorAll('.word-card')].some(c => !c.classList.contains('search-hidden'));
+      msg.style.display = (q && !visibleInSection) ? 'block' : 'none';
+    });
+
+    if (q) {
+      countEl.textContent = totalVisible + ' resultaat' + (totalVisible !== 1 ? 'en' : '') + ' gevonden';
+    } else {
+      countEl.textContent = '';
+    }
+  }
+</script>
+
+<!-- DOSSIER 1 -->
+<section class="dossier-section" data-dossier="1">
+
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
+  <h2 class="chapter-title" style="margin-bottom:0;">
+    Dossier 1
+  </h2>
+
+  <a href="oef-fr-nl-dossier1.html"
+     class="exercise-btn">
+     Oefenen
+  </a>
+</div>
+
+  <div class="section-header">
+    <div class="section-title">Zelfstandige naamwoorden</div>
+  </div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">un événement</span><div class="divider"></div><span class="fr">een evenement</span></div>
+    <div class="word-card"><span class="nl">une idée</span><div class="divider"></div><span class="fr">een idee</span></div>
+    <div class="word-card"><span class="nl">un festival</span><div class="divider"></div><span class="fr">een festival</span></div>
+    <div class="word-card"><span class="nl">un projet</span><div class="divider"></div><span class="fr">een project</span></div>
+    <div class="word-card"><span class="nl">un talent</span><div class="divider"></div><span class="fr">een talent</span></div>
+    <div class="word-card"><span class="nl">la visite</span><div class="divider"></div><span class="fr">het bezoek</span></div>
+    <div class="word-card"><span class="nl">une activité</span><div class="divider"></div><span class="fr">een activiteit</span></div>
+    <div class="word-card"><span class="nl">l'anglais</span><div class="divider"></div><span class="fr">het Engels</span></div>
+    <div class="word-card"><span class="nl">un bâtiment</span><div class="divider"></div><span class="fr">een gebouw</span></div>
+    <div class="word-card"><span class="nl">la biologie</span><div class="divider"></div><span class="fr">de biologie</span></div>
+    <div class="word-card"><span class="nl">l'amitié</span><div class="divider"></div><span class="fr">de vriendschap</span></div>
+    <div class="word-card"><span class="nl">l'amour</span><div class="divider"></div><span class="fr">de liefde</span></div>
+    <div class="word-card"><span class="nl">une aventure</span><div class="divider"></div><span class="fr">een avontuur</span></div>
+    <div class="word-card"><span class="nl">un baiser</span><div class="divider"></div><span class="fr">een kus</span></div>
+    <div class="word-card"><span class="nl">un bateau</span><div class="divider"></div><span class="fr">een boot</span></div>
+    <div class="word-card"><span class="nl">un bonnet de bain</span><div class="divider"></div><span class="fr">een badmuts</span></div>
+    <div class="word-card"><span class="nl">une carte au trésor</span><div class="divider"></div><span class="fr">een schatkaart</span></div>
+    <div class="word-card"><span class="nl">une chaise de plage</span><div class="divider"></div><span class="fr">een strandstoel</span></div>
+    <div class="word-card"><span class="nl">un château de sable</span><div class="divider"></div><span class="fr">een zandkasteel</span></div>
+    <div class="word-card"><span class="nl">un combat</span><div class="divider"></div><span class="fr">een gevecht</span></div>
+    <div class="word-card"><span class="nl">une compétition</span><div class="divider"></div><span class="fr">een competitie</span></div>
+    <div class="word-card"><span class="nl">une équipe</span><div class="divider"></div><span class="fr">een team</span></div>
+    <div class="word-card"><span class="nl">un filet</span><div class="divider"></div><span class="fr">een net</span></div>
+    <div class="word-card"><span class="nl">une forêt</span><div class="divider"></div><span class="fr">een bos</span></div>
+    <div class="word-card"><span class="nl">un kayak</span><div class="divider"></div><span class="fr">een kajak</span></div>
+    <div class="word-card"><span class="nl">un maillot de bain</span><div class="divider"></div><span class="fr">een badpak</span></div>
+    <div class="word-card"><span class="nl">la mer</span><div class="divider"></div><span class="fr">de zee</span></div>
+    <div class="word-card"><span class="nl">un moniteur / une monitrice</span><div class="divider"></div><span class="fr">een monitor</span></div>
+    <div class="word-card"><span class="nl">une montagne</span><div class="divider"></div><span class="fr">een berg</span></div>
+    <div class="word-card"><span class="nl">un parasol</span><div class="divider"></div><span class="fr">een parasol</span></div>
+    <div class="word-card"><span class="nl">un paysage</span><div class="divider"></div><span class="fr">een landschap</span></div>
+    <div class="word-card"><span class="nl">une photo de vacances</span><div class="divider"></div><span class="fr">een vakantiefoto</span></div>
+    <div class="word-card"><span class="nl">une piscine</span><div class="divider"></div><span class="fr">een zwembad</span></div>
+    <div class="word-card"><span class="nl">un pistolet à eau</span><div class="divider"></div><span class="fr">een waterpistool</span></div>
+    <div class="word-card"><span class="nl">une plage</span><div class="divider"></div><span class="fr">een strand</span></div>
+    <div class="word-card"><span class="nl">une planche de surf</span><div class="divider"></div><span class="fr">een surfplank</span></div>
+    <div class="word-card"><span class="nl">une promenade</span><div class="divider"></div><span class="fr">een wandeling</span></div>
+    <div class="word-card"><span class="nl">une randonnée</span><div class="divider"></div><span class="fr">een tocht</span></div>
+    <div class="word-card"><span class="nl">un rocher</span><div class="divider"></div><span class="fr">een rots</span></div>
+    <div class="word-card"><span class="nl">le sable</span><div class="divider"></div><span class="fr">het zand</span></div>
+    <div class="word-card"><span class="nl">un sac à dos</span><div class="divider"></div><span class="fr">een rugzak</span></div>
+    <div class="word-card"><span class="nl">une serviette</span><div class="divider"></div><span class="fr">een handdoek</span></div>
+    <div class="word-card"><span class="nl">une tente</span><div class="divider"></div><span class="fr">een tent</span></div>
+    <div class="word-card"><span class="nl">un terrain de camping</span><div class="divider"></div><span class="fr">een kampeerterrein</span></div>
+    <div class="word-card"><span class="nl">un terrain de jeu</span><div class="divider"></div><span class="fr">een speelterrein</span></div>
+    <div class="word-card"><span class="nl">un trésor</span><div class="divider"></div><span class="fr">een schat</span></div>
+    <div class="word-card"><span class="nl">un voyageur</span><div class="divider"></div><span class="fr">een reiziger</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Adjectieven</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">inoubliable</span><div class="divider"></div><span class="fr">onvergetelijk</span></div>
+    <div class="word-card"><span class="nl">musical(e)</span><div class="divider"></div><span class="fr">muzikaal</span></div>
+    <div class="word-card"><span class="nl">agréable</span><div class="divider"></div><span class="fr">aangenaam</span></div>
+    <div class="word-card"><span class="nl">amusant(e)</span><div class="divider"></div><span class="fr">plezierig</span></div>
+    <div class="word-card"><span class="nl">aventureux / aventureuse</span><div class="divider"></div><span class="fr">avontuurlijk</span></div>
+    <div class="word-card"><span class="nl">banal(e)</span><div class="divider"></div><span class="fr">gewoon</span></div>
+    <div class="word-card"><span class="nl">chouette</span><div class="divider"></div><span class="fr">leuk</span></div>
+    <div class="word-card"><span class="nl">drôle</span><div class="divider"></div><span class="fr">grappig</span></div>
+    <div class="word-card"><span class="nl">extraordinaire</span><div class="divider"></div><span class="fr">buitengewoon</span></div>
+    <div class="word-card"><span class="nl">fou / folle</span><div class="divider"></div><span class="fr">gek</span></div>
+    <div class="word-card"><span class="nl">génial(e)</span><div class="divider"></div><span class="fr">geweldig</span></div>
+    <div class="word-card"><span class="nl">grandiose</span><div class="divider"></div><span class="fr">grandioos</span></div>
+    <div class="word-card"><span class="nl">incroyable</span><div class="divider"></div><span class="fr">ongelooflijk</span></div>
+    <div class="word-card"><span class="nl">intéressant(e)</span><div class="divider"></div><span class="fr">interessant</span></div>
+    <div class="word-card"><span class="nl">magique</span><div class="divider"></div><span class="fr">magisch</span></div>
+    <div class="word-card"><span class="nl">merveilleux / merveilleuse</span><div class="divider"></div><span class="fr">prachtig</span></div>
+    <div class="word-card"><span class="nl">original(e)</span><div class="divider"></div><span class="fr">origineel</span></div>
+    <div class="word-card"><span class="nl">relax(e)</span><div class="divider"></div><span class="fr">ontspannen</span></div>
+    <div class="word-card"><span class="nl">romantique</span><div class="divider"></div><span class="fr">romantisch</span></div>
+    <div class="word-card"><span class="nl">sensationnel(le)</span><div class="divider"></div><span class="fr">spectaculair</span></div>
+    <div class="word-card"><span class="nl">unique</span><div class="divider"></div><span class="fr">uniek</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Werkwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">participer à</span><div class="divider"></div><span class="fr">deelnemen aan</span></div>
+    <div class="word-card"><span class="nl">sélectionner</span><div class="divider"></div><span class="fr">selecteren</span></div>
+    <div class="word-card"><span class="nl">s'inscrire</span><div class="divider"></div><span class="fr">zich inschrijven</span></div>
+    <div class="word-card"><span class="nl">attaquer</span><div class="divider"></div><span class="fr">aanvallen</span></div>
+    <div class="word-card"><span class="nl">bronzer</span><div class="divider"></div><span class="fr">zonnen</span></div>
+    <div class="word-card"><span class="nl">camper</span><div class="divider"></div><span class="fr">kamperen</span></div>
+    <div class="word-card"><span class="nl">crier</span><div class="divider"></div><span class="fr">roepen</span></div>
+    <div class="word-card"><span class="nl">gagner</span><div class="divider"></div><span class="fr">winnen</span></div>
+    <div class="word-card"><span class="nl">lire</span><div class="divider"></div><span class="fr">lezen</span></div>
+    <div class="word-card"><span class="nl">nager</span><div class="divider"></div><span class="fr">zwemmen</span></div>
+    <div class="word-card"><span class="nl">poster</span><div class="divider"></div><span class="fr">posten</span></div>
+    <div class="word-card"><span class="nl">s'amuser</span><div class="divider"></div><span class="fr">zich amuseren</span></div>
+    <div class="word-card"><span class="nl">ajouter</span><div class="divider"></div><span class="fr">toevoegen</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Bijwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">alors</span><div class="divider"></div><span class="fr">welnu / dus / dan</span></div>
+    <div class="word-card"><span class="nl">d'abord</span><div class="divider"></div><span class="fr">eerst</span></div>
+    <div class="word-card"><span class="nl">enfin</span><div class="divider"></div><span class="fr">ten slotte</span></div>
+    <div class="word-card"><span class="nl">ensuite</span><div class="divider"></div><span class="fr">vervolgens</span></div>
+    <div class="word-card"><span class="nl">finalement</span><div class="divider"></div><span class="fr">uiteindelijk</span></div>
+    <div class="word-card"><span class="nl">puis</span><div class="divider"></div><span class="fr">daarna</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Uitdrukkingen</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">créer une ambiance</span><div class="divider"></div><span class="fr">een sfeer creëren</span></div>
+    <div class="word-card"><span class="nl">partir à la recherche de</span><div class="divider"></div><span class="fr">op zoek gaan naar</span></div>
+    <div class="word-card"><span class="nl">passer un moment inoubliable</span><div class="divider"></div><span class="fr">een onvergetelijk moment beleven</span></div>
+    <div class="word-card"><span class="nl">rentrer sa candidature</span><div class="divider"></div><span class="fr">zijn kandidatuur indienen</span></div>
+    <div class="word-card"><span class="nl">à la campagne</span><div class="divider"></div><span class="fr">op het platteland</span></div>
+    <div class="word-card"><span class="nl">à l'extérieur</span><div class="divider"></div><span class="fr">buiten</span></div>
+    <div class="word-card"><span class="nl">à la mer</span><div class="divider"></div><span class="fr">aan zee</span></div>
+    <div class="word-card"><span class="nl">chercher un trésor</span><div class="divider"></div><span class="fr">een schat zoeken</span></div>
+  </div>
+</section>
+
+<!-- DOSSIER 2 -->
+<section class="dossier-section" data-dossier="2">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
+  <h2 class="chapter-title" style="margin-bottom:0;">
+    Dossier 2
+  </h2>
+
+  <a href="oef-fr-nl-dossier2.html"
+     class="exercise-btn">
+     Oefenen
+  </a>
+</div>
+  <div class="section-header"><div class="section-title">Zelfstandige naamwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">un pinceau</span><div class="divider"></div><span class="fr">een penseel / borstel</span></div>
+    <div class="word-card"><span class="nl">le plastique</span><div class="divider"></div><span class="fr">de plastic</span></div>
+    <div class="word-card"><span class="nl">un pot</span><div class="divider"></div><span class="fr">een pot</span></div>
+    <div class="word-card"><span class="nl">un rouleau</span><div class="divider"></div><span class="fr">een rol</span></div>
+    <div class="word-card"><span class="nl">un rouleau de papier toilette</span><div class="divider"></div><span class="fr">een rol toiletpapier</span></div>
+    <div class="word-card"><span class="nl">le surcyclage</span><div class="divider"></div><span class="fr">de upcycling</span></div>
+    <div class="word-card"><span class="nl">une tendance</span><div class="divider"></div><span class="fr">een tendens</span></div>
+    <div class="word-card"><span class="nl">un tube</span><div class="divider"></div><span class="fr">een tube</span></div>
+    <div class="word-card"><span class="nl">une valeur</span><div class="divider"></div><span class="fr">een waarde</span></div>
+    <div class="word-card"><span class="nl">le verre</span><div class="divider"></div><span class="fr">het glas</span></div>
+    <div class="word-card"><span class="nl">un budget</span><div class="divider"></div><span class="fr">een budget</span></div>
+    <div class="word-card"><span class="nl">le carton</span><div class="divider"></div><span class="fr">de karton</span></div>
+    <div class="word-card"><span class="nl">un cintre</span><div class="divider"></div><span class="fr">een kleerhanger</span></div>
+    <div class="word-card"><span class="nl">des ciseaux</span><div class="divider"></div><span class="fr">de schaar</span></div>
+    <div class="word-card"><span class="nl">la colle</span><div class="divider"></div><span class="fr">de lijm</span></div>
+    <div class="word-card"><span class="nl">un couteau</span><div class="divider"></div><span class="fr">een mes</span></div>
+    <div class="word-card"><span class="nl">un cutter</span><div class="divider"></div><span class="fr">een cuttermes</span></div>
+    <div class="word-card"><span class="nl">un matériau</span><div class="divider"></div><span class="fr">een materiaal</span></div>
+    <div class="word-card"><span class="nl">un objet</span><div class="divider"></div><span class="fr">een voorwerp</span></div>
+    <div class="word-card"><span class="nl">le papier alu(minium)</span><div class="divider"></div><span class="fr">de aluminiumfolie</span></div>
+    <div class="word-card"><span class="nl">la peinture</span><div class="divider"></div><span class="fr">de verf</span></div>
+    <div class="word-card"><span class="nl">un conseil</span><div class="divider"></div><span class="fr">een advies</span></div>
+    <div class="word-card"><span class="nl">un réaménagement</span><div class="divider"></div><span class="fr">een herinrichting</span></div>
+    <div class="word-card"><span class="nl">un caisson</span><div class="divider"></div><span class="fr">een doos / bak</span></div>
+    <div class="word-card"><span class="nl">un canapé</span><div class="divider"></div><span class="fr">een zetel</span></div>
+    <div class="word-card"><span class="nl">un coin détente</span><div class="divider"></div><span class="fr">een ontspanningshoek</span></div>
+    <div class="word-card"><span class="nl">une disposition</span><div class="divider"></div><span class="fr">een schikking</span></div>
+    <div class="word-card"><span class="nl">un dressing</span><div class="divider"></div><span class="fr">een dressing</span></div>
+    <div class="word-card"><span class="nl">un lampadaire</span><div class="divider"></div><span class="fr">een staande lamp</span></div>
+    <div class="word-card"><span class="nl">une lampe boule</span><div class="divider"></div><span class="fr">een bolvormige lamp</span></div>
+    <div class="word-card"><span class="nl">un lit mezzanine</span><div class="divider"></div><span class="fr">een hoogslaper</span></div>
+    <div class="word-card"><span class="nl">un meuble</span><div class="divider"></div><span class="fr">een meubelstuk</span></div>
+    <div class="word-card"><span class="nl">un pêle-mêle</span><div class="divider"></div><span class="fr">een prikbord</span></div>
+    <div class="word-card"><span class="nl">le rangement</span><div class="divider"></div><span class="fr">het opruimen / bergruimte</span></div>
+    <div class="word-card"><span class="nl">un sticker</span><div class="divider"></div><span class="fr">een sticker</span></div>
+    <div class="word-card"><span class="nl">une armoire</span><div class="divider"></div><span class="fr">een kast</span></div>
+    <div class="word-card"><span class="nl">un bureau</span><div class="divider"></div><span class="fr">een bureau</span></div>
+    <div class="word-card"><span class="nl">une chaise</span><div class="divider"></div><span class="fr">een stoel</span></div>
+    <div class="word-card"><span class="nl">une commode</span><div class="divider"></div><span class="fr">een ladenkast</span></div>
+    <div class="word-card"><span class="nl">une console de jeux</span><div class="divider"></div><span class="fr">een spelconsole</span></div>
+    <div class="word-card"><span class="nl">une couette</span><div class="divider"></div><span class="fr">een donsdeken</span></div>
+    <div class="word-card"><span class="nl">un coussin</span><div class="divider"></div><span class="fr">een kussen</span></div>
+    <div class="word-card"><span class="nl">un drap</span><div class="divider"></div><span class="fr">een laken</span></div>
+    <div class="word-card"><span class="nl">un écran</span><div class="divider"></div><span class="fr">een scherm</span></div>
+    <div class="word-card"><span class="nl">une étagère</span><div class="divider"></div><span class="fr">een rekje</span></div>
+    <div class="word-card"><span class="nl">un feutre</span><div class="divider"></div><span class="fr">een viltstift</span></div>
+    <div class="word-card"><span class="nl">une lampe de bureau</span><div class="divider"></div><span class="fr">een bureaulamp</span></div>
+    <div class="word-card"><span class="nl">un lit</span><div class="divider"></div><span class="fr">een bed</span></div>
+    <div class="word-card"><span class="nl">des lits superposés</span><div class="divider"></div><span class="fr">het stapelbed</span></div>
+    <div class="word-card"><span class="nl">un matelas</span><div class="divider"></div><span class="fr">een matras</span></div>
+    <div class="word-card"><span class="nl">un miroir</span><div class="divider"></div><span class="fr">een spiegel</span></div>
+    <div class="word-card"><span class="nl">un nounours</span><div class="divider"></div><span class="fr">een knuffeldier</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Adjectieven</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">modulable</span><div class="divider"></div><span class="fr">modulair</span></div>
+    <div class="word-card"><span class="nl">pastel clair</span><div class="divider"></div><span class="fr">licht pastel</span></div>
+    <div class="word-card"><span class="nl">polyvalent(e)</span><div class="divider"></div><span class="fr">polyvalent</span></div>
+    <div class="word-card"><span class="nl">sombre</span><div class="divider"></div><span class="fr">donker</span></div>
+    <div class="word-card"><span class="nl">supplémentaire</span><div class="divider"></div><span class="fr">bijkomend</span></div>
+    <div class="word-card"><span class="nl">surprenant(e)</span><div class="divider"></div><span class="fr">verrassend</span></div>
+    <div class="word-card"><span class="nl">transparent(e)</span><div class="divider"></div><span class="fr">transparant</span></div>
+    <div class="word-card"><span class="nl">arrondi(e)</span><div class="divider"></div><span class="fr">afgerond</span></div>
+    <div class="word-card"><span class="nl">carré(e)</span><div class="divider"></div><span class="fr">vierkant</span></div>
+    <div class="word-card"><span class="nl">coloré(e)</span><div class="divider"></div><span class="fr">gekleurd</span></div>
+    <div class="word-card"><span class="nl">empilable</span><div class="divider"></div><span class="fr">stapelbaar</span></div>
+    <div class="word-card"><span class="nl">flexible</span><div class="divider"></div><span class="fr">flexibel</span></div>
+    <div class="word-card"><span class="nl">graphique</span><div class="divider"></div><span class="fr">grafisch</span></div>
+    <div class="word-card"><span class="nl">mat(e)</span><div class="divider"></div><span class="fr">mat</span></div>
+    <div class="word-card"><span class="nl">moderne</span><div class="divider"></div><span class="fr">modern</span></div>
+    <div class="word-card"><span class="nl">foncé(e)</span><div class="divider"></div><span class="fr">donker (kleur)</span></div>
+    <div class="word-card"><span class="nl">gris métallisé</span><div class="divider"></div><span class="fr">metaalgrijs</span></div>
+    <div class="word-card"><span class="nl">marron</span><div class="divider"></div><span class="fr">kastanjebruin</span></div>
+    <div class="word-card"><span class="nl">orange</span><div class="divider"></div><span class="fr">oranje</span></div>
+    <div class="word-card"><span class="nl">superposé(e)</span><div class="divider"></div><span class="fr">boven elkaar</span></div>
+    <div class="word-card"><span class="nl">blanc / blanche</span><div class="divider"></div><span class="fr">wit</span></div>
+    <div class="word-card"><span class="nl">clair(e)</span><div class="divider"></div><span class="fr">licht / helder</span></div>
+    <div class="word-card"><span class="nl">confortable</span><div class="divider"></div><span class="fr">comfortabel</span></div>
+    <div class="word-card"><span class="nl">distinct(e)</span><div class="divider"></div><span class="fr">verschillend</span></div>
+    <div class="word-card"><span class="nl">spacieux / spacieuse</span><div class="divider"></div><span class="fr">ruim</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Werkwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">coller</span><div class="divider"></div><span class="fr">lijmen</span></div>
+    <div class="word-card"><span class="nl">contrôler</span><div class="divider"></div><span class="fr">controleren</span></div>
+    <div class="word-card"><span class="nl">couper</span><div class="divider"></div><span class="fr">snijden</span></div>
+    <div class="word-card"><span class="nl">coûter</span><div class="divider"></div><span class="fr">kosten</span></div>
+    <div class="word-card"><span class="nl">découper</span><div class="divider"></div><span class="fr">uitsnijden</span></div>
+    <div class="word-card"><span class="nl">pendre</span><div class="divider"></div><span class="fr">ophangen</span></div>
+    <div class="word-card"><span class="nl">plier</span><div class="divider"></div><span class="fr">plooien / vouwen</span></div>
+    <div class="word-card"><span class="nl">ramasser</span><div class="divider"></div><span class="fr">verzamelen / opruimen</span></div>
+    <div class="word-card"><span class="nl">recycler</span><div class="divider"></div><span class="fr">recycleren</span></div>
+    <div class="word-card"><span class="nl">valoir</span><div class="divider"></div><span class="fr">waard zijn</span></div>
+    <div class="word-card"><span class="nl">rechercher</span><div class="divider"></div><span class="fr">opzoeken</span></div>
+    <div class="word-card"><span class="nl">remplacer</span><div class="divider"></div><span class="fr">vervangen</span></div>
+    <div class="word-card"><span class="nl">repeindre</span><div class="divider"></div><span class="fr">herschilden</span></div>
+    <div class="word-card"><span class="nl">séparer</span><div class="divider"></div><span class="fr">scheiden</span></div>
+    <div class="word-card"><span class="nl">souhaiter</span><div class="divider"></div><span class="fr">wensen</span></div>
+    <div class="word-card"><span class="nl">taguer</span><div class="divider"></div><span class="fr">taggen</span></div>
+    <div class="word-card"><span class="nl">transformer</span><div class="divider"></div><span class="fr">omvormen</span></div>
+    <div class="word-card"><span class="nl">accueillir</span><div class="divider"></div><span class="fr">ontvangen</span></div>
+    <div class="word-card"><span class="nl">améliorer</span><div class="divider"></div><span class="fr">verbeteren</span></div>
+    <div class="word-card"><span class="nl">appliquer</span><div class="divider"></div><span class="fr">aanbrengen</span></div>
+    <div class="word-card"><span class="nl">créer</span><div class="divider"></div><span class="fr">creëren</span></div>
+    <div class="word-card"><span class="nl">décorer</span><div class="divider"></div><span class="fr">decoreren</span></div>
+    <div class="word-card"><span class="nl">enlever</span><div class="divider"></div><span class="fr">wegnemen</span></div>
+    <div class="word-card"><span class="nl">garder</span><div class="divider"></div><span class="fr">bewaren</span></div>
+    <div class="word-card"><span class="nl">intégrer</span><div class="divider"></div><span class="fr">integreren</span></div>
+    <div class="word-card"><span class="nl">peindre</span><div class="divider"></div><span class="fr">schilderen</span></div>
+    <div class="word-card"><span class="nl">placer</span><div class="divider"></div><span class="fr">plaatsen</span></div>
+    <div class="word-card"><span class="nl">prévoir</span><div class="divider"></div><span class="fr">voorzien</span></div>
+    <div class="word-card"><span class="nl">ranger</span><div class="divider"></div><span class="fr">opruimen</span></div>
+    <div class="word-card"><span class="nl">réaménager</span><div class="divider"></div><span class="fr">inrichten</span></div>
+    <div class="word-card"><span class="nl">mesurer</span><div class="divider"></div><span class="fr">meten</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Uitdrukkingen</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">donner une deuxième vie à</span><div class="divider"></div><span class="fr">een tweede leven geven aan</span></div>
+    <div class="word-card"><span class="nl">faire du neuf avec du vieux</span><div class="divider"></div><span class="fr">van iets ouds iets nieuws maken</span></div>
+    <div class="word-card"><span class="nl">redonner vie à</span><div class="divider"></div><span class="fr">opnieuw leven geven aan</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Voorzetsels</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">à l'intérieur de</span><div class="divider"></div><span class="fr">binnenin</span></div>
+    <div class="word-card"><span class="nl">au-dessous de</span><div class="divider"></div><span class="fr">onder</span></div>
+    <div class="word-card"><span class="nl">au-dessus de</span><div class="divider"></div><span class="fr">boven</span></div>
+    <div class="word-card"><span class="nl">autour de</span><div class="divider"></div><span class="fr">rond</span></div>
+    <div class="word-card"><span class="nl">contre</span><div class="divider"></div><span class="fr">tegen</span></div>
+    <div class="word-card"><span class="nl">en bas de</span><div class="divider"></div><span class="fr">onderaan</span></div>
+    <div class="word-card"><span class="nl">en haut de</span><div class="divider"></div><span class="fr">bovenaan</span></div>
+    <div class="word-card"><span class="nl">près de</span><div class="divider"></div><span class="fr">dicht bij</span></div>
+    <div class="word-card"><span class="nl">devant</span><div class="divider"></div><span class="fr">voor</span></div>
+    <div class="word-card"><span class="nl">derrière</span><div class="divider"></div><span class="fr">achter</span></div>
+    <div class="word-card"><span class="nl">sur</span><div class="divider"></div><span class="fr">op</span></div>
+    <div class="word-card"><span class="nl">sous</span><div class="divider"></div><span class="fr">onder</span></div>
+    <div class="word-card"><span class="nl">à droite de</span><div class="divider"></div><span class="fr">rechts van</span></div>
+    <div class="word-card"><span class="nl">à gauche de</span><div class="divider"></div><span class="fr">links van</span></div>
+    <div class="word-card"><span class="nl">à côté de</span><div class="divider"></div><span class="fr">naast</span></div>
+    <div class="word-card"><span class="nl">entre</span><div class="divider"></div><span class="fr">tussen</span></div>
+    <div class="word-card"><span class="nl">en face de</span><div class="divider"></div><span class="fr">tegenover</span></div>
+    <div class="word-card"><span class="nl">dans / dedans</span><div class="divider"></div><span class="fr">in / erin</span></div>
+    <div class="word-card"><span class="nl">au fond de</span><div class="divider"></div><span class="fr">achteraan</span></div>
+    <div class="word-card"><span class="nl">au milieu de</span><div class="divider"></div><span class="fr">in het midden van</span></div>
+  </div>
+</section>
+
+<!-- DOSSIER 3 -->
+<section class="dossier-section" data-dossier="3">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
+  <h2 class="chapter-title" style="margin-bottom:0;">
+    Dossier 3
+  </h2>
+
+  <a href="oef-fr-nl-dossier3.html"
+     class="exercise-btn">
+     Oefenen
+  </a>
+</div>
+
+  <div class="section-header"><div class="section-title">Zelfstandige naamwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">le partage</span><div class="divider"></div><span class="fr">het delen</span></div>
+    <div class="word-card"><span class="nl">une preuve</span><div class="divider"></div><span class="fr">een bewijs</span></div>
+    <div class="word-card"><span class="nl">une publicité</span><div class="divider"></div><span class="fr">een reclame</span></div>
+    <div class="word-card"><span class="nl">la réalité</span><div class="divider"></div><span class="fr">de realiteit</span></div>
+    <div class="word-card"><span class="nl">un site</span><div class="divider"></div><span class="fr">een website</span></div>
+    <div class="word-card"><span class="nl">une source</span><div class="divider"></div><span class="fr">een bron</span></div>
+    <div class="word-card"><span class="nl">un témoin</span><div class="divider"></div><span class="fr">een getuige</span></div>
+    <div class="word-card"><span class="nl">une anecdote</span><div class="divider"></div><span class="fr">een anekdote</span></div>
+    <div class="word-card"><span class="nl">un auteur</span><div class="divider"></div><span class="fr">een auteur</span></div>
+    <div class="word-card"><span class="nl">un avis</span><div class="divider"></div><span class="fr">een mening</span></div>
+    <div class="word-card"><span class="nl">une capture d'écran</span><div class="divider"></div><span class="fr">een screenshot</span></div>
+    <div class="word-card"><span class="nl">un compte Instagram</span><div class="divider"></div><span class="fr">een instagramaccount</span></div>
+    <div class="word-card"><span class="nl">un esprit</span><div class="divider"></div><span class="fr">een geest / verstand</span></div>
+    <div class="word-card"><span class="nl">un fait</span><div class="divider"></div><span class="fr">een feit</span></div>
+    <div class="word-card"><span class="nl">la fiabilité</span><div class="divider"></div><span class="fr">de betrouwbaarheid</span></div>
+    <div class="word-card"><span class="nl">un journaliste</span><div class="divider"></div><span class="fr">een journalist</span></div>
+    <div class="word-card"><span class="nl">une nouvelle</span><div class="divider"></div><span class="fr">een nieuwsbericht</span></div>
+    <div class="word-card"><span class="nl">la popularité</span><div class="divider"></div><span class="fr">populariteit</span></div>
+    <div class="word-card"><span class="nl">la pression</span><div class="divider"></div><span class="fr">druk</span></div>
+    <div class="word-card"><span class="nl">un secret</span><div class="divider"></div><span class="fr">een geheim</span></div>
+    <div class="word-card"><span class="nl">le sexting</span><div class="divider"></div><span class="fr">sexting</span></div>
+    <div class="word-card"><span class="nl">un sexto</span><div class="divider"></div><span class="fr">een seksbericht</span></div>
+    <div class="word-card"><span class="nl">un témoignage</span><div class="divider"></div><span class="fr">een getuigenis</span></div>
+    <div class="word-card"><span class="nl">une victime</span><div class="divider"></div><span class="fr">een slachtoffer</span></div>
+    <div class="word-card"><span class="nl">une bêtise</span><div class="divider"></div><span class="fr">een stommiteit</span></div>
+    <div class="word-card"><span class="nl">une blague</span><div class="divider"></div><span class="fr">een grap</span></div>
+    <div class="word-card"><span class="nl">une cible</span><div class="divider"></div><span class="fr">een doelwit</span></div>
+    <div class="word-card"><span class="nl">le cyberharcèlement</span><div class="divider"></div><span class="fr">cyberpesten</span></div>
+    <div class="word-card"><span class="nl">le harcèlement</span><div class="divider"></div><span class="fr">pesten</span></div>
+    <div class="word-card"><span class="nl">une menace</span><div class="divider"></div><span class="fr">een bedreiging</span></div>
+    <div class="word-card"><span class="nl">une personne</span><div class="divider"></div><span class="fr">een persoon</span></div>
+    <div class="word-card"><span class="nl">la peur</span><div class="divider"></div><span class="fr">angst</span></div>
+    <div class="word-card"><span class="nl">une plateforme</span><div class="divider"></div><span class="fr">platform</span></div>
+    <div class="word-card"><span class="nl">les réseaux sociaux</span><div class="divider"></div><span class="fr">sociale media</span></div>
+    <div class="word-card"><span class="nl">une vidéo</span><div class="divider"></div><span class="fr">video</span></div>
+    <div class="word-card"><span class="nl">la vie privée</span><div class="divider"></div><span class="fr">privéleven</span></div>
+    <div class="word-card"><span class="nl">une webcam</span><div class="divider"></div><span class="fr">webcam</span></div>
+    <div class="word-card"><span class="nl">un accord</span><div class="divider"></div><span class="fr">akkoord</span></div>
+    <div class="word-card"><span class="nl">une adresse e-mail</span><div class="divider"></div><span class="fr">e-mailadres</span></div>
+    <div class="word-card"><span class="nl">un adulte</span><div class="divider"></div><span class="fr">volwassene</span></div>
+    <div class="word-card"><span class="nl">un commentaire</span><div class="divider"></div><span class="fr">commentaar</span></div>
+    <div class="word-card"><span class="nl">un contact physique</span><div class="divider"></div><span class="fr">fysiek contact</span></div>
+    <div class="word-card"><span class="nl">une date de naissance</span><div class="divider"></div><span class="fr">geboortedatum</span></div>
+    <div class="word-card"><span class="nl">une identité</span><div class="divider"></div><span class="fr">identiteit</span></div>
+    <div class="word-card"><span class="nl">un inconnu</span><div class="divider"></div><span class="fr">onbekende</span></div>
+    <div class="word-card"><span class="nl">un menteur</span><div class="divider"></div><span class="fr">leugenaar</span></div>
+    <div class="word-card"><span class="nl">un message</span><div class="divider"></div><span class="fr">bericht</span></div>
+    <div class="word-card"><span class="nl">un mot de passe</span><div class="divider"></div><span class="fr">wachtwoord</span></div>
+    <div class="word-card"><span class="nl">un nom</span><div class="divider"></div><span class="fr">naam</span></div>
+    <div class="word-card"><span class="nl">une page de profil</span><div class="divider"></div><span class="fr">profielpagina</span></div>
+    <div class="word-card"><span class="nl">une photo de profil</span><div class="divider"></div><span class="fr">profielfoto</span></div>
+    <div class="word-card"><span class="nl">un prénom</span><div class="divider"></div><span class="fr">voornaam</span></div>
+    <div class="word-card"><span class="nl">un pseudo(nyme)</span><div class="divider"></div><span class="fr">gebruikersnaam</span></div>
+    <div class="word-card"><span class="nl">une publication</span><div class="divider"></div><span class="fr">publicatie / post</span></div>
+    <div class="word-card"><span class="nl">une réputation</span><div class="divider"></div><span class="fr">reputatie</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Adjectieven</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">choquant(e)</span><div class="divider"></div><span class="fr">choquerend</span></div>
+    <div class="word-card"><span class="nl">critique</span><div class="divider"></div><span class="fr">kritisch</span></div>
+    <div class="word-card"><span class="nl">direct(e)</span><div class="divider"></div><span class="fr">direct</span></div>
+    <div class="word-card"><span class="nl">émotionnel(le)</span><div class="divider"></div><span class="fr">emotioneel</span></div>
+    <div class="word-card"><span class="nl">faux / fausse</span><div class="divider"></div><span class="fr">vals / niet echt</span></div>
+    <div class="word-card"><span class="nl">fiable</span><div class="divider"></div><span class="fr">betrouwbaar</span></div>
+    <div class="word-card"><span class="nl">intermédiaire</span><div class="divider"></div><span class="fr">tussenliggend</span></div>
+    <div class="word-card"><span class="nl">objectif / objective</span><div class="divider"></div><span class="fr">objectief</span></div>
+    <div class="word-card"><span class="nl">virtuel / virtuelle</span><div class="divider"></div><span class="fr">virtueel</span></div>
+    <div class="word-card"><span class="nl">vrai(e)</span><div class="divider"></div><span class="fr">waar / echt</span></div>
+    <div class="word-card"><span class="nl">amoureux / amoureuse</span><div class="divider"></div><span class="fr">verliefd</span></div>
+    <div class="word-card"><span class="nl">blessant(e)</span><div class="divider"></div><span class="fr">kwetsend</span></div>
+    <div class="word-card"><span class="nl">humiliant(e)</span><div class="divider"></div><span class="fr">vernederend</span></div>
+    <div class="word-card"><span class="nl">menaçant(e)</span><div class="divider"></div><span class="fr">bedreigend</span></div>
+    <div class="word-card"><span class="nl">renfermé(e)</span><div class="divider"></div><span class="fr">gesloten / teruggetrokken</span></div>
+    <div class="word-card"><span class="nl">violent(e)</span><div class="divider"></div><span class="fr">gewelddadig</span></div>
+    <div class="word-card"><span class="nl">attentif / attentive</span><div class="divider"></div><span class="fr">aandachtig</span></div>
+    <div class="word-card"><span class="nl">aucun(e) … ne</span><div class="divider"></div><span class="fr">geen enkele</span></div>
+    <div class="word-card"><span class="nl">certain(e)</span><div class="divider"></div><span class="fr">bepaalde</span></div>
+    <div class="word-card"><span class="nl">chaque</span><div class="divider"></div><span class="fr">elke</span></div>
+    <div class="word-card"><span class="nl">gênant(e)</span><div class="divider"></div><span class="fr">gênant</span></div>
+    <div class="word-card"><span class="nl">personnel / personnelle</span><div class="divider"></div><span class="fr">persoonlijk</span></div>
+    <div class="word-card"><span class="nl">plusieurs</span><div class="divider"></div><span class="fr">meerdere</span></div>
+    <div class="word-card"><span class="nl">provocateur / provocatrice</span><div class="divider"></div><span class="fr">provocerend</span></div>
+    <div class="word-card"><span class="nl">prudent(e)</span><div class="divider"></div><span class="fr">voorzichtig</span></div>
+    <div class="word-card"><span class="nl">quelques</span><div class="divider"></div><span class="fr">enkele</span></div>
+    <div class="word-card"><span class="nl">tout(e)</span><div class="divider"></div><span class="fr">al(le)</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Werkwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">contrôler</span><div class="divider"></div><span class="fr">controleren</span></div>
+    <div class="word-card"><span class="nl">croire</span><div class="divider"></div><span class="fr">geloven</span></div>
+    <div class="word-card"><span class="nl">découvrir</span><div class="divider"></div><span class="fr">ontdekken</span></div>
+    <div class="word-card"><span class="nl">diffuser</span><div class="divider"></div><span class="fr">verspreiden</span></div>
+    <div class="word-card"><span class="nl">partager</span><div class="divider"></div><span class="fr">delen</span></div>
+    <div class="word-card"><span class="nl">s'appuyer sur</span><div class="divider"></div><span class="fr">steunen op</span></div>
+    <div class="word-card"><span class="nl">truquer</span><div class="divider"></div><span class="fr">vervalsen</span></div>
+    <div class="word-card"><span class="nl">vérifier</span><div class="divider"></div><span class="fr">controleren / nagaan</span></div>
+    <div class="word-card"><span class="nl">développer (son esprit critique)</span><div class="divider"></div><span class="fr">ontwikkelen</span></div>
+    <div class="word-card"><span class="nl">faire une recherche</span><div class="divider"></div><span class="fr">onderzoek doen</span></div>
+    <div class="word-card"><span class="nl">se moquer de quelqu'un</span><div class="divider"></div><span class="fr">iemand uitlachen</span></div>
+    <div class="word-card"><span class="nl">menacer</span><div class="divider"></div><span class="fr">bedreigen</span></div>
+    <div class="word-card"><span class="nl">s'excuser</span><div class="divider"></div><span class="fr">zich verontschuldigen</span></div>
+    <div class="word-card"><span class="nl">se rendre compte</span><div class="divider"></div><span class="fr">beseffen</span></div>
+    <div class="word-card"><span class="nl">être en ligne</span><div class="divider"></div><span class="fr">online zijn</span></div>
+    <div class="word-card"><span class="nl">en sortir</span><div class="divider"></div><span class="fr">eruit raken</span></div>
+    <div class="word-card"><span class="nl">être confronté à</span><div class="divider"></div><span class="fr">geconfronteerd worden met</span></div>
+    <div class="word-card"><span class="nl">porter plainte contre quelqu'un</span><div class="divider"></div><span class="fr">klacht indienen tegen</span></div>
+    <div class="word-card"><span class="nl">prendre pour cible</span><div class="divider"></div><span class="fr">iemand als doelwit nemen</span></div>
+    <div class="word-card"><span class="nl">se disputer avec quelqu'un</span><div class="divider"></div><span class="fr">ruzie maken met iemand</span></div>
+    <div class="word-card"><span class="nl">embêter</span><div class="divider"></div><span class="fr">plagen</span></div>
+    <div class="word-card"><span class="nl">expérimenter</span><div class="divider"></div><span class="fr">experimenteren</span></div>
+    <div class="word-card"><span class="nl">flirter</span><div class="divider"></div><span class="fr">flirten</span></div>
+    <div class="word-card"><span class="nl">harceler</span><div class="divider"></div><span class="fr">pesten / lastigvallen</span></div>
+    <div class="word-card"><span class="nl">inciter</span><div class="divider"></div><span class="fr">aanzetten tot</span></div>
+    <div class="word-card"><span class="nl">insulter</span><div class="divider"></div><span class="fr">beledigen</span></div>
+    <div class="word-card"><span class="nl">envoyer</span><div class="divider"></div><span class="fr">sturen</span></div>
+    <div class="word-card"><span class="nl">éteindre</span><div class="divider"></div><span class="fr">uitzetten</span></div>
+    <div class="word-card"><span class="nl">partager (in deze context)</span><div class="divider"></div><span class="fr">posten</span></div>
+    <div class="word-card"><span class="nl">protéger</span><div class="divider"></div><span class="fr">beschermen</span></div>
+    <div class="word-card"><span class="nl">réfléchir</span><div class="divider"></div><span class="fr">nadenken</span></div>
+    <div class="word-card"><span class="nl">refuser</span><div class="divider"></div><span class="fr">weigeren</span></div>
+    <div class="word-card"><span class="nl">respecter</span><div class="divider"></div><span class="fr">respecteren</span></div>
+    <div class="word-card"><span class="nl">surfer</span><div class="divider"></div><span class="fr">surfen</span></div>
+    <div class="word-card"><span class="nl">accepter</span><div class="divider"></div><span class="fr">aanvaarden</span></div>
+    <div class="word-card"><span class="nl">allumer</span><div class="divider"></div><span class="fr">aanzetten</span></div>
+    <div class="word-card"><span class="nl">chatter</span><div class="divider"></div><span class="fr">chatten</span></div>
+    <div class="word-card"><span class="nl">communiquer</span><div class="divider"></div><span class="fr">communiceren</span></div>
+  </div>
+</section>
+
+<!-- DOSSIER 4 -->
+<section class="dossier-section" data-dossier="4">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
+  <h2 class="chapter-title" style="margin-bottom:0;">
+    Dossier 4
+  </h2>
+
+  <a href="oef-fr-nl-dossier4.html"
+     class="exercise-btn">
+     Oefenen
+  </a>
+</div>
+
+  <div class="section-header"><div class="section-title">Zelfstandige naamwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">l'ail</span><div class="divider"></div><span class="fr">knoflook</span></div>
+    <div class="word-card"><span class="nl">un amuse-gueule</span><div class="divider"></div><span class="fr">hapje</span></div>
+    <div class="word-card"><span class="nl">un blanc d'œuf</span><div class="divider"></div><span class="fr">eiwit</span></div>
+    <div class="word-card"><span class="nl">un citron</span><div class="divider"></div><span class="fr">citroen</span></div>
+    <div class="word-card"><span class="nl">un concombre</span><div class="divider"></div><span class="fr">komkommer</span></div>
+    <div class="word-card"><span class="nl">la farine</span><div class="divider"></div><span class="fr">bloem / meel</span></div>
+    <div class="word-card"><span class="nl">une framboise</span><div class="divider"></div><span class="fr">framboos</span></div>
+    <div class="word-card"><span class="nl">le fromage</span><div class="divider"></div><span class="fr">kaas</span></div>
+    <div class="word-card"><span class="nl">un glaçon</span><div class="divider"></div><span class="fr">ijsblokje</span></div>
+    <div class="word-card"><span class="nl">une gousse d'ail</span><div class="divider"></div><span class="fr">knoflookteentje</span></div>
+    <div class="word-card"><span class="nl">l'huile d'olive</span><div class="divider"></div><span class="fr">olijfolie</span></div>
+    <div class="word-card"><span class="nl">le jambon</span><div class="divider"></div><span class="fr">ham</span></div>
+    <div class="word-card"><span class="nl">un jaune d'œuf</span><div class="divider"></div><span class="fr">eigeel</span></div>
+    <div class="word-card"><span class="nl">la laitue</span><div class="divider"></div><span class="fr">sla</span></div>
+    <div class="word-card"><span class="nl">l'animation</span><div class="divider"></div><span class="fr">animatie</span></div>
+    <div class="word-card"><span class="nl">un anniversaire</span><div class="divider"></div><span class="fr">verjaardag</span></div>
+    <div class="word-card"><span class="nl">une boisson</span><div class="divider"></div><span class="fr">drankje</span></div>
+    <div class="word-card"><span class="nl">une date</span><div class="divider"></div><span class="fr">datum</span></div>
+    <div class="word-card"><span class="nl">une décoration</span><div class="divider"></div><span class="fr">decoratie</span></div>
+    <div class="word-card"><span class="nl">un endroit / un lieu</span><div class="divider"></div><span class="fr">plaats</span></div>
+    <div class="word-card"><span class="nl">une fête surprise</span><div class="divider"></div><span class="fr">verrassingsfeestje</span></div>
+    <div class="word-card"><span class="nl">une invitation</span><div class="divider"></div><span class="fr">uitnodiging</span></div>
+    <div class="word-card"><span class="nl">un invité / une invitée</span><div class="divider"></div><span class="fr">gast</span></div>
+    <div class="word-card"><span class="nl">la nourriture</span><div class="divider"></div><span class="fr">eten / voeding</span></div>
+    <div class="word-card"><span class="nl">une playlist</span><div class="divider"></div><span class="fr">playlist</span></div>
+    <div class="word-card"><span class="nl">les préparatifs</span><div class="divider"></div><span class="fr">voorbereidingen</span></div>
+    <div class="word-card"><span class="nl">un rendez-vous</span><div class="divider"></div><span class="fr">afspraak</span></div>
+    <div class="word-card"><span class="nl">un thème</span><div class="divider"></div><span class="fr">thema</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Adjectieven</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">festif / festive</span><div class="divider"></div><span class="fr">feestelijk</span></div>
+    <div class="word-card"><span class="nl">secret / secrète</span><div class="divider"></div><span class="fr">geheim</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Werkwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">mélanger</span><div class="divider"></div><span class="fr">mengen</span></div>
+    <div class="word-card"><span class="nl">poivrer</span><div class="divider"></div><span class="fr">peper toevoegen</span></div>
+    <div class="word-card"><span class="nl">préchauffer</span><div class="divider"></div><span class="fr">voorverwarmen</span></div>
+    <div class="word-card"><span class="nl">saler</span><div class="divider"></div><span class="fr">zouten</span></div>
+    <div class="word-card"><span class="nl">tartiner</span><div class="divider"></div><span class="fr">smeren</span></div>
+    <div class="word-card"><span class="nl">verser</span><div class="divider"></div><span class="fr">gieten</span></div>
+    <div class="word-card"><span class="nl">ajouter</span><div class="divider"></div><span class="fr">toevoegen</span></div>
+    <div class="word-card"><span class="nl">couper</span><div class="divider"></div><span class="fr">snijden</span></div>
+    <div class="word-card"><span class="nl">cuire</span><div class="divider"></div><span class="fr">bakken / koken</span></div>
+    <div class="word-card"><span class="nl">laver</span><div class="divider"></div><span class="fr">wassen</span></div>
+    <div class="word-card"><span class="nl">prévoir</span><div class="divider"></div><span class="fr">voorzien</span></div>
+    <div class="word-card"><span class="nl">se déguiser</span><div class="divider"></div><span class="fr">zich verkleden</span></div>
+    <div class="word-card"><span class="nl">apprécier</span><div class="divider"></div><span class="fr">waarderen</span></div>
+    <div class="word-card"><span class="nl">compter sur</span><div class="divider"></div><span class="fr">rekenen op</span></div>
+    <div class="word-card"><span class="nl">confirmer</span><div class="divider"></div><span class="fr">bevestigen</span></div>
+    <div class="word-card"><span class="nl">décorer</span><div class="divider"></div><span class="fr">decoreren</span></div>
+    <div class="word-card"><span class="nl">envisager de</span><div class="divider"></div><span class="fr">overwegen om</span></div>
+    <div class="word-card"><span class="nl">falloir</span><div class="divider"></div><span class="fr">moeten</span></div>
+    <div class="word-card"><span class="nl">inviter</span><div class="divider"></div><span class="fr">uitnodigen</span></div>
+    <div class="word-card"><span class="nl">participer à</span><div class="divider"></div><span class="fr">deelnemen aan</span></div>
+    <div class="word-card"><span class="nl">se réunir</span><div class="divider"></div><span class="fr">samenkomen</span></div>
+    <div class="word-card"><span class="nl">se taire</span><div class="divider"></div><span class="fr">zwijgen</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Uitdrukkingen</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">arriver (un peu) plus tard</span><div class="divider"></div><span class="fr">iets later aankomen</span></div>
+    <div class="word-card"><span class="nl">avoir l'intention de</span><div class="divider"></div><span class="fr">van plan zijn om</span></div>
+    <div class="word-card"><span class="nl">ça me ferait plaisir</span><div class="divider"></div><span class="fr">dat zou me plezier doen</span></div>
+    <div class="word-card"><span class="nl">rendez-vous chez</span><div class="divider"></div><span class="fr">afspraak bij</span></div>
+  </div>
+</section>
+
+<!-- DOSSIER 5 -->
+<section class="dossier-section" data-dossier="5">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
+  <h2 class="chapter-title" style="margin-bottom:0;">
+    Dossier 5
+  </h2>
+
+  <a href="oef-fr-nl-dossier5.html"
+     class="exercise-btn">
+     Oefenen
+  </a>
+</div>
+  <div class="section-header"><div class="section-title">Zelfstandige naamwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">une nouveauté</span><div class="divider"></div><span class="fr">nieuwigheid</span></div>
+    <div class="word-card"><span class="nl">un podium</span><div class="divider"></div><span class="fr">podium</span></div>
+    <div class="word-card"><span class="nl">une surprise</span><div class="divider"></div><span class="fr">verrassing</span></div>
+    <div class="word-card"><span class="nl">le téléchargement</span><div class="divider"></div><span class="fr">downloaden</span></div>
+    <div class="word-card"><span class="nl">une valeur</span><div class="divider"></div><span class="fr">waarde</span></div>
+    <div class="word-card"><span class="nl">la vente</span><div class="divider"></div><span class="fr">verkoop</span></div>
+    <div class="word-card"><span class="nl">un disque</span><div class="divider"></div><span class="fr">plaat</span></div>
+    <div class="word-card"><span class="nl">une frontière</span><div class="divider"></div><span class="fr">grens</span></div>
+    <div class="word-card"><span class="nl">un impact</span><div class="divider"></div><span class="fr">invloed</span></div>
+    <div class="word-card"><span class="nl">une annulation</span><div class="divider"></div><span class="fr">annulering</span></div>
+    <div class="word-card"><span class="nl">un avenir</span><div class="divider"></div><span class="fr">toekomst</span></div>
+    <div class="word-card"><span class="nl">les coulisses</span><div class="divider"></div><span class="fr">coulissen</span></div>
+    <div class="word-card"><span class="nl">un événement</span><div class="divider"></div><span class="fr">evenement</span></div>
+    <div class="word-card"><span class="nl">la gratuité</span><div class="divider"></div><span class="fr">gratisheid</span></div>
+    <div class="word-card"><span class="nl">un musicien / une musicienne</span><div class="divider"></div><span class="fr">muzikant</span></div>
+    <div class="word-card"><span class="nl">un succès</span><div class="divider"></div><span class="fr">succes</span></div>
+    <div class="word-card"><span class="nl">un technicien / une technicienne</span><div class="divider"></div><span class="fr">technicus</span></div>
+    <div class="word-card"><span class="nl">un téléspectateur</span><div class="divider"></div><span class="fr">tv-kijker</span></div>
+    <div class="word-card"><span class="nl">un ticket</span><div class="divider"></div><span class="fr">ticket</span></div>
+    <div class="word-card"><span class="nl">une tournée</span><div class="divider"></div><span class="fr">tournee</span></div>
+    <div class="word-card"><span class="nl">une tenue</span><div class="divider"></div><span class="fr">outfit</span></div>
+    <div class="word-card"><span class="nl">un tube</span><div class="divider"></div><span class="fr">hit</span></div>
+    <div class="word-card"><span class="nl">une voix</span><div class="divider"></div><span class="fr">stem</span></div>
+    <div class="word-card"><span class="nl">une chorégraphie</span><div class="divider"></div><span class="fr">choreografie</span></div>
+    <div class="word-card"><span class="nl">un concert</span><div class="divider"></div><span class="fr">concert</span></div>
+    <div class="word-card"><span class="nl">une danse</span><div class="divider"></div><span class="fr">dans</span></div>
+    <div class="word-card"><span class="nl">un danseur / une danseuse</span><div class="divider"></div><span class="fr">danser(es)</span></div>
+    <div class="word-card"><span class="nl">une déception</span><div class="divider"></div><span class="fr">teleurstelling</span></div>
+    <div class="word-card"><span class="nl">un décor</span><div class="divider"></div><span class="fr">decor</span></div>
+    <div class="word-card"><span class="nl">le dynamisme</span><div class="divider"></div><span class="fr">dynamiek</span></div>
+    <div class="word-card"><span class="nl">un écran</span><div class="divider"></div><span class="fr">scherm</span></div>
+    <div class="word-card"><span class="nl">un effet</span><div class="divider"></div><span class="fr">effect</span></div>
+    <div class="word-card"><span class="nl">une interprétation</span><div class="divider"></div><span class="fr">vertolking</span></div>
+    <div class="word-card"><span class="nl">une parole</span><div class="divider"></div><span class="fr">songtekst / woorden</span></div>
+    <div class="word-card"><span class="nl">une prestation</span><div class="divider"></div><span class="fr">prestatie</span></div>
+    <div class="word-card"><span class="nl">un public</span><div class="divider"></div><span class="fr">publiek</span></div>
+    <div class="word-card"><span class="nl">un rappeur</span><div class="divider"></div><span class="fr">rapper</span></div>
+    <div class="word-card"><span class="nl">une sono</span><div class="divider"></div><span class="fr">geluidsinstallatie</span></div>
+    <div class="word-card"><span class="nl">un spectacle</span><div class="divider"></div><span class="fr">spektakel</span></div>
+    <div class="word-card"><span class="nl">un talent</span><div class="divider"></div><span class="fr">talent</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Adjectieven</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">commercial(e)</span><div class="divider"></div><span class="fr">commercieel</span></div>
+    <div class="word-card"><span class="nl">émouvant(e)</span><div class="divider"></div><span class="fr">ontroerend</span></div>
+    <div class="word-card"><span class="nl">francophone</span><div class="divider"></div><span class="fr">Franstalig</span></div>
+    <div class="word-card"><span class="nl">féminin(e)</span><div class="divider"></div><span class="fr">vrouwelijk</span></div>
+    <div class="word-card"><span class="nl">lent(e)</span><div class="divider"></div><span class="fr">traag</span></div>
+    <div class="word-card"><span class="nl">mélodieux / mélodieuse</span><div class="divider"></div><span class="fr">melodieus</span></div>
+    <div class="word-card"><span class="nl">musical(e)</span><div class="divider"></div><span class="fr">muzikaal</span></div>
+    <div class="word-card"><span class="nl">originaire (de)</span><div class="divider"></div><span class="fr">afkomstig van</span></div>
+    <div class="word-card"><span class="nl">phénoménal(e)</span><div class="divider"></div><span class="fr">fenomenaal</span></div>
+    <div class="word-card"><span class="nl">rapide</span><div class="divider"></div><span class="fr">snel</span></div>
+    <div class="word-card"><span class="nl">rythmique</span><div class="divider"></div><span class="fr">ritmisch</span></div>
+    <div class="word-card"><span class="nl">sentimental(e)</span><div class="divider"></div><span class="fr">sentimenteel</span></div>
+    <div class="word-card"><span class="nl">disponible</span><div class="divider"></div><span class="fr">beschikbaar</span></div>
+    <div class="word-card"><span class="nl">excité(e)</span><div class="divider"></div><span class="fr">opgewonden</span></div>
+    <div class="word-card"><span class="nl">exclusif / exclusive</span><div class="divider"></div><span class="fr">exclusief</span></div>
+    <div class="word-card"><span class="nl">gratuit(e)</span><div class="divider"></div><span class="fr">gratis</span></div>
+    <div class="word-card"><span class="nl">payant(e)</span><div class="divider"></div><span class="fr">betalend</span></div>
+    <div class="word-card"><span class="nl">unique</span><div class="divider"></div><span class="fr">uniek</span></div>
+    <div class="word-card"><span class="nl">virtuel / virtuelle</span><div class="divider"></div><span class="fr">virtueel</span></div>
+    <div class="word-card"><span class="nl">arrogant(e)</span><div class="divider"></div><span class="fr">arrogant</span></div>
+    <div class="word-card"><span class="nl">déçu(e)</span><div class="divider"></div><span class="fr">ontgoocheld</span></div>
+    <div class="word-card"><span class="nl">impressionnant(e)</span><div class="divider"></div><span class="fr">indrukwekkend</span></div>
+    <div class="word-card"><span class="nl">magnifique</span><div class="divider"></div><span class="fr">prachtig</span></div>
+    <div class="word-card"><span class="nl">sympa</span><div class="divider"></div><span class="fr">sympathiek</span></div>
+    <div class="word-card"><span class="nl">talentueux / talentueuse</span><div class="divider"></div><span class="fr">getalenteerd</span></div>
+    <div class="word-card"><span class="nl">touchant(e)</span><div class="divider"></div><span class="fr">ontroerend</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Werkwoorden</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">télécharger</span><div class="divider"></div><span class="fr">downloaden</span></div>
+    <div class="word-card"><span class="nl">surnommer</span><div class="divider"></div><span class="fr">een bijnaam geven</span></div>
+    <div class="word-card"><span class="nl">assister à</span><div class="divider"></div><span class="fr">bijwonen</span></div>
+    <div class="word-card"><span class="nl">opter pour</span><div class="divider"></div><span class="fr">kiezen voor</span></div>
+    <div class="word-card"><span class="nl">retransmettre</span><div class="divider"></div><span class="fr">heruitzenden</span></div>
+    <div class="word-card"><span class="nl">voter</span><div class="divider"></div><span class="fr">stemmen</span></div>
+    <div class="word-card"><span class="nl">annuler</span><div class="divider"></div><span class="fr">annuleren</span></div>
+    <div class="word-card"><span class="nl">regretter</span><div class="divider"></div><span class="fr">betreuren / spijt hebben</span></div>
+    <div class="word-card"><span class="nl">se faire escroquer</span><div class="divider"></div><span class="fr">opgelicht worden</span></div>
+    <div class="word-card"><span class="nl">se moquer de</span><div class="divider"></div><span class="fr">uitlachen</span></div>
+    <div class="word-card"><span class="nl">se préoccuper de</span><div class="divider"></div><span class="fr">aandacht schenken aan</span></div>
+  </div>
+
+  <div class="section-header"><div class="section-title">Uitdrukkingen</div></div>
+  <div class="word-grid">
+    <div class="word-card"><span class="nl">mettre de l'ambiance</span><div class="divider"></div><span class="fr">sfeer maken</span></div>
+    <div class="word-card"><span class="nl">passer un bon moment</span><div class="divider"></div><span class="fr">een leuke tijd hebben</span></div>
+<div class="word-card"><span class="nl" style="flex:1;">quelque chose à quoi je ne m'attendais pas</span><div class="divider"></div><span class="fr" style="flex:1;">iets wat ik niet verwachtte</span></div>    <div class="word-card"><span class="nl">live</span><div class="divider"></div><span class="fr">en direct</span></div>
+    <div class="word-card"><span class="nl">en ligne</span><div class="divider"></div><span class="fr">online</span></div>
+    <div class="word-card"><span class="nl">en streaming</span><div class="divider"></div><span class="fr">via streaming</span></div>
+    <div class="word-card"><span class="nl">rentrer dans ses frais</span><div class="divider"></div><span class="fr">uit de kosten raken</span></div>
+    <div class="word-card"><span class="nl">chez soi</span><div class="divider"></div><span class="fr">thuis</span></div>
+    <div class="word-card"><span class="nl">C'était terrible</span><div class="divider"></div><span class="fr">het was geweldig</span></div>
+    <div class="word-card"><span class="nl">Mention spéciale pour</span><div class="divider"></div><span class="fr">speciale vermelding voor</span></div>
+  </div>
+</section>
+
+
 
 </main>
 
 <footer>
   © 2026 Vanherzeele Matteo
 </footer>
+
+</body>
+</html>
+
+</body>
+</html>
 
 </body>
 </html>
