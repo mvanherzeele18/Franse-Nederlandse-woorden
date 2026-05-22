@@ -54,10 +54,27 @@ onAuthStateChanged(window.auth, (user) => {
 });
 
 </script>
+
+<script type="module">
+
+import {
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+window.logout = async function () {
+
+  await signOut(window.auth);
+
+  window.location.href = "login.html";
+
+}
+
+</script>
   
 <body>
 
   <h1>Welkom!</h1>
+  <button onclick="logout()">Uitloggen</button>
 
 </body>
 
