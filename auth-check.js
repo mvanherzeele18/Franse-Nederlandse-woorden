@@ -27,7 +27,90 @@ onAuthStateChanged(auth, (user) => {
 
   } else {
 
-    window.location.href = "/login.html";
+    document.body.style.display = "block";
+
+    document.body.innerHTML = `
+
+<div style="
+
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#F1F8E9;
+  font-family:'DM Sans', sans-serif;
+  padding:2rem;
+
+">
+
+  <div style="
+
+    background:white;
+    padding:3rem 2.5rem;
+    border-radius:16px;
+    border:3px solid #6BBE3A;
+    text-align:center;
+    max-width:420px;
+    width:100%;
+    box-shadow:0 8px 24px rgba(107,190,58,0.2);
+
+  ">
+
+    <h1 style="
+
+      font-family:'Playfair Display', serif;
+      color:#2E7D32;
+      margin-bottom:1rem;
+      font-size:2rem;
+
+    ">
+
+      Niet ingelogd
+
+    </h1>
+
+    <p style="
+
+      color:#1B5E20;
+      margin-bottom:2rem;
+      line-height:1.6;
+
+    ">
+
+      Je moet eerst inloggen om deze pagina te bekijken.
+
+    </p>
+
+    <button id="loginBtn" style="
+
+      background:#6BBE3A;
+      color:white;
+      border:none;
+      padding:14px 28px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:1rem;
+      font-weight:600;
+      transition:0.3s;
+
+    ">
+
+      Login
+
+    </button>
+
+  </div>
+
+</div>
+
+`;
+
+    document.getElementById("loginBtn")
+      .addEventListener("click", () => {
+
+        window.location.href = "/login.html";
+
+      });
 
   }
 
