@@ -1195,6 +1195,27 @@ body.maintenance {
 
 </main>
 
+<script>
+const maintenanceMode = true; // true = aan, false = uit
+
+if (maintenanceMode) {
+    document.body.classList.add("maintenance");
+
+    function setHeaderHeight() {
+        const header = document.querySelector("header");
+        document.documentElement.style.setProperty(
+            "--header-height",
+            header.offsetHeight + "px"
+        );
+    }
+
+    setHeaderHeight();
+    window.addEventListener("resize", setHeaderHeight);
+} else {
+    document.querySelector(".maintenance-overlay")?.remove();
+}
+</script>
+  
 <footer>
   © 2026 Vanherzeele Matteo
 </footer>
