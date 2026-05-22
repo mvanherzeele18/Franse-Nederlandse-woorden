@@ -27,83 +27,73 @@ onAuthStateChanged(auth, (user) => {
 
   } else {
 
-    document.body.style.display = "block";
+    document.body.style.display = "flex";
+
+    document.body.style.justifyContent = "center";
+
+    document.body.style.alignItems = "center";
+
+    document.body.style.minHeight = "100vh";
+
+    document.body.style.background = "#F1F8E9";
+
+    document.body.style.fontFamily = "Arial";
 
     document.body.innerHTML = `
 
-<div style="
+      <div style="
 
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#F1F8E9;
-  font-family:'DM Sans', sans-serif;
-  padding:2rem;
+        background:white;
+        padding:3rem;
+        border-radius:16px;
+        border:3px solid #6BBE3A;
+        text-align:center;
+        max-width:400px;
+        box-shadow:0 8px 24px rgba(107,190,58,0.2);
 
-">
+      ">
 
-  <div style="
+        <h1 style="
 
-    background:white;
-    padding:3rem 2.5rem;
-    border-radius:16px;
-    border:3px solid #6BBE3A;
-    text-align:center;
-    max-width:420px;
-    width:100%;
-    box-shadow:0 8px 24px rgba(107,190,58,0.2);
+          color:#2E7D32;
+          margin-bottom:1rem;
 
-  ">
+        ">
 
-    <h1 style="
+          Niet ingelogd
 
-      font-family:'Playfair Display', serif;
-      color:#2E7D32;
-      margin-bottom:1rem;
-      font-size:2rem;
+        </h1>
 
-    ">
+        <p style="
 
-      Niet ingelogd
+          color:#1B5E20;
+          margin-bottom:2rem;
 
-    </h1>
+        ">
 
-    <p style="
+          Je moet eerst inloggen om deze pagina te bekijken.
 
-      color:#1B5E20;
-      margin-bottom:2rem;
-      line-height:1.6;
+        </p>
 
-    ">
+        <button id="loginBtn" style="
 
-      Je moet eerst inloggen om deze pagina te bekijken.
+          background:#6BBE3A;
+          color:white;
+          border:none;
+          padding:12px 24px;
+          border-radius:8px;
+          cursor:pointer;
+          font-size:16px;
 
-    </p>
+        ">
 
-    <button id="loginBtn" style="
+          Login
 
-      background:#6BBE3A;
-      color:white;
-      border:none;
-      padding:14px 28px;
-      border-radius:10px;
-      cursor:pointer;
-      font-size:1rem;
-      font-weight:600;
-      transition:0.3s;
+        </button>
 
-    ">
+      </div>
 
-      Login
-
-    </button>
-
-  </div>
-
-</div>
-
-`;
+    `;
 
     document.getElementById("loginBtn")
       .addEventListener("click", () => {
