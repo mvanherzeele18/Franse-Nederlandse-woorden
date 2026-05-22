@@ -36,10 +36,55 @@ window.auth = auth;
   
 </head>
 
+<script type="module">
+
+import {
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+window.login = async function () {
+
+  const email = document.getElementById("email").value;
+
+  const password = document.getElementById("password").value;
+
+  try {
+
+    await signInWithEmailAndPassword(
+      window.auth,
+      email,
+      password
+    );
+
+    alert("Succesvol ingelogd!");
+
+    window.location.href = "dashboard.html";
+
+  } catch (error) {
+
+    alert("Foute email of wachtwoord");
+
+    console.log(error);
+
+  }
+
+}
+
+</script>
+  
 <body>
 
   <h1>Login</h1>
 
-</body>
+  <input type="email" id="email" placeholder="Email">
 
+  <br><br>
+
+  <input type="password" id="password" placeholder="Wachtwoord">
+
+  <br><br>
+
+  <button onclick="login()">Inloggen</button>
+
+</body>
 </html>
