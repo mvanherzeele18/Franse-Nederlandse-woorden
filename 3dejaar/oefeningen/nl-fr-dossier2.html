@@ -405,7 +405,7 @@
   // Extract words from the main page
   async function loadWords() {
     try {
-      const response = await fetch('nederlands-frans.html');
+      const response = await fetch('https://mvanherzeele.github.io/Franse-Nederlandse-woorden/3dejaar/nederlands-frans.html');
       const html = await response.text();
       
       const parser = new DOMParser();
