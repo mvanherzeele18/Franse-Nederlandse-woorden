@@ -98,7 +98,7 @@ onAuthStateChanged(auth, (user) => {
     document.getElementById("loginBtn")
       .addEventListener("click", () => {
 
-        window.location.href = "/login.html";
+        window.location.href = "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/login.html";
 
       });
 
