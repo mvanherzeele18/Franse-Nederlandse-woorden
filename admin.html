@@ -81,6 +81,33 @@ button:hover {
 
 }
 
+
+input {
+
+  width:100%;
+  padding:12px;
+  border:2px solid var(--green-light);
+  border-radius:10px;
+  margin-bottom:0.5rem;
+  font-size:1rem;
+
+}
+
+input:focus {
+
+  outline:none;
+  border-color:var(--green);
+
+}
+
+#message {
+
+  margin-top:1rem;
+  color:var(--green-dark);
+  font-weight:600;
+
+}
+
 </style>
 </head>
 
@@ -94,6 +121,38 @@ button:hover {
 Welkom Matteo!
 </p>
 
+<input
+type="text"
+id="fr"
+placeholder="Frans woord"
+>
+
+<br><br>
+
+<input
+type="text"
+id="nl"
+placeholder="Nederlands woord"
+>
+
+<br><br>
+
+<input
+type="text"
+id="dossier"
+placeholder="Dossier nummer"
+>
+
+<br><br>
+
+<button onclick="addWord()">
+Woord toevoegen
+</button>
+
+<br><br>
+
+<div id="message"></div>
+  
 <button onclick="logout()">
 Uitloggen
 </button>
@@ -114,6 +173,15 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
+import {
+
+  getFirestore,
+  collection,
+  addDoc
+
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
 const firebaseConfig = {
 
   apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
@@ -128,6 +196,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 onAuthStateChanged(auth, (user) => {
 
@@ -163,7 +232,58 @@ window.logout = async function () {
   "/Franse-Nederlandse-woorden/login.html";
 
 }
+window.addWord = async function () {
 
+  const fr =
+  document.getElementById("fr").value;
+
+  const nl =
+  document.getElementById("nl").value;
+
+  const dossier =
+  document.getElementById("dossier").value;
+
+  if (!fr || !nl || !dossier) {
+
+    alert("Vul alles in.");
+
+    return;
+
+  }
+
+  try {
+
+    await addDoc(
+      collection(db, "woorden"),
+      {
+
+        fr: fr,
+        nl: nl,
+        dossier: dossier
+
+      }
+    );
+
+    document.getElementById("message")
+    .innerText =
+    "Woord toegevoegd!";
+
+    document.getElementById("fr").value = "";
+
+    document.getElementById("nl").value = "";
+
+    document.getElementById("dossier").value = "";
+
+  } catch (error) {
+
+    console.log(error);
+
+    alert("Fout bij opslaan.");
+
+  }
+
+}
+  
 </script>
 
 </body>
