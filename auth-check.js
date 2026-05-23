@@ -120,15 +120,14 @@ onAuthStateChanged(auth, (user) => {
     loginBtn.addEventListener("click", () => {
 
       window.location.href =
-        "/login.html?redirect=" +
-        encodeURIComponent(window.location.pathname);
+        "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/login.html?redirect";
 
     });
 
     registerBtn.addEventListener("click", () => {
 
       window.location.href =
-        "/register.html";
+        "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/register.html";
 
     });
 
