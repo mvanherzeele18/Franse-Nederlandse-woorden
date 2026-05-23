@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+
+  --green: #6BBE3A;
+  --green-light: #D4E8B8;
+  --green-dark: #2E7D32;
+  --yellow: #FDD835;
+  --bg: #F1F8E9;
+  --white: #FFFFFF;
+
+}
+
+body {
+
+  margin:0;
+  font-family:'DM Sans', sans-serif;
+  background:var(--bg);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+
+}
+
+.box {
+
+  background:var(--white);
+  border:3px solid var(--green);
+  border-radius:16px;
+  padding:3rem;
+  width:90%;
+  max-width:500px;
+  text-align:center;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+
+}
+
+h1 {
+
+  font-family:'Playfair Display', serif;
+  color:var(--green-dark);
+  margin-bottom:1rem;
+
+}
+
+p {
+
+  color:var(--green-dark);
+  margin-bottom:2rem;
+
+}
+
+button {
+
+  background:var(--yellow);
+  color:var(--green-dark);
+  border:none;
+  padding:0.9rem 1.4rem;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+
+}
+
+button:hover {
+
+  background:var(--green-light);
+  transform:translateY(-2px);
+
+}
+
+</style>
+</head>
+
+<body style="display:none;">
+
+<div class="box">
+
+<h1>Admin Panel</h1>
+
+<p>
+Welkom Matteo!
+</p>
+
+<button onclick="logout()">
+Uitloggen
+</button>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+
+  getAuth,
+  onAuthStateChanged,
+  signOut
+
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+  authDomain: "vocabulairesite.firebaseapp.com",
+  projectId: "vocabulairesite",
+  storageBucket: "vocabulairesite.firebasestorage.app",
+  messagingSenderId: "1002919769364",
+  appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+
+  if (!user) {
+
+    window.location.href =
+    "/Franse-Nederlandse-woorden/login.html";
+
+    return;
+
+  }
+
+  if (user.email !== "vanherzeelematteo@gmail.com") {
+
+    alert("Geen toegang.");
+
+    window.location.href =
+    "/Franse-Nederlandse-woorden/index.html";
+
+    return;
+
+  }
+
+  document.body.style.display = "flex";
+
+});
+
+window.logout = async function () {
+
+  await signOut(auth);
+
+  window.location.href =
+  "/Franse-Nederlandse-woorden/login.html";
+
+}
+
+</script>
+
+</body>
+</html>
