@@ -5,108 +5,289 @@
 
   <meta charset="UTF-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
   <title>Login</title>
 
-<script type="module">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  <style>
 
-import {
-  getAuth
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    body {
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
-  authDomain: "vocabulairesite.firebaseapp.com",
-  projectId: "vocabulairesite",
-  storageBucket: "vocabulairesite.firebasestorage.app",
-  messagingSenderId: "1002919769364",
-  appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
-  measurementId: "G-5FVEW59WH3"
-};
-const app = initializeApp(firebaseConfig);
+      margin: 0;
 
-const auth = getAuth(app);
+      min-height: 100vh;
 
-window.auth = auth;
+      display: flex;
 
-</script>
-  
+      justify-content: center;
+
+      align-items: center;
+
+      background: #F1F8E9;
+
+      font-family: 'DM Sans', sans-serif;
+
+    }
+
+    .login-box {
+
+      background: white;
+
+      padding: 3rem;
+
+      border-radius: 16px;
+
+      border: 3px solid #6BBE3A;
+
+      width: 360px;
+
+      box-shadow:
+      0 8px 24px rgba(107,190,58,0.2);
+
+      text-align: center;
+
+    }
+
+    h1 {
+
+      font-family:
+      'Playfair Display', serif;
+
+      color: #2E7D32;
+
+      margin-bottom: 2rem;
+
+    }
+
+    input {
+
+      width: 100%;
+
+      padding: 14px;
+
+      margin-bottom: 1rem;
+
+      border-radius: 8px;
+
+      border: 2px solid #C5E1A5;
+
+      font-size: 1rem;
+
+      box-sizing: border-box;
+
+    }
+
+    input:focus {
+
+      outline: none;
+
+      border-color: #6BBE3A;
+
+    }
+
+    button {
+
+      width: 100%;
+
+      padding: 14px;
+
+      border: none;
+
+      border-radius: 8px;
+
+      background: #6BBE3A;
+
+      color: white;
+
+      font-size: 1rem;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition: all 0.3s;
+
+    }
+
+    button:hover {
+
+      transform: translateY(-2px);
+
+      box-shadow:
+      0 4px 12px rgba(107,190,58,0.25);
+
+      background: #81C784;
+
+    }
+
+    .register-link {
+
+      margin-top: 1.5rem;
+
+      display: block;
+
+      color: #2E7D32;
+
+      text-decoration: none;
+
+      font-weight: 500;
+
+    }
+
+  </style>
+
 </head>
 
-<script type="module">
-
-import {
-  signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
-window.login = async function () {
-
-  const email = document.getElementById("email").value;
-
-  const password = document.getElementById("password").value;
-
-  try {
-
-    await signInWithEmailAndPassword(
-      window.auth,
-      email,
-      password
-    );
-
-    if (!userCredential.user.emailVerified) {
-
-  await auth.signOut();
-
-  alert(
-    "Controleer eerst je e-mail en verifieer je account."
-  );
-
-  return;
-
-}
-
-    const params = new URLSearchParams(window.location.search);
-
-const redirect = params.get("redirect");
-
-if (redirect) {
-
-  window.location.href = redirect;
-
-} else {
-
-  window.location.href = "/Franse-Nederlandse-woorden/index.html";
-
-}
-
-  } catch (error) {
-
-    alert("Foute email of wachtwoord");
-
-    console.log(error);
-
-  }
-
-}
-
-</script>
-  
 <body>
 
-  <h1>Login</h1>
+  <div class="login-box">
 
-  <input type="email" id="email" placeholder="Email">
+    <h1>Inloggen</h1>
 
-  <br><br>
+    <input
+      type="email"
+      id="email"
+      placeholder="E-mailadres"
+    >
 
-  <input type="password" id="password" placeholder="Wachtwoord">
+    <input
+      type="password"
+      id="password"
+      placeholder="Wachtwoord"
+    >
 
-  <br><br>
+    <button onclick="login()">
 
-  <button onclick="login()">Inloggen</button>
+      Inloggen
+
+    </button>
+
+    <a class="register-link"
+       href="/Franse-Nederlandse-woorden/register.html">
+
+      Nog geen account? Registreren
+
+    </a>
+
+  </div>
+
+  <script type="module">
+
+    import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+    import {
+
+      getAuth,
+
+      signInWithEmailAndPassword,
+
+      signOut
+
+    }
+    from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+    const firebaseConfig = {
+
+      apiKey:
+      "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+
+      authDomain:
+      "vocabulairesite.firebaseapp.com",
+
+      projectId:
+      "vocabulairesite",
+
+      storageBucket:
+      "vocabulairesite.firebasestorage.app",
+
+      messagingSenderId:
+      "1002919769364",
+
+      appId:
+      "1:1002919769364:web:face9ebdbe3cb1db37fe01",
+
+      measurementId:
+      "G-5FVEW59WH3"
+
+    };
+
+    const app =
+    initializeApp(firebaseConfig);
+
+    const auth =
+    getAuth(app);
+
+    window.login = async function () {
+
+      const email =
+      document.getElementById("email").value;
+
+      const password =
+      document.getElementById("password").value;
+
+      try {
+
+        const userCredential =
+
+        await signInWithEmailAndPassword(
+
+          auth,
+          email,
+          password
+
+        );
+
+        if (
+          !userCredential.user.emailVerified
+        ) {
+
+          await signOut(auth);
+
+          alert(
+            "Controleer eerst je e-mail en verifieer je account."
+          );
+
+          return;
+
+        }
+
+        const params =
+        new URLSearchParams(
+          window.location.search
+        );
+
+        const redirect =
+        params.get("redirect");
+
+        if (redirect) {
+
+          window.location.href =
+          redirect;
+
+        } else {
+
+          window.location.href =
+          "/Franse-Nederlandse-woorden/index.html";
+
+        }
+
+      } catch (error) {
+
+        alert(
+          "Fout e-mailadres of wachtwoord."
+        );
+
+        console.log(error);
+
+      }
+
+    };
+
+  </script>
 
 </body>
 </html>
