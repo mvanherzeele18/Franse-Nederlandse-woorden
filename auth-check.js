@@ -6,13 +6,21 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 const firebaseConfig = {
+
   apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+
   authDomain: "vocabulairesite.firebaseapp.com",
+
   projectId: "vocabulairesite",
+
   storageBucket: "vocabulairesite.firebasestorage.app",
+
   messagingSenderId: "1002919769364",
+
   appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
+
   measurementId: "G-5FVEW59WH3"
+
 };
 
 const app = initializeApp(firebaseConfig);
@@ -77,109 +85,119 @@ onAuthStateChanged(auth, (user) => {
 
         <div style="
 
-  display:flex;
-  gap:1rem;
-  justify-content:center;
+          display:flex;
+          gap:1rem;
+          justify-content:center;
 
-">
+        ">
 
-  <button id="loginBtn" style="
+          <button id="loginBtn" style="
 
-    background:#6BBE3A;
-    color:white;
-    border:none;
-    padding:12px 24px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-    font-weight:600;
-    transition:all 0.3s;
+            background:#6BBE3A;
+            color:white;
+            border:none;
+            padding:12px 24px;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:16px;
+            font-weight:600;
+            transition:all 0.3s;
 
-  ">
+          ">
 
-    Login
+            Login
 
-  </button>
+          </button>
 
-  <button id="registerBtn" style="
+          <button id="registerBtn" style="
 
-    background:#FDD835;
-    color:#1B5E20;
-    border:none;
-    padding:12px 24px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-    font-weight:600;
-    transition:all 0.3s;
+            background:#FDD835;
+            color:#1B5E20;
+            border:none;
+            padding:12px 24px;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:16px;
+            font-weight:600;
+            transition:all 0.3s;
 
-  ">
+          ">
 
-    Registreren
+            Registreren
 
-  </button>
+          </button>
 
-</div>
+        </div>
 
       </div>
 
     `;
 
-    document.getElementById("loginBtn")
-      .addEventListener("click", () => {document.getElementById("registerBtn")
-.addEventListener("click", () => {
+    const loginBtn =
+    document.getElementById("loginBtn");
 
-  window.location.href =
-  "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/register.html";
+    const registerBtn =
+    document.getElementById("registerBtn");
 
-});
+    loginBtn.addEventListener("click", () => {
 
-const loginBtn = document.getElementById("loginBtn");
+      window.location.href =
+      "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/login.html?redirect=" +
+      encodeURIComponent(window.location.pathname);
 
-loginBtn.addEventListener("mouseenter", () => {
+    });
 
-  loginBtn.style.transform = "translateY(-2px)";
-  loginBtn.style.boxShadow =
-    "0 4px 12px rgba(107, 190, 58, 0.25)";
-  loginBtn.style.background = "#81C784";
+    registerBtn.addEventListener("click", () => {
 
-});
+      window.location.href =
+      "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/register.html";
 
-loginBtn.addEventListener("mouseleave", () => {
+    });
 
-  loginBtn.style.transform = "translateY(0)";
-  loginBtn.style.boxShadow = "none";
-  loginBtn.style.background = "#6BBE3A";
+    loginBtn.addEventListener("mouseenter", () => {
 
-});
+      loginBtn.style.transform = "translateY(-2px)";
 
-const registerBtn =
-document.getElementById("registerBtn");
+      loginBtn.style.boxShadow =
+      "0 4px 12px rgba(107, 190, 58, 0.25)";
 
-registerBtn.addEventListener("mouseenter", () => {
+      loginBtn.style.background = "#81C784";
 
-  registerBtn.style.transform = "translateY(-2px)";
-  registerBtn.style.boxShadow =
-    "0 4px 12px rgba(107, 190, 58, 0.25)";
-  registerBtn.style.background = "#FFE082";
+    });
 
-});
+    loginBtn.addEventListener("mouseleave", () => {
 
-registerBtn.addEventListener("mouseleave", () => {
+      loginBtn.style.transform = "translateY(0)";
 
-  registerBtn.style.transform = "translateY(0)";
-  registerBtn.style.boxShadow = "none";
-  registerBtn.style.background = "#FDD835";
+      loginBtn.style.boxShadow = "none";
 
-});
-      
+      loginBtn.style.background = "#6BBE3A";
 
-        window.location.href =
-  "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/login.html?redirect=" +
-  encodeURIComponent(window.location.pathname);
+    });
 
-      });
+    registerBtn.addEventListener("mouseenter", () => {
+
+      registerBtn.style.transform = "translateY(-2px)";
+
+      registerBtn.style.boxShadow =
+      "0 4px 12px rgba(107, 190, 58, 0.25)";
+
+      registerBtn.style.background = "#FFE082";
+
+    });
+
+    registerBtn.addEventListener("mouseleave", () => {
+
+      registerBtn.style.transform = "translateY(0)";
+
+      registerBtn.style.boxShadow = "none";
+
+      registerBtn.style.background = "#FDD835";
+
+    });
 
   }
+
+});
 
 });
