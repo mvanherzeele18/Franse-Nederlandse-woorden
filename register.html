@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Registreren</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+
+  font-family:'DM Sans', sans-serif;
+  background:#F1F8E9;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+
+}
+
+.box {
+
+  background:white;
+  padding:3rem;
+  border-radius:16px;
+  border:3px solid #6BBE3A;
+  width:350px;
+
+}
+
+input {
+
+  width:100%;
+  padding:12px;
+  margin-bottom:1rem;
+
+}
+
+button {
+
+  width:100%;
+  padding:12px;
+  background:#2E7D32;
+  color:white;
+  border:none;
+  border-radius:8px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>Registreren</h1>
+
+<input type="email" id="email" placeholder="Email">
+
+<input type="password" id="password" placeholder="Wachtwoord">
+
+<button onclick="register()">
+
+Registreren
+
+</button>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+const firebaseConfig = {
+
+  apiKey: "JOUW_API_KEY",
+
+  authDomain: "JOUW_PROJECT.firebaseapp.com",
+
+  projectId: "JOUW_PROJECT_ID",
+
+  storageBucket: "JOUW_PROJECT.appspot.com",
+
+  messagingSenderId: "123456789",
+
+  appId: "JOUW_APP_ID"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+window.register = async function () {
+
+  const email =
+    document.getElementById("email").value;
+
+  const password =
+    document.getElementById("password").value;
+
+  try {
+
+    await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    alert("Account succesvol aangemaakt!");
+
+    window.location.href = "/login.html";
+
+  } catch (error) {
+
+    if (error.code === "auth/email-already-in-use") {
+
+      alert("Dit email-adres heeft al een account.");
+
+    } else {
+
+      alert(error.message);
+
+    }
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
