@@ -75,28 +75,104 @@ onAuthStateChanged(auth, (user) => {
 
         </p>
 
-        <button id="loginBtn" style="
+        <div style="
 
-          background:#6BBE3A;
-          color:white;
-          border:none;
-          padding:12px 24px;
-          border-radius:8px;
-          cursor:pointer;
-          font-size:16px;
+  display:flex;
+  gap:1rem;
+  justify-content:center;
 
-        ">
+">
 
-          Login
+  <button id="loginBtn" style="
 
-        </button>
+    background:#6BBE3A;
+    color:white;
+    border:none;
+    padding:12px 24px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:all 0.3s;
+
+  ">
+
+    Login
+
+  </button>
+
+  <button id="registerBtn" style="
+
+    background:#FDD835;
+    color:#1B5E20;
+    border:none;
+    padding:12px 24px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:all 0.3s;
+
+  ">
+
+    Registreren
+
+  </button>
+
+</div>
 
       </div>
 
     `;
 
     document.getElementById("loginBtn")
-      .addEventListener("click", () => {
+      .addEventListener("click", () => {document.getElementById("registerBtn")
+.addEventListener("click", () => {
+
+  window.location.href =
+  "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/register.html";
+
+});
+
+const loginBtn = document.getElementById("loginBtn");
+
+loginBtn.addEventListener("mouseenter", () => {
+
+  loginBtn.style.transform = "translateY(-2px)";
+  loginBtn.style.boxShadow =
+    "0 4px 12px rgba(107, 190, 58, 0.25)";
+  loginBtn.style.background = "#81C784";
+
+});
+
+loginBtn.addEventListener("mouseleave", () => {
+
+  loginBtn.style.transform = "translateY(0)";
+  loginBtn.style.boxShadow = "none";
+  loginBtn.style.background = "#6BBE3A";
+
+});
+
+const registerBtn =
+document.getElementById("registerBtn");
+
+registerBtn.addEventListener("mouseenter", () => {
+
+  registerBtn.style.transform = "translateY(-2px)";
+  registerBtn.style.boxShadow =
+    "0 4px 12px rgba(107, 190, 58, 0.25)";
+  registerBtn.style.background = "#FFE082";
+
+});
+
+registerBtn.addEventListener("mouseleave", () => {
+
+  registerBtn.style.transform = "translateY(0)";
+  registerBtn.style.boxShadow = "none";
+  registerBtn.style.background = "#FDD835";
+
+});
+      
 
         window.location.href =
   "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/login.html?redirect=" +
