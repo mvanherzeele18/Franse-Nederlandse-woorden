@@ -3,146 +3,320 @@
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<title>Registreren</title>
+  <title>Registreren</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
-<style>
+  <style>
 
-body {
+    body {
 
-  font-family:'DM Sans', sans-serif;
-  background:#F1F8E9;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
+      margin: 0;
 
-}
+      min-height: 100vh;
 
-.box {
+      display: flex;
 
-  background:white;
-  padding:3rem;
-  border-radius:16px;
-  border:3px solid #6BBE3A;
-  width:350px;
+      justify-content: center;
 
-}
+      align-items: center;
 
-input {
+      background: #F1F8E9;
 
-  width:100%;
-  padding:12px;
-  margin-bottom:1rem;
+      font-family: 'DM Sans', sans-serif;
 
-}
+    }
 
-button {
+    .register-box {
 
-  width:100%;
-  padding:12px;
-  background:#2E7D32;
-  color:white;
-  border:none;
-  border-radius:8px;
+      background: white;
 
-}
+      padding: 3rem;
 
-</style>
+      border-radius: 16px;
+
+      border: 3px solid #6BBE3A;
+
+      width: 360px;
+
+      box-shadow:
+      0 8px 24px rgba(107,190,58,0.2);
+
+      text-align: center;
+
+    }
+
+    h1 {
+
+      font-family:
+      'Playfair Display', serif;
+
+      color: #2E7D32;
+
+      margin-bottom: 2rem;
+
+    }
+
+    input {
+
+      width: 100%;
+
+      padding: 14px;
+
+      margin-bottom: 1rem;
+
+      border-radius: 8px;
+
+      border: 2px solid #C5E1A5;
+
+      font-size: 1rem;
+
+      box-sizing: border-box;
+
+      transition: all 0.3s;
+
+    }
+
+    input:focus {
+
+      outline: none;
+
+      border-color: #6BBE3A;
+
+      box-shadow:
+      0 0 8px rgba(107,190,58,0.2);
+
+    }
+
+    button {
+
+      width: 100%;
+
+      padding: 14px;
+
+      border: none;
+
+      border-radius: 8px;
+
+      background: #6BBE3A;
+
+      color: white;
+
+      font-size: 1rem;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition: all 0.3s;
+
+    }
+
+    button:hover {
+
+      transform: translateY(-2px);
+
+      box-shadow:
+      0 4px 12px rgba(107,190,58,0.25);
+
+      background: #81C784;
+
+    }
+
+    .login-link {
+
+      margin-top: 1.5rem;
+
+      display: block;
+
+      color: #2E7D32;
+
+      text-decoration: none;
+
+      font-weight: 500;
+
+      transition: 0.3s;
+
+    }
+
+    .login-link:hover {
+
+      color: #6BBE3A;
+
+    }
+
+    .info {
+
+      color: #558B2F;
+
+      font-size: 0.9rem;
+
+      margin-bottom: 1.5rem;
+
+      line-height: 1.5;
+
+    }
+
+  </style>
 
 </head>
 
 <body>
 
-<div class="box">
+  <div class="register-box">
 
-<h1>Registreren</h1>
+    <h1>Registreren</h1>
 
-<input type="email" id="email" placeholder="Email">
+    <p class="info">
 
-<input type="password" id="password" placeholder="Wachtwoord">
+      Maak een account aan om toegang te krijgen tot de oefeningen en vocabulaire.
 
-<button type="button" onclick="register()">
+    </p>
 
-Registreren
+    <input
+      type="email"
+      id="email"
+      placeholder="E-mailadres"
+    >
 
-</button>
+    <input
+      type="password"
+      id="password"
+      placeholder="Wachtwoord"
+    >
 
-</div>
+    <button type="button"
+            onclick="register()">
 
-<script type="module">
+      Account aanmaken
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    </button>
 
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  sendEmailVerification
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    <a class="login-link"
+       href="/Franse-Nederlandse-woorden/login.html">
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
-  authDomain: "vocabulairesite.firebaseapp.com",
-  projectId: "vocabulairesite",
-  storageBucket: "vocabulairesite.firebasestorage.app",
-  messagingSenderId: "1002919769364",
-  appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
-  measurementId: "G-5FVEW59WH3"
-};
+      Heb je al een account? Inloggen
 
-const app = initializeApp(firebaseConfig);
+    </a>
 
-const auth = getAuth(app);
+  </div>
 
-window.register = async function () {
+  <script type="module">
 
-  const email =
-    document.getElementById("email").value;
+    import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
-  const password =
-    document.getElementById("password").value;
+    import {
 
-  try {
+      getAuth,
 
-    const userCredential =
-await createUserWithEmailAndPassword(
-  auth,
-  email,
-  password
-);
+      createUserWithEmailAndPassword,
 
-await sendEmailVerification(
-  userCredential.user
-);
-
-alert(
-  "Account aangemaakt! Controleer je e-mail voor verificatie. Bekijk ook je spam."
-);
-
-window.location.href = "/Franse-Nederlandse-woorden/login.html";
-
-  } catch (error) {
-
-    if (error.code === "auth/email-already-in-use") {
-
-      alert("Dit email-adres heeft al een account.");
-
-    } else {
-
-      alert(error.message);
+      sendEmailVerification
 
     }
+    from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-  }
+    const firebaseConfig = {
 
-}
+      apiKey:
+      "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
 
-</script>
+      authDomain:
+      "vocabulairesite.firebaseapp.com",
+
+      projectId:
+      "vocabulairesite",
+
+      storageBucket:
+      "vocabulairesite.firebasestorage.app",
+
+      messagingSenderId:
+      "1002919769364",
+
+      appId:
+      "1:1002919769364:web:face9ebdbe3cb1db37fe01",
+
+      measurementId:
+      "G-5FVEW59WH3"
+
+    };
+
+    const app =
+    initializeApp(firebaseConfig);
+
+    const auth =
+    getAuth(app);
+
+    window.register = async function () {
+
+      const email =
+      document.getElementById("email").value;
+
+      const password =
+      document.getElementById("password").value;
+
+      try {
+
+        const userCredential =
+
+        await createUserWithEmailAndPassword(
+
+          auth,
+          email,
+          password
+
+        );
+
+        await sendEmailVerification(
+          userCredential.user
+        );
+
+        alert(
+
+          "Account aangemaakt! Controleer je e-mail voor verificatie. Bekijk ook je spam."
+
+        );
+
+        window.location.href =
+        "/Franse-Nederlandse-woorden/login.html";
+
+      } catch (error) {
+
+        if (
+          error.code ===
+          "auth/email-already-in-use"
+        ) {
+
+          alert(
+            "Dit e-mailadres heeft al een account."
+          );
+
+        } else if (
+          error.code ===
+          "auth/weak-password"
+        ) {
+
+          alert(
+            "Je wachtwoord moet minstens 6 tekens bevatten."
+          );
+
+        } else {
+
+          alert(error.message);
+
+        }
+
+      }
+
+    };
+
+  </script>
 
 </body>
 </html>
