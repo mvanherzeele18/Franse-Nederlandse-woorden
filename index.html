@@ -85,6 +85,33 @@
     font-size: 1rem;
   }
 
+  #logoutBtn {
+
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: var(--yellow);
+  color: var(--green-dark);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#logoutBtn:hover {
+
+  background: var(--green-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(107, 190, 58, 0.25);
+
+}
+  
   main {
     flex: 1;
     max-width: 1200px;
@@ -218,6 +245,13 @@
 <body>
 
 <header>
+
+<button id="logoutBtn">
+
+  Uitloggen
+
+</button>
+  
   <h1>Vocabulaire Français–Nederlands</h1>
   <p>Groenhove Atheneum Waregem</p>
 
@@ -259,5 +293,43 @@
   © 2026 Vanherzeele Matteo
 </footer>
 
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+
+  getAuth,
+
+  signOut
+
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+  authDomain: "vocabulairesite.firebaseapp.com",
+  projectId: "vocabulairesite",
+  storageBucket: "vocabulairesite.firebasestorage.app",
+  messagingSenderId: "1002919769364",
+  appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
+  measurementId: "G-5FVEW59WH3"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+document.getElementById("logoutBtn")
+
+.addEventListener("click", async () => {
+
+  await signOut(auth);
+
+  window.location.href = "/login.html";
+
+});
+
+</script>
+  
 </body>
 </html>
