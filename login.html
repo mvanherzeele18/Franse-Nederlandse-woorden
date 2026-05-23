@@ -123,23 +123,6 @@
 
     }
 
-    .secondary-btn {
-
-      margin-top: 1rem;
-    
-      background: transparent;
-    
-      color: var(--green-dark);
-    
-      border: 2px solid var(--green);
-    
-    }
-    
-    .secondary-btn:hover {
-    
-      background: var(--green-light);
-    
-    }
     .register-link {
 
       margin-top: 1.5rem;
@@ -203,14 +186,6 @@
       Inloggen
 
     </button>
-    <button
-    type="button"
-    onclick="resetPassword()"
-    class="secondary-btn"
-    >
-    Wachtwoord vergeten?
-    </button>
-
     
     <a class="register-link"
        href="/Franse-Nederlandse-woorden/register.html">
@@ -302,43 +277,6 @@
 
           return;
 
-        }
-        window.resetPassword = async function () {
-        
-          const email =
-          document.getElementById("email").value;
-        
-          if (!email) {
-        
-            alert(
-              "Vul eerst je e-mailadres in."
-            );
-        
-            return;
-        
-          }
-        
-          try {
-        
-            await sendPasswordResetEmail(
-              auth,
-              email
-            );
-        
-            alert(
-              "Er werd een resetmail verzonden. Bekijk ook je spam."
-            );
-        
-          } catch (error) {
-        
-            alert(
-              "Kon geen resetmail verzenden."
-            );
-        
-            console.log(error);
-        
-          }
-        
         }
 
         const params =
