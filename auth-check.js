@@ -17,9 +17,7 @@ const firebaseConfig = {
 
   messagingSenderId: "1002919769364",
 
-  appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
-
-  measurementId: "G-5FVEW59WH3"
+  appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01"
 
 };
 
@@ -50,7 +48,6 @@ onAuthStateChanged(auth, (user) => {
     document.body.innerHTML = `
 
       <div style="
-
         background:white;
         padding:3rem;
         border-radius:16px;
@@ -58,41 +55,29 @@ onAuthStateChanged(auth, (user) => {
         text-align:center;
         max-width:400px;
         box-shadow:0 8px 24px rgba(107,190,58,0.2);
-
       ">
 
         <h1 style="
-
           color:#2E7D32;
           margin-bottom:1rem;
-
         ">
-
           Niet ingelogd
-
         </h1>
 
         <p style="
-
           color:#1B5E20;
           margin-bottom:2rem;
-
         ">
-
           Je moet eerst inloggen om deze pagina te bekijken.
-
         </p>
 
         <div style="
-
           display:flex;
           gap:1rem;
           justify-content:center;
-
         ">
 
           <button id="loginBtn" style="
-
             background:#6BBE3A;
             color:white;
             border:none;
@@ -102,15 +87,11 @@ onAuthStateChanged(auth, (user) => {
             font-size:16px;
             font-weight:600;
             transition:all 0.3s;
-
           ">
-
             Login
-
           </button>
 
           <button id="registerBtn" style="
-
             background:#FDD835;
             color:#1B5E20;
             border:none;
@@ -120,11 +101,8 @@ onAuthStateChanged(auth, (user) => {
             font-size:16px;
             font-weight:600;
             transition:all 0.3s;
-
           ">
-
             Registreren
-
           </button>
 
         </div>
@@ -134,23 +112,23 @@ onAuthStateChanged(auth, (user) => {
     `;
 
     const loginBtn =
-    document.getElementById("loginBtn");
+      document.getElementById("loginBtn");
 
     const registerBtn =
-    document.getElementById("registerBtn");
+      document.getElementById("registerBtn");
 
     loginBtn.addEventListener("click", () => {
 
       window.location.href =
-      "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/login.html?redirect=" +
-      encodeURIComponent(window.location.pathname);
+        "/login.html?redirect=" +
+        encodeURIComponent(window.location.pathname);
 
     });
 
     registerBtn.addEventListener("click", () => {
 
       window.location.href =
-      "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/register.html";
+        "/register.html";
 
     });
 
@@ -159,7 +137,7 @@ onAuthStateChanged(auth, (user) => {
       loginBtn.style.transform = "translateY(-2px)";
 
       loginBtn.style.boxShadow =
-      "0 4px 12px rgba(107, 190, 58, 0.25)";
+        "0 4px 12px rgba(107, 190, 58, 0.25)";
 
       loginBtn.style.background = "#81C784";
 
@@ -180,7 +158,7 @@ onAuthStateChanged(auth, (user) => {
       registerBtn.style.transform = "translateY(-2px)";
 
       registerBtn.style.boxShadow =
-      "0 4px 12px rgba(107, 190, 58, 0.25)";
+        "0 4px 12px rgba(107, 190, 58, 0.25)";
 
       registerBtn.style.background = "#FFE082";
 
@@ -197,7 +175,5 @@ onAuthStateChanged(auth, (user) => {
     });
 
   }
-
-});
 
 });
