@@ -57,7 +57,19 @@ window.login = async function () {
     );
 
 
-    window.location.href = "dashboard.html";
+    const params = new URLSearchParams(window.location.search);
+
+const redirect = params.get("redirect");
+
+if (redirect) {
+
+  window.location.href = redirect;
+
+} else {
+
+  window.location.href = "/";
+
+}
 
   } catch (error) {
 
