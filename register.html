@@ -81,7 +81,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebas
 
 import {
   getAuth,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  sendEmailVerification
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 const firebaseConfig = {
@@ -108,15 +109,22 @@ window.register = async function () {
 
   try {
 
-    await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    const userCredential =
+await createUserWithEmailAndPassword(
+  auth,
+  email,
+  password
+);
 
-    alert("Account succesvol aangemaakt!");
+await sendEmailVerification(
+  userCredential.user
+);
 
-    window.location.href = "/Franse-Nederlandse-woorden/login.html";
+alert(
+  "Account aangemaakt! Controleer je e-mail voor verificatie."
+);
+
+window.location.href = "/Franse-Nederlandse-woorden/login.html";
 
   } catch (error) {
 
