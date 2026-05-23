@@ -56,6 +56,15 @@ window.login = async function () {
       password
     );
 
+    if (!userCredential.user.emailVerified) {
+
+      alert(
+        "Controleer eerst je e-mail en verifieer je account."
+      );
+    
+      return;
+    
+    }
 
     const params = new URLSearchParams(window.location.search);
 
