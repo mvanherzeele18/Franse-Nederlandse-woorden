@@ -543,15 +543,21 @@ onAuthStateChanged(auth, (user) => {
 
     document.body.style.display = "flex";
 
-    if (
-      user.email ===
-      "vanherzeelematteo@gmail.com"
-    ) {
+    const allowedAdmins = [
 
-      document.getElementById("adminBtn")
-      .style.display = "block";
+  "vanherzeelematteo@gmail.com",
+  "vanherzeele.matteo@groenhoveschool.be",
 
-    }
+];
+
+if (
+  allowedAdmins.includes(user.email)
+) {
+
+  document.getElementById("adminBtn")
+  .style.display = "block";
+
+}
 
   } else {
 
