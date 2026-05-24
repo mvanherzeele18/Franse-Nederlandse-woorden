@@ -41,47 +41,81 @@ body {
 
 header {
 
-  background: var(--green-dark);
+  background: linear-gradient(
+    135deg,
+    var(--green-dark) 0%,
+    var(--green) 100%
+  );
+
   padding: 2rem;
+
   border-bottom: 4px solid var(--yellow);
 
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
-  gap: 1rem;
+
   flex-wrap: wrap;
+
+  gap: 1rem;
 
 }
 
 header h1 {
 
   font-family: 'Playfair Display', serif;
+
   color: var(--yellow);
+
   font-size: 2rem;
 
 }
 
-.back-btn {
+.nav-btn {
 
   background: var(--yellow);
+
   color: var(--green-dark);
 
   text-decoration: none;
 
-  padding: 0.8rem 1.2rem;
+  padding: 0.7rem 1.2rem;
 
   border-radius: 10px;
 
   font-weight: 600;
 
-  transition: 0.3s;
+  transition: all 0.3s;
 
 }
 
-.back-btn:hover {
+.nav-btn:hover {
 
   background: var(--green-light);
+
   transform: translateY(-2px);
+
+}
+
+@media (max-width: 600px) {
+
+  header {
+
+    flex-direction: column;
+
+    text-align: center;
+
+  }
+
+  .nav-btn {
+
+    width: 100%;
+
+    text-align: center;
+
+  }
 
 }
 
@@ -200,13 +234,14 @@ main {
 <body>
 
 <header>
-
   <h1>Aankondigingen</h1>
 
-  <a href="index.html" class="back-btn">
+  <a 
+    href="index.html"
+    class="nav-btn"
+  >
     ← Terug
   </a>
-
 </header>
 
 <main id="announcementContainer">
