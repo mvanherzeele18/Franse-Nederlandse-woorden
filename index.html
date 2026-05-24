@@ -583,10 +583,14 @@ async function checkAnnouncements() {
     snapshot.docs.length;
 
   const seenAnnouncements =
-    localStorage.getItem("seenAnnouncements");
+    Number(
+      localStorage.getItem(
+        "seenAnnouncements"
+      )
+    ) || 0;
 
   if (
-    seenAnnouncements != totalAnnouncements
+    totalAnnouncements > seenAnnouncements
   ) {
 
     document.getElementById(
