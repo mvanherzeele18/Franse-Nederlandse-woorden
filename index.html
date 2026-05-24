@@ -297,18 +297,32 @@ footer {
   header {
 
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
+    padding: 2rem 1rem;
 
   }
 
   .top-buttons {
 
     position: static;
-    margin-top: 1.5rem;
-    margin-bottom: 0.8rem;
+
+    order: 3;
+
     width: 100%;
+
+    display: flex;
+
     justify-content: center;
+
+    gap: 0.7rem;
+
+    margin-top: 1.5rem;
+
+    margin-bottom: 0.8rem;
 
   }
 
@@ -316,9 +330,13 @@ footer {
   #profileBtn {
 
     width: 48%;
+
     max-width: 160px;
+
     padding: 0.6rem 1rem;
+
     font-size: 0.85rem;
+
     border-radius: 8px;
 
   }
@@ -326,7 +344,11 @@ footer {
   #profileMenu {
 
     position: static;
+
+    order: 4;
+
     width: 100%;
+
     margin-top: 0.5rem;
 
   }
@@ -334,9 +356,26 @@ footer {
   .bug-report-btn {
 
     position: static;
+
+    order: 5;
+
     margin-top: 1rem;
+
     width: 100%;
+
     justify-content: center;
+
+  }
+
+  header h1 {
+
+    order: 1;
+
+  }
+
+  header p {
+
+    order: 2;
 
   }
 
