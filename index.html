@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Vocabulaire – Kies je jaar</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -10,6 +11,7 @@
 <style>
 
 :root {
+
   --green: #6BBE3A;
   --green-light: #D4E8B8;
   --green-dark: #2E7D32;
@@ -18,46 +20,163 @@
   --muted: #558B2F;
   --bg: #F1F8E9;
   --white: #FFFFFF;
+
 }
 
 * {
+
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
 }
 
 body {
+
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
 }
 
 header {
+
   background: var(--green-dark);
   padding: 3rem 2rem;
   text-align: center;
   border-bottom: 4px solid var(--yellow);
   position: relative;
+
 }
 
 header h1 {
+
   font-family: 'Playfair Display', serif;
   font-size: clamp(2rem, 5vw, 3rem);
   color: var(--yellow);
   letter-spacing: 0.02em;
   margin-bottom: 0.5rem;
+
 }
 
 header p {
+
   color: var(--green-light);
   font-size: 1.1rem;
   font-weight: 300;
+
+}
+
+.top-buttons {
+
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  gap: 0.7rem;
+  z-index: 9999;
+
+}
+
+#logoutBtn,
+#profileBtn {
+
+  background: var(--yellow);
+  color: var(--green-dark);
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.08);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+#logoutBtn:hover,
+#profileBtn:hover {
+
+  background: var(--green-light);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 4px 12px rgba(107, 190, 58, 0.25);
+
+}
+
+#profileMenu {
+
+  position: fixed;
+
+  top: 4.5rem;
+
+  left: 1rem;
+
+  background: white;
+
+  border-radius: 12px;
+
+  padding: 0.8rem;
+
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.12);
+
+  display: none;
+
+  flex-direction: column;
+
+  gap: 0.5rem;
+
+  min-width: 220px;
+
+  z-index: 9999;
+
+}
+
+#profileMenu button {
+
+  background: var(--bg);
+
+  border: none;
+
+  padding: 0.8rem 1rem;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-family: 'DM Sans', sans-serif;
+
+  font-weight: 600;
+
+  color: var(--green-dark);
+
+  transition: all 0.3s;
+
+  text-align: left;
+
+}
+
+#profileMenu button:hover {
+
+  background: var(--green-light);
+
+  transform: translateX(4px);
+
 }
 
 .bug-report-btn {
+
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -74,157 +193,22 @@ header p {
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
+
 }
 
 .bug-report-btn:hover {
-  background: var(--green-light);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(107, 190, 58, 0.25);
-}
-
-#logoutBtn {
-
-  position: fixed;
-
-  top: 1rem;
-
-  left: 1rem;
-
-  background: var(--yellow);
-
-  color: var(--green-dark);
-
-  border: none;
-
-  padding: 0.6rem 1rem;
-
-  border-radius: 10px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  font-size: 0.9rem;
-
-  transition: all 0.3s;
-
-  z-index: 9999;
-
-  box-shadow:
-  0 4px 12px rgba(0,0,0,0.08);
-
-}
-
-#logoutBtn:hover {
 
   background: var(--green-light);
 
   transform: translateY(-2px);
 
   box-shadow:
-  0 4px 12px rgba(107, 190, 58, 0.25);
-
-}
-
-#profileBtn {
-
-  position: fixed;
-
-  top: 1rem;
-
-  left: 9.5rem;
-
-  width: 45px;
-
-  height: 45px;
-
-  border-radius: 50%;
-
-  border: none;
-
-  background: var(--yellow);
-
-  color: var(--green-dark);
-
-  font-size: 1.2rem;
-
-  cursor: pointer;
-
-  transition: all 0.3s;
-
-  z-index: 9999;
-
-  box-shadow:
-  0 4px 12px rgba(0,0,0,0.08);
-
-}
-
-#profileBtn:hover {
-
-  background: var(--green-light);
-
-  transform: translateY(-2px);
-
-}
-
-#profileMenu {
-
-  position: fixed;
-
-  top: 4.5rem;
-
-  left: 9.5rem;
-
-  background: white;
-
-  border-radius: 14px;
-
-  padding: 0.8rem;
-
-  width: 220px;
-
-  display: none;
-
-  flex-direction: column;
-
-  gap: 0.6rem;
-
-  z-index: 9999;
-
-  box-shadow:
-  0 8px 24px rgba(0,0,0,0.12);
-
-}
-
-#profileMenu button {
-
-  background: var(--bg);
-
-  border: none;
-
-  padding: 0.9rem;
-
-  border-radius: 10px;
-
-  font-weight: 600;
-
-  color: var(--green-dark);
-
-  cursor: pointer;
-
-  transition: all 0.3s;
-
-}
-
-#profileMenu button:hover {
-
-  background: var(--green);
-
-  color: white;
+    0 4px 12px rgba(107, 190, 58, 0.25);
 
 }
 
 main {
+
   flex: 1;
   max-width: 1200px;
   width: 100%;
@@ -235,34 +219,44 @@ main {
   justify-content: center;
   align-items: center;
   gap: 3rem;
+
 }
 
 .intro {
+
   text-align: center;
   margin-bottom: 2rem;
+
 }
 
 .intro h2 {
+
   font-family: 'Playfair Display', serif;
   font-size: 1.8rem;
   color: var(--green-dark);
   margin-bottom: 1rem;
+
 }
 
 .intro p {
+
   font-size: 1.1rem;
   color: var(--text);
   line-height: 1.6;
+
 }
 
 .choice-container {
+
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   width: 100%;
+
 }
 
 .choice-card {
+
   background: var(--white);
   border: 3px solid var(--green);
   border-radius: 12px;
@@ -275,27 +269,27 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
 }
 
 .choice-card:hover {
+
   background: var(--green);
   color: var(--white);
   transform: translateY(-8px);
   box-shadow: 0 8px 24px rgba(107, 190, 58, 0.3);
-}
 
-.choice-card h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.6rem;
 }
 
 footer {
+
   text-align: center;
   padding: 2rem;
   color: var(--muted);
   font-size: 0.85rem;
   border-top: 1px solid var(--green-light);
   margin-top: auto;
+
 }
 
 @media (max-width: 768px) {
@@ -308,41 +302,41 @@ footer {
 
   }
 
-  #logoutBtn {
+  .top-buttons {
 
     position: static;
-    order: 4;
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
     width: 100%;
-    max-width: 250px;
-    margin-top: 1rem;
+    justify-content: center;
 
   }
 
+  #logoutBtn,
   #profileBtn {
 
-    position: static;
-    order: 3;
-    margin-top: 1rem;
+    width: 48%;
+    max-width: 160px;
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 8px;
 
   }
 
   #profileMenu {
 
     position: static;
-    order: 5;
     width: 100%;
-    max-width: 250px;
+    margin-top: 0.5rem;
 
   }
 
   .bug-report-btn {
 
     position: static;
-    order: 6;
-    width: 100%;
-    max-width: 250px;
-    justify-content: center;
     margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
 
   }
 
@@ -355,17 +349,17 @@ footer {
 
 <header>
 
-<button id="logoutBtn">
+<div class="top-buttons">
 
-  Uitloggen
+  <button id="profileBtn">
+    👤
+  </button>
 
-</button>
+  <button id="logoutBtn">
+    Uitloggen
+  </button>
 
-<button id="profileBtn">
-
-  👤
-
-</button>
+</div>
 
 <div id="profileMenu">
 
@@ -394,10 +388,9 @@ footer {
 <a 
 href="https://docs.google.com/forms/d/e/1FAIpQLSdJUHf3tuMiZtz2If9wSjU9XPaIeX3EOMbBtBU_hFrOJbiw6Q/viewform?usp=publish-editor"
 target="_blank"
-class="bug-report-btn">
-
+class="bug-report-btn"
+>
 Fout melden
-
 </a>
 
 </header>
@@ -406,33 +399,29 @@ Fout melden
 
 <div class="intro">
 
-<h2>Kies je jaar</h2>
+  <h2>Kies je jaar</h2>
 
-<p>Selecteer het jaar waar je in zit</p>
+  <p>Selecteer het jaar waar je in zit</p>
 
 </div>
 
 <div class="choice-container">
 
-<a href="3dejaar/index.html" class="choice-card">
+  <a href="3dejaar/index.html" class="choice-card">
 
-<h3>3de jaar</h3>
+    <h3>3de jaar</h3>
 
-<p>Ga naar het derde jaar</p>
+    <p>Ga naar het derde jaar</p>
 
-<p>Waarschuwing! Het boek Coup de Coeur 3 verandert in het schooljaar 26/27</p>
+  </a>
 
-</a>
+  <a href="4dejaar/index.html" class="choice-card">
 
-<a href="4dejaar/index.html" class="choice-card">
+    <h3>4de jaar</h3>
 
-<h3>4de jaar</h3>
+    <p>Ga naar het vierde jaar</p>
 
-<p>Ga naar het vierde jaar</p>
-
-<p>Tijdelijk niet beschikbaar</p>
-
-</a>
+  </a>
 
 </div>
 
@@ -446,52 +435,33 @@ Fout melden
 
 <script type="module">
 
-import { initializeApp }
-
-from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
 import {
 
   getAuth,
-
   signOut,
-
   onAuthStateChanged
 
-}
-
-from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 const firebaseConfig = {
 
-  apiKey:
-  "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
-
-  authDomain:
-  "vocabulairesite.firebaseapp.com",
-
-  projectId:
-  "vocabulairesite",
-
-  storageBucket:
-  "vocabulairesite.firebasestorage.app",
-
-  messagingSenderId:
-  "1002919769364",
-
-  appId:
-  "1:1002919769364:web:face9ebdbe3cb1db37fe01"
+  apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+  authDomain: "vocabulairesite.firebaseapp.com",
+  projectId: "vocabulairesite",
+  storageBucket: "vocabulairesite.firebasestorage.app",
+  messagingSenderId: "1002919769364",
+  appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
+  measurementId: "G-5FVEW59WH3"
 
 };
 
-const app =
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const auth =
-getAuth(app);
+const auth = getAuth(app);
 
-document
-.getElementById("logoutBtn")
+document.getElementById("logoutBtn")
 
 .addEventListener("click", async () => {
 
@@ -510,7 +480,9 @@ document.getElementById("profileMenu");
 
 profileBtn.addEventListener("click", () => {
 
-  if(profileMenu.style.display === "flex"){
+  if (
+    profileMenu.style.display === "flex"
+  ) {
 
     profileMenu.style.display = "none";
 
@@ -524,19 +496,30 @@ profileBtn.addEventListener("click", () => {
 
 onAuthStateChanged(auth, (user) => {
 
-  if(user?.email === "vanherzeelematteo@gmail.com"){
+  if (user) {
 
-    document
-    .getElementById("adminBtn")
-    .style.display = "block";
+    document.body.style.display = "flex";
+
+    if (
+      user.email ===
+      "vanherzeelematteo@gmail.com"
+    ) {
+
+      document.getElementById("adminBtn")
+      .style.display = "block";
+
+    }
+
+  } else {
+
+    window.location.href =
+    "/Franse-Nederlandse-woorden/login.html";
 
   }
 
 });
 
 </script>
-
-<script type="module" src="./auth-check.js"></script>
 
 </body>
 </html>
