@@ -21,11 +21,19 @@
 
 }
 
-body {
+* {
 
   margin:0;
+  padding:0;
+  box-sizing:border-box;
+
+}
+
+body {
+
   font-family:'DM Sans', sans-serif;
   background:var(--bg);
+
   padding:2rem;
 
 }
@@ -40,26 +48,36 @@ body {
 h1 {
 
   font-family:'Playfair Display', serif;
+
   color:var(--green-dark);
-  margin-bottom:2rem;
+
   text-align:center;
+
+  margin-bottom:2rem;
 
 }
 
 .announcement {
 
   background:var(--white);
+
   border:3px solid var(--green);
+
   border-radius:16px;
+
   padding:1.5rem;
+
   margin-bottom:1rem;
-  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+
+  box-shadow:
+  0 4px 12px rgba(0,0,0,0.08);
 
 }
 
 .announcement h2 {
 
   color:var(--green-dark);
+
   margin-bottom:0.5rem;
 
 }
@@ -67,13 +85,41 @@ h1 {
 .announcement p {
 
   color:#333;
+
   line-height:1.6;
+
+}
+
+.delete-btn {
+
+  margin-top:1rem;
+
+  background:#e53935;
+
+  color:white;
+
+  border:none;
+
+  padding:0.7rem 1rem;
+
+  border-radius:8px;
+
+  cursor:pointer;
+
+  font-weight:600;
+
+}
+
+.delete-btn:hover {
+
+  background:#c62828;
 
 }
 
 .empty {
 
   text-align:center;
+
   color:var(--green-dark);
 
 }
@@ -91,40 +137,139 @@ h1 {
 
 </div>
 
-<script>
+<script type="module">
 
-const announcements =
-JSON.parse(
-localStorage.getItem("announcements")
-) || [];
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+
+  getFirestore,
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+  deleteDoc,
+  doc
+
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+import {
+
+  getAuth,
+  onAuthStateChanged
+
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+  authDomain: "vocabulairesite.firebaseapp.com",
+  projectId: "vocabulairesite",
+  storageBucket: "vocabulairesite.firebasestorage.app",
+  messagingSenderId: "1002919769364",
+  appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
+  measurementId: "G-5FVEW59WH3"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const auth = getAuth(app);
+
+let currentUser = null;
+
+onAuthStateChanged(auth, (user) => {
+
+  currentUser = user;
+
+});
 
 const container =
 document.getElementById("announcements");
 
-if (announcements.length === 0) {
+const q =
+query(
+  collection(db, "announcements"),
+  orderBy("createdAt", "desc")
+);
 
-  container.innerHTML =
-  '<p class="empty">Nog geen aankondigingen.</p>';
+onSnapshot(q, (snapshot) => {
 
-} else {
+  container.innerHTML = "";
 
-  announcements.reverse().forEach(item => {
+  if (snapshot.empty) {
 
-    container.innerHTML += `
+    container.innerHTML =
+    '<p class="empty">Nog geen aankondigingen.</p>';
 
-      <div class="announcement">
+    return;
 
-        <h2>${item.title}</h2>
+  }
 
-        <p>${item.message}</p>
+  snapshot.forEach((docSnap) => {
 
-      </div>
+    const data = docSnap.data();
+
+    const div =
+    document.createElement("div");
+
+    div.className = "announcement";
+
+    let deleteButton = "";
+
+    if (
+      currentUser &&
+      currentUser.email ===
+      "vanherzeelematteo@gmail.com"
+    ) {
+
+      deleteButton = `
+
+        <button
+        class="delete-btn"
+        onclick="deleteAnnouncement('${docSnap.id}')">
+        Verwijderen
+        </button>
+
+      `;
+
+    }
+
+    div.innerHTML = `
+
+      <h2>${data.title}</h2>
+
+      <p>${data.message}</p>
+
+      ${deleteButton}
 
     `;
 
+    container.appendChild(div);
+
   });
 
-}
+});
+
+window.deleteAnnouncement =
+async function(id) {
+
+  if (
+    !confirm(
+      "Ben je zeker dat je deze aankondiging wilt verwijderen?"
+    )
+  ) return;
+
+  await deleteDoc(
+    doc(db, "announcements", id)
+  );
+
+};
 
 </script>
 
