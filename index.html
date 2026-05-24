@@ -37,7 +37,7 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  display: none;
+  display: flex;
   flex-direction: column;
 
 }
@@ -137,7 +137,7 @@ header p {
 
   gap: 0.5rem;
 
-  min-width: 240px;
+  min-width: 220px;
 
   z-index: 9999;
 
@@ -165,8 +165,6 @@ header p {
 
   text-align: left;
 
-  position: relative;
-
 }
 
 #profileMenu button:hover {
@@ -174,26 +172,6 @@ header p {
   background: var(--green-light);
 
   transform: translateX(4px);
-
-}
-
-#announcementDot {
-
-  position: absolute;
-
-  top: 10px;
-
-  right: 12px;
-
-  width: 10px;
-
-  height: 10px;
-
-  background: red;
-
-  border-radius: 50%;
-
-  display: none;
 
 }
 
@@ -406,7 +384,7 @@ footer {
 </style>
 </head>
 
-<body>
+<body style="display:none;">
 
 <header>
 
@@ -433,11 +411,7 @@ footer {
   </button>
 
   <button onclick="window.location.href='aankondigingen.html'">
-
     Aankondigingen
-
-    <span id="announcementDot"></span>
-
   </button>
 
   <button 
@@ -445,8 +419,8 @@ footer {
   style="display:none;"
   onclick="window.location.href='admin.html'"
   >
-    Admin
-  </button>
+  Admin
+</button>
 
 </div>
 
@@ -514,14 +488,6 @@ import {
 
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-import {
-
-  getFirestore,
-  collection,
-  getDocs
-
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
 const firebaseConfig = {
 
   apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
@@ -537,8 +503,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
-
-const db = getFirestore(app);
 
 document.getElementById("logoutBtn")
 
@@ -573,36 +537,6 @@ profileBtn.addEventListener("click", () => {
 
 });
 
-async function checkAnnouncements() {
-
-  const snapshot = await getDocs(
-    collection(db, "announcements")
-  );
-
-  const totalAnnouncements =
-    snapshot.docs.length;
-
-  const seenAnnouncements =
-    Number(
-      localStorage.getItem(
-        "seenAnnouncements"
-      )
-    ) || 0;
-
-  if (
-    totalAnnouncements > seenAnnouncements
-  ) {
-
-    document.getElementById(
-      "announcementDot"
-    ).style.display = "block";
-
-  }
-
-}
-
-checkAnnouncements();
-
 onAuthStateChanged(auth, (user) => {
 
   if (user) {
@@ -611,19 +545,19 @@ onAuthStateChanged(auth, (user) => {
 
     const allowedAdmins = [
 
-      "vanherzeelematteo@gmail.com",
-      "vanherzeele.matteo@groenhoveschool.be",
+  "vanherzeelematteo@gmail.com",
+  "vanherzeele.matteo@groenhoveschool.be",
 
-    ];
+];
 
-    if (
-      allowedAdmins.includes(user.email)
-    ) {
+if (
+  allowedAdmins.includes(user.email)
+) {
 
-      document.getElementById("adminBtn")
-      .style.display = "block";
+  document.getElementById("adminBtn")
+  .style.display = "block";
 
-    }
+}
 
   } else {
 
