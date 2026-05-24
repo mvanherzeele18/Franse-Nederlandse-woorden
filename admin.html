@@ -21,82 +21,149 @@
 
 }
 
+* {
+
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
 body {
 
-  margin:0;
   font-family:'DM Sans', sans-serif;
-  background:var(--bg);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
+  background: var(--bg);
+  min-height: 100vh;
+
+  display: none;
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 2rem;
 
 }
 
 .box {
 
-  background:var(--white);
-  border:3px solid var(--green);
-  border-radius:16px;
-  padding:3rem;
-  width:90%;
-  max-width:500px;
-  text-align:center;
-  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+  background: var(--white);
+
+  border: 3px solid var(--green);
+
+  border-radius: 16px;
+
+  padding: 3rem;
+
+  width: 100%;
+
+  max-width: 500px;
+
+  text-align: center;
+
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.08);
 
 }
 
 h1 {
 
   font-family:'Playfair Display', serif;
-  color:var(--green-dark);
-  margin-bottom:1rem;
+
+  color: var(--green-dark);
+
+  margin-bottom: 1rem;
+
+  font-size: 2rem;
 
 }
 
 p {
 
-  color:var(--green-dark);
-  margin-bottom:2rem;
+  color: var(--green-dark);
+
+  margin-bottom: 2rem;
+
+  font-size: 1rem;
+
+}
+
+.button-group {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 1rem;
 
 }
 
 button {
 
-  background:var(--yellow);
-  color:var(--green-dark);
-  border:none;
-  padding:0.9rem 1.4rem;
-  border-radius:10px;
-  font-weight:600;
-  cursor:pointer;
-  transition:0.3s;
+  background: var(--yellow);
+
+  color: var(--green-dark);
+
+  border: none;
+
+  padding: 1rem 1.4rem;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.3s;
+
+  font-size: 0.95rem;
 
 }
 
 button:hover {
 
-  background:var(--green-light);
-  transform:translateY(-2px);
+  background: var(--green-light);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 4px 12px rgba(107,190,58,0.25);
+
+}
+
+@media (max-width: 600px) {
+
+  .box {
+
+    padding: 2rem 1.5rem;
+
+  }
 
 }
 
 </style>
 </head>
 
-<body style="display:none;">
+<body>
 
 <div class="box">
 
-<h1>Admin Panel</h1>
+  <h1>Admin Panel</h1>
 
-<p>
-Welkom Matteo!
-</p>
+  <p>
+    Welkom Matteo!
+  </p>
 
-<button onclick="logout()">
-Uitloggen
-</button>
+  <div class="button-group">
+
+    <button onclick="window.location.href='index.html'">
+      Naar homepage
+    </button>
+
+    <button onclick="logout()">
+      Uitloggen
+    </button>
+
+  </div>
 
 </div>
 
@@ -107,7 +174,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebas
 import {
 
   getAuth,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signOut
 
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
@@ -158,9 +226,18 @@ onAuthStateChanged(auth, (user) => {
 
   }
 
-  document.body.style.display = "block";
+  document.body.style.display = "flex";
 
 });
+
+window.logout = async function () {
+
+  await signOut(auth);
+
+  window.location.href =
+  "/Franse-Nederlandse-woorden/login.html";
+
+};
 
 </script>
 
