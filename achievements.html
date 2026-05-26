@@ -246,15 +246,83 @@ const db = getFirestore(app);
 const achievements = [
 
   {
-
-    id: "dossier1perfect",
-
+    id: "nlfr1",
     title:
     "3de jaar - Haal 100% op Nederlands → Frans Dossier 1",
-
     description:
-    "Behaal 100% op de oefening.",
+    "Behaal 100% op de oefening."
+  },
 
+  {
+    id: "nlfr2",
+    title:
+    "3de jaar - Haal 100% op Nederlands → Frans Dossier 2",
+    description:
+    "Behaal 100% op de oefening."
+  },
+
+  {
+    id: "nlfr3",
+    title:
+    "3de jaar - Haal 100% op Nederlands → Frans Dossier 3",
+    description:
+    "Behaal 100% op de oefening."
+  },
+
+  {
+    id: "nlfr4",
+    title:
+    "3de jaar - Haal 100% op Nederlands → Frans Dossier 4",
+    description:
+    "Behaal 100% op de oefening."
+  },
+
+  {
+    id: "nlfr5",
+    title:
+    "3de jaar - Haal 100% op Nederlands → Frans Dossier 5",
+    description:
+    "Behaal 100% op de oefening."
+  },
+
+  {
+    id: "frnl1",
+    title:
+    "3de jaar - Haal 100% op Frans → Nederlands Dossier 1",
+    description:
+    "Behaal 100% op de oefening."
+  },
+
+  {
+    id: "frnl2",
+    title:
+    "3de jaar - Haal 100% op Frans → Nederlands Dossier 2",
+    description:
+    "Behaal 100% op de oefening."
+  },
+
+  {
+    id: "frnl3",
+    title:
+    "3de jaar - Haal 100% op Frans → Nederlands Dossier 3",
+    description:
+    "Behaal 100% op de oefening."
+  },
+
+  {
+    id: "frnl4",
+    title:
+    "3de jaar - Haal 100% op Frans → Nederlands Dossier 4",
+    description:
+    "Behaal 100% op de oefening."
+  },
+
+  {
+    id: "frnl5",
+    title:
+    "3de jaar - Haal 100% op Frans → Nederlands Dossier 5",
+    description:
+    "Behaal 100% op de oefening."
   }
 
 ];
@@ -291,10 +359,10 @@ onAuthStateChanged(auth, async (user) => {
   achievements.sort((a,b) => {
 
     const aDate =
-    data[a.id]?.date || 0;
+    data[a.id]?.date?.seconds || 0;
 
     const bDate =
-    data[b.id]?.date || 0;
+    data[b.id]?.date?.seconds || 0;
 
     return bDate - aDate;
 
