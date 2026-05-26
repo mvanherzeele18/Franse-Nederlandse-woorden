@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Achievements</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+
+  --green: #6BBE3A;
+  --green-light: #D4E8B8;
+  --green-dark: #2E7D32;
+  --yellow: #FDD835;
+  --bg: #F1F8E9;
+  --white: #FFFFFF;
+  --gray: #d7d7d7;
+  --gray-text: #777;
+
+}
+
+* {
+
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+
+}
+
+body {
+
+  font-family:'DM Sans', sans-serif;
+  background:var(--bg);
+  min-height:100vh;
+  display:none;
+  flex-direction:column;
+
+}
+
+header {
+
+  background: linear-gradient(
+    135deg,
+    var(--green-dark) 0%,
+    var(--green) 100%
+  );
+
+  padding:2rem;
+
+  border-bottom:4px solid var(--yellow);
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  flex-wrap:wrap;
+
+  gap:1rem;
+
+}
+
+header h1 {
+
+  font-family:'Playfair Display', serif;
+  color:var(--yellow);
+  font-size:2rem;
+
+}
+
+.nav-btn {
+
+  background:var(--yellow);
+
+  color:var(--green-dark);
+
+  text-decoration:none;
+
+  padding:0.7rem 1.2rem;
+
+  border-radius:10px;
+
+  font-weight:600;
+
+  transition:0.3s;
+
+}
+
+.nav-btn:hover {
+
+  background:var(--green-light);
+
+  transform:translateY(-2px);
+
+}
+
+main {
+
+  flex:1;
+
+  width:100%;
+
+  max-width:900px;
+
+  margin:2rem auto;
+
+  padding:0 1rem;
+
+}
+
+.achievement {
+
+  background:var(--white);
+
+  border-left:8px solid var(--green);
+
+  border-radius:14px;
+
+  padding:1.5rem;
+
+  margin-bottom:1rem;
+
+  box-shadow:
+    0 4px 14px rgba(0,0,0,0.08);
+
+}
+
+.achievement.locked {
+
+  background:var(--gray);
+
+  border-left:8px solid #999;
+
+  color:var(--gray-text);
+
+}
+
+.achievement h2 {
+
+  font-size:1.1rem;
+
+  margin-bottom:0.5rem;
+
+}
+
+.achievement p {
+
+  font-size:0.95rem;
+
+}
+
+.date {
+
+  margin-top:0.8rem;
+
+  font-size:0.8rem;
+
+  opacity:0.8;
+
+}
+
+@media (max-width:600px) {
+
+  header {
+
+    flex-direction:column;
+
+    text-align:center;
+
+  }
+
+  .nav-btn {
+
+    width:100%;
+
+    text-align:center;
+
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <h1>Achievements</h1>
+
+  <a href="index.html" class="nav-btn">
+    ← Terug
+  </a>
+
+</header>
+
+<main id="achievementList">
+
+</main>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+
+  getAuth,
+  onAuthStateChanged
+
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+import {
+
+  getFirestore,
+  doc,
+  getDoc
+
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+  authDomain: "vocabulairesite.firebaseapp.com",
+  projectId: "vocabulairesite",
+  storageBucket: "vocabulairesite.firebasestorage.app",
+  messagingSenderId: "1002919769364",
+  appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
+  measurementId: "G-5FVEW59WH3"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+const achievements = [
+
+  {
+
+    id: "dossier1perfect",
+
+    title:
+    "3de jaar - Haal 100% op Nederlands → Frans Dossier 1",
+
+    description:
+    "Behaal 100% op de oefening.",
+
+  }
+
+];
+
+onAuthStateChanged(auth, async (user) => {
+
+  if (!user) {
+
+    window.location.href =
+    "/Franse-Nederlandse-woorden/login.html";
+
+    return;
+
+  }
+
+  document.body.style.display = "flex";
+
+  const docRef =
+  doc(db, "achievements", user.uid);
+
+  const docSnap =
+  await getDoc(docRef);
+
+  const data =
+  docSnap.exists()
+  ? docSnap.data()
+  : {};
+
+  const list =
+  document.getElementById(
+    "achievementList"
+  );
+
+  achievements.sort((a,b) => {
+
+    const aDate =
+    data[a.id]?.date || 0;
+
+    const bDate =
+    data[b.id]?.date || 0;
+
+    return bDate - aDate;
+
+  });
+
+  achievements.forEach((achievement) => {
+
+    const unlocked =
+    data[achievement.id];
+
+    const div =
+    document.createElement("div");
+
+    div.className =
+    unlocked
+    ? "achievement"
+    : "achievement locked";
+
+    div.innerHTML = `
+
+      <h2>
+        ${achievement.title}
+      </h2>
+
+      <p>
+        ${achievement.description}
+      </p>
+
+      ${
+        unlocked
+        ? `
+        <div class="date">
+          Behaald op:
+          ${new Date(
+            unlocked.date
+          ).toLocaleString("nl-BE")}
+        </div>
+        `
+        : `
+        <div class="date">
+          Nog niet behaald
+        </div>
+        `
+      }
+
+    `;
+
+    list.appendChild(div);
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
