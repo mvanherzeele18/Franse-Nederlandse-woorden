@@ -329,7 +329,7 @@ onAuthStateChanged(auth, async (user) => {
         <div class="date">
           Behaald op:
           ${new Date(
-            unlocked.date
+            unlocked.date.seconds * 1000
           ).toLocaleString("nl-BE")}
         </div>
         `
