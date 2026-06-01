@@ -550,7 +550,7 @@ async function updateMultiplayerScore() {
   const {
     getFirestore,
     doc,
-    updateDoc
+    setDoc
   } =
   await import(
     "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"
@@ -564,14 +564,12 @@ async function updateMultiplayerScore() {
   );
 
   const firebaseConfig = {
-
     apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
     authDomain: "vocabulairesite.firebaseapp.com",
     projectId: "vocabulairesite",
     storageBucket: "vocabulairesite.firebasestorage.app",
     messagingSenderId: "1002919769364",
     appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01"
-
   };
 
   const app = initializeApp(firebaseConfig);
@@ -582,24 +580,47 @@ async function updateMultiplayerScore() {
 
   const user = auth.currentUser;
 
-  if (!user) return;
+  if (!user) {
+    console.log("Geen gebruiker gevonden");
+    return;
+  }
 
-  await updateDoc(
+  try {
 
-    doc(
-      db,
-      "multiplayerGames",
-      multiplayerCode,
-      "players",
-      user.uid
-    ),
+    await setDoc(
 
-    {
-      score: score,
-      time: Date.now() - startTime
-    }
+      doc(
+        db,
+        "multiplayerGames",
+        multiplayerCode,
+        "players",
+        user.uid
+      ),
 
-  );
+      {
+        name: user.email,
+        score: score,
+        time: Date.now() - startTime,
+        lastUpdated: Date.now()
+      },
+
+      { merge: true }
+
+    );
+
+    console.log(
+      "Multiplayer score opgeslagen:",
+      score
+    );
+
+  } catch(error){
+
+    console.error(
+      "Fout bij opslaan multiplayer score:",
+      error
+    );
+
+  }
 
 }
   
