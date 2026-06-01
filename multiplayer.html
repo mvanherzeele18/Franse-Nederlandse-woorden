@@ -77,6 +77,70 @@ input{
 
 <h2>Leerkracht</h2>
 
+<label>Jaar</label>
+
+<select id="yearSelect">
+
+<option value="3dejaar">
+3de jaar
+</option>
+
+<option value="4dejaar">
+4de jaar
+</option>
+
+</select>
+
+<br><br>
+
+<label>Oefening</label>
+
+<select id="exerciseSelect">
+
+<option value="nl-fr-dossier1.html">
+NL → FR Dossier 1
+</option>
+
+<option value="nl-fr-dossier2.html">
+NL → FR Dossier 2
+</option>
+
+<option value="nl-fr-dossier3.html">
+NL → FR Dossier 3
+</option>
+
+<option value="nl-fr-dossier4.html">
+NL → FR Dossier 4
+</option>
+
+<option value="nl-fr-dossier5.html">
+NL → FR Dossier 5
+</option>
+
+<option value="fr-nl-dossier1.html">
+FR → NL Dossier 1
+</option>
+
+<option value="fr-nl-dossier2.html">
+FR → NL Dossier 2
+</option>
+
+<option value="fr-nl-dossier3.html">
+FR → NL Dossier 3
+</option>
+
+<option value="fr-nl-dossier4.html">
+FR → NL Dossier 4
+</option>
+
+<option value="fr-nl-dossier5.html">
+FR → NL Dossier 5
+</option>
+
+</select>
+
+<br><br>
+
 <button id="createGame">
 Groep aanmaken
 </button>
@@ -86,6 +150,21 @@ Sessie stoppen
 </button>
 
 <div id="generatedCode"></div>
+
+<div
+id="leaderboardSection"
+style="display:none;margin-top:2rem;"
+>
+
+<h2>
+🏆 Live Scorebord
+</h2>
+
+<div id="playersList">
+Nog geen spelers
+</div>
+
+</div>
 
 </div>
 
@@ -126,34 +205,30 @@ setDoc,
 getDoc,
 updateDoc,
 collection,
-onSnapshot,
 query,
-orderBy
+orderBy,
+onSnapshot
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
-  authDomain: "vocabulairesite.firebaseapp.com",
-  projectId: "vocabulairesite",
-  storageBucket: "vocabulairesite.firebasestorage.app",
-  messagingSenderId: "1002919769364",
-  appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
-  measurementId: "G-5FVEW59WH3"
+apiKey:"AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+authDomain:"vocabulairesite.firebaseapp.com",
+projectId:"vocabulairesite",
+storageBucket:"vocabulairesite.firebasestorage.app",
+messagingSenderId:"1002919769364",
+appId:"1:1002919769364:web:face9ebdbe3cb1db37fe01",
+measurementId:"G-5FVEW59WH3"
 };
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
-
 const db = getFirestore(app);
 
 let currentCode = null;
 
 const teachers = [
-
 "vanherzeelematteo@gmail.com"
-
 ];
 
 function generateCode(){
@@ -166,9 +241,7 @@ let code = "";
 for(let i=0;i<6;i++){
 
 code += chars.charAt(
-Math.floor(
-Math.random()*chars.length
-)
+Math.floor(Math.random()*chars.length)
 );
 
 }
@@ -181,13 +254,11 @@ onAuthStateChanged(auth,user=>{
 
 if(!user) return;
 
-if(
-teachers.includes(user.email)
-){
+if(teachers.includes(user.email)){
 
 document.getElementById(
 "teacherPanel"
-).style.display="block";
+).style.display = "block";
 
 }
 
@@ -195,12 +266,25 @@ document.getElementById(
 
 document
 .getElementById("createGame")
-.addEventListener(
-"click",
-async()=>{
+.addEventListener("click", async()=>{
 
-const code =
-generateCode();
+const year =
+document.getElementById("yearSelect").value;
+
+const exercise =
+document.getElementById("exerciseSelect").value;
+
+if(!year || !exercise){
+
+alert(
+"Kies eerst een jaar en oefening."
+);
+
+return;
+
+}
+
+const code = generateCode();
 
 currentCode = code;
 
@@ -214,28 +298,34 @@ code
 
 {
 active:true,
-createdAt:Date.now()
+createdAt:Date.now(),
+year:year,
+exercise:exercise
 }
 
 );
 
-document
-.getElementById(
+document.getElementById(
 "generatedCode"
 ).innerHTML =
 
-`<div class="code">${code}</div>`;
+`
+<div class="code">
+${code}
+</div>
+`;
+
+document.getElementById(
+"leaderboardSection"
+).style.display = "block";
 
 listenPlayers(code);
 
-}
-);
+});
 
 document
 .getElementById("stopGame")
-.addEventListener(
-"click",
-async()=>{
+.addEventListener("click", async()=>{
 
 if(!currentCode) return;
 
@@ -253,54 +343,66 @@ active:false
 
 );
 
-alert(
-"Sessie gestopt"
-);
+document.getElementById(
+"generatedCode"
+).innerHTML = "";
 
-}
-);
+document.getElementById(
+"playersList"
+).innerHTML = "";
+
+document.getElementById(
+"leaderboardSection"
+).style.display = "none";
+
+alert("Sessie gestopt");
+
+});
 
 document
 .getElementById("joinBtn")
-.addEventListener(
-"click",
-async()=>{
+.addEventListener("click", async()=>{
 
 const user =
 auth.currentUser;
 
+if(!user){
+
+alert("Log eerst in");
+return;
+
+}
+
 const code =
 document
-.getElementById(
-"joinCode"
-)
+.getElementById("joinCode")
 .value
 .trim()
 .toUpperCase();
 
-const gameSnap =
-await getDoc(
+const gameRef =
 doc(
 db,
 "multiplayerGames",
 code
-)
 );
 
-if(
-!gameSnap.exists()
-){
+const gameSnap =
+await getDoc(gameRef);
+
+if(!gameSnap.exists()){
 
 alert("Code bestaat niet");
 return;
 
 }
 
-if(
-!gameSnap.data().active
-){
+const game =
+gameSnap.data();
 
-alert("Sessie afgelopen");
+if(!game.active){
+
+alert("Deze sessie is afgelopen");
 return;
 
 }
@@ -316,16 +418,10 @@ user.uid
 ),
 
 {
-name:
-user.email,
-
+name:user.email,
 score:0,
-
-time:0,
-
-joinedAt:
-Date.now()
-
+time:999999999,
+joinedAt:Date.now()
 }
 
 );
@@ -335,46 +431,82 @@ localStorage.setItem(
 code
 );
 
-window.location.href =
-"https://mvanherzeele.github.io/Franse-Nederlandse-woorden/3dejaar/oefeningen/nl-fr-dossier1.html";
+localStorage.setItem(
+"multiplayerExercise",
+game.exercise
+);
+
+localStorage.setItem(
+"multiplayerYear",
+game.year
+);
+
+let url = "";
+
+if(game.year === "3de"){
+
+url =
+"https://mvanherzeele.github.io/Franse-Nederlandse-woorden/3dejaar/oefeningen/" +
+game.exercise +
+".html";
 
 }
-);
+else{
+
+url =
+"https://mvanherzeele.github.io/Franse-Nederlandse-woorden/4dejaar/oefeningen/" +
+game.exercise +
+".html";
+
+}
+
+window.location.href = url;
+
+});
 
 function listenPlayers(code){
 
-const playersRef =
-query(
+const playersRef = query(
+
 collection(
 db,
 "multiplayerGames",
 code,
 "players"
 ),
+
 orderBy("score","desc"),
 orderBy("time","asc")
+
 );
 
-onSnapshot(
-playersRef,
-(snapshot)=>{
+onSnapshot(playersRef,(snapshot)=>{
 
-let html="";
+let html = "";
 
-let place=1;
+let place = 1;
 
-snapshot.forEach(doc=>{
+snapshot.forEach(playerDoc=>{
 
-const p =
-doc.data();
+const player =
+playerDoc.data();
 
 html += `
 
 <div class="player">
-#${place}
-${p.name}
--
-${p.score} punten
+
+<b>#${place}</b>
+
+${player.name}
+
+<br>
+
+Score: ${player.score}
+
+<br>
+
+Tijd: ${player.time}
+
 </div>
 
 `;
@@ -383,16 +515,13 @@ place++;
 
 });
 
-document
-.getElementById(
+document.getElementById(
 "playersList"
 ).innerHTML =
 
-html ||
-"Nog geen spelers";
+html || "Nog geen spelers";
 
-}
-);
+});
 
 }
 
