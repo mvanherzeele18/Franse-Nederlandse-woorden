@@ -7,23 +7,32 @@
 <title>Multiplayer</title>
 
 <style>
+
+:root{
+  --green:#6BBE3A;
+  --green-dark:#2E7D32;
+  --green-light:#D4E8B8;
+  --yellow:#FDD835;
+  --bg:#F1F8E9;
+}
+
 body{
   font-family:Arial,sans-serif;
-  background:#F1F8E9;
+  background:var(--bg);
   padding:2rem;
 }
 
 .box{
-  max-width:600px;
+  max-width:800px;
   margin:auto;
   background:white;
-  padding:2rem;
+  border:3px solid var(--green);
   border-radius:16px;
-  border:3px solid #6BBE3A;
+  padding:2rem;
 }
 
 button{
-  background:#FDD835;
+  background:var(--yellow);
   border:none;
   padding:12px 20px;
   border-radius:10px;
@@ -31,25 +40,32 @@ button{
   font-weight:bold;
 }
 
-button:hover{
-  opacity:.9;
+input{
+  width:100%;
+  padding:12px;
+  border:2px solid var(--green);
+  border-radius:10px;
+  margin-bottom:1rem;
+}
+
+.player{
+  background:var(--green-light);
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:8px;
+}
+
+.code{
+  font-size:2rem;
+  font-weight:bold;
+  margin-top:1rem;
 }
 
 #teacherPanel{
   display:none;
 }
 
-.code{
-  margin-top:1rem;
-  padding:1rem;
-  background:#D4E8B8;
-  border-radius:10px;
-  font-size:2rem;
-  text-align:center;
-  font-weight:bold;
-}
 </style>
-
 </head>
 <body>
 
@@ -65,24 +81,29 @@ button:hover{
 Groep aanmaken
 </button>
 
+<button id="stopGame">
+Sessie stoppen
+</button>
+
 <div id="generatedCode"></div>
 
 </div>
-
-<div id="studentPanel">
 
 <h2>Leerling</h2>
 
 <input
 id="joinCode"
 placeholder="Groepscode"
-style="padding:10px;width:100%;margin-bottom:1rem;"
 >
 
 <button id="joinBtn">
 Deelnemen
 </button>
 
+<h2>Scorebord</h2>
+
+<div id="playersList">
+Nog geen spelers
 </div>
 
 </div>
@@ -102,23 +123,23 @@ import {
 getFirestore,
 doc,
 setDoc,
-getDoc
+getDoc,
+updateDoc,
+collection,
+onSnapshot,
+query,
+orderBy
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
-
+apiKey: "JOUW_APIKEY",
 authDomain: "vocabulairesite.firebaseapp.com",
-
 projectId: "vocabulairesite",
-
 storageBucket: "vocabulairesite.firebasestorage.app",
-
 messagingSenderId: "1002919769364",
-
-appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01"
+appId: "JOUW_APPID"
 
 };
 
@@ -127,6 +148,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const db = getFirestore(app);
+
+let currentCode = null;
 
 const teachers = [
 
@@ -144,7 +167,9 @@ let code = "";
 for(let i=0;i<6;i++){
 
 code += chars.charAt(
-Math.floor(Math.random()*chars.length)
+Math.floor(
+Math.random()*chars.length
+)
 );
 
 }
@@ -153,16 +178,9 @@ return code;
 
 }
 
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth,user=>{
 
-if(!user){
-
-window.location.href =
-"/Franse-Nederlandse-woorden/login.html";
-
-return;
-
-}
+if(!user) return;
 
 if(
 teachers.includes(user.email)
@@ -170,7 +188,7 @@ teachers.includes(user.email)
 
 document.getElementById(
 "teacherPanel"
-).style.display = "block";
+).style.display="block";
 
 }
 
@@ -178,9 +196,14 @@ document.getElementById(
 
 document
 .getElementById("createGame")
-.addEventListener("click", async ()=>{
+.addEventListener(
+"click",
+async()=>{
 
-const code = generateCode();
+const code =
+generateCode();
+
+currentCode = code;
 
 await setDoc(
 
@@ -192,61 +215,187 @@ code
 
 {
 active:true,
-createdAt:Date.now(),
-createdBy:"vanherzeelematteo@gmail.com"
+createdAt:Date.now()
 }
 
 );
 
-document.getElementById(
+document
+.getElementById(
 "generatedCode"
 ).innerHTML =
 
 `<div class="code">${code}</div>`;
 
-});
+listenPlayers(code);
+
+}
+);
+
+document
+.getElementById("stopGame")
+.addEventListener(
+"click",
+async()=>{
+
+if(!currentCode) return;
+
+await updateDoc(
+
+doc(
+db,
+"multiplayerGames",
+currentCode
+),
+
+{
+active:false
+}
+
+);
+
+alert(
+"Sessie gestopt"
+);
+
+}
+);
 
 document
 .getElementById("joinBtn")
-.addEventListener("click", async ()=>{
+.addEventListener(
+"click",
+async()=>{
+
+const user =
+auth.currentUser;
 
 const code =
-document.getElementById(
+document
+.getElementById(
 "joinCode"
-).value.trim().toUpperCase();
+)
+.value
+.trim()
+.toUpperCase();
 
-const gameRef =
+const gameSnap =
+await getDoc(
 doc(
 db,
 "multiplayerGames",
 code
+)
 );
 
-const gameSnap =
-await getDoc(gameRef);
-
-if(!gameSnap.exists()){
+if(
+!gameSnap.exists()
+){
 
 alert("Code bestaat niet");
-
 return;
 
 }
 
-const game =
-gameSnap.data();
+if(
+!gameSnap.data().active
+){
 
-if(!game.active){
-
-alert("Deze sessie is afgelopen");
-
+alert("Sessie afgelopen");
 return;
 
 }
 
-alert("Succesvol verbonden!");
+await setDoc(
+
+doc(
+db,
+"multiplayerGames",
+code,
+"players",
+user.uid
+),
+
+{
+name:
+user.email,
+
+score:0,
+
+time:0,
+
+joinedAt:
+Date.now()
+
+}
+
+);
+
+localStorage.setItem(
+"multiplayerCode",
+code
+);
+
+window.location.href =
+"nl-fr-dossier1.html";
+
+}
+);
+
+function listenPlayers(code){
+
+const playersRef =
+query(
+collection(
+db,
+"multiplayerGames",
+code,
+"players"
+),
+orderBy("score","desc"),
+orderBy("time","asc")
+);
+
+onSnapshot(
+playersRef,
+(snapshot)=>{
+
+let html="";
+
+let place=1;
+
+snapshot.forEach(doc=>{
+
+const p =
+doc.data();
+
+html += `
+
+<div class="player">
+#${place}
+${p.name}
+-
+${p.score} punten
+</div>
+
+`;
+
+place++;
 
 });
+
+document
+.getElementById(
+"playersList"
+).innerHTML =
+
+html ||
+"Nog geen spelers";
+
+}
+);
+
+}
 
 </script>
 
