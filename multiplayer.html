@@ -157,7 +157,7 @@ style="display:none;margin-top:2rem;"
 >
 
 <h2>
-🏆 Live Scorebord
+Live Scorebord
 </h2>
 
 <div id="playersList">
@@ -178,12 +178,6 @@ placeholder="Groepscode"
 <button id="joinBtn">
 Deelnemen
 </button>
-
-<h2>Scorebord</h2>
-
-<div id="playersList">
-Nog geen spelers
-</div>
 
 </div>
 
@@ -226,6 +220,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 let currentCode = null;
+let unsubscribeLeaderboard = null;
 
 const teachers = [
 "vanherzeelematteo@gmail.com"
@@ -250,7 +245,7 @@ return code;
 
 }
 
-onAuthStateChanged(auth,user=>{
+onAuthStateChanged(auth,(user)=>{
 
 if(!user) return;
 
@@ -266,25 +261,20 @@ document.getElementById(
 
 document
 .getElementById("createGame")
-.addEventListener("click", async()=>{
+.addEventListener("click",async()=>{
 
 const year =
-document.getElementById("yearSelect").value;
+document.getElementById(
+"yearSelect"
+).value;
 
 const exercise =
-document.getElementById("exerciseSelect").value;
+document.getElementById(
+"exerciseSelect"
+).value;
 
-if(!year || !exercise){
-
-alert(
-"Kies eerst een jaar en oefening."
-);
-
-return;
-
-}
-
-const code = generateCode();
+const code =
+generateCode();
 
 currentCode = code;
 
@@ -298,9 +288,9 @@ code
 
 {
 active:true,
-createdAt:Date.now(),
 year:year,
-exercise:exercise
+exercise:exercise,
+createdAt:Date.now()
 }
 
 );
@@ -309,23 +299,19 @@ document.getElementById(
 "generatedCode"
 ).innerHTML =
 
-`
-<div class="code">
-${code}
-</div>
-`;
+`<div class="code">${code}</div>`;
 
 document.getElementById(
 "leaderboardSection"
 ).style.display = "block";
 
-listenPlayers(code);
+startLeaderboard(code);
 
 });
 
 document
 .getElementById("stopGame")
-.addEventListener("click", async()=>{
+.addEventListener("click",async()=>{
 
 if(!currentCode) return;
 
@@ -343,6 +329,16 @@ active:false
 
 );
 
+if(unsubscribeLeaderboard){
+
+unsubscribeLeaderboard();
+
+}
+
+document.getElementById(
+"leaderboardSection"
+).style.display = "none";
+
 document.getElementById(
 "generatedCode"
 ).innerHTML = "";
@@ -351,9 +347,7 @@ document.getElementById(
 "playersList"
 ).innerHTML = "";
 
-document.getElementById(
-"leaderboardSection"
-).style.display = "none";
+currentCode = null;
 
 alert("Sessie gestopt");
 
@@ -361,7 +355,7 @@ alert("Sessie gestopt");
 
 document
 .getElementById("joinBtn")
-.addEventListener("click", async()=>{
+.addEventListener("click",async()=>{
 
 const user =
 auth.currentUser;
@@ -374,9 +368,9 @@ return;
 }
 
 const code =
-document
-.getElementById("joinCode")
-.value
+document.getElementById(
+"joinCode"
+).value
 .trim()
 .toUpperCase();
 
@@ -402,7 +396,7 @@ gameSnap.data();
 
 if(!game.active){
 
-alert("Deze sessie is afgelopen");
+alert("Sessie afgelopen");
 return;
 
 }
@@ -431,42 +425,22 @@ localStorage.setItem(
 code
 );
 
-localStorage.setItem(
-"multiplayerExercise",
-game.exercise
-);
-
-localStorage.setItem(
-"multiplayerYear",
-game.year
-);
-
-let url = "";
-
-if(game.year === "3dejaar"){
-
-url =
-"https://mvanherzeele.github.io/Franse-Nederlandse-woorden/3dejaar/oefeningen/" +
+let url =
+"https://mvanherzeele.github.io/Franse-Nederlandse-woorden/" +
+game.year +
+"/oefeningen/" +
 game.exercise +
 ".html";
 
-}
-else if(game.year === "4dejaar"){
-
-url =
-"https://mvanherzeele.github.io/Franse-Nederlandse-woorden/4dejaar/oefeningen/" +
-game.exercise +
-".html";
-
-}
-
-window.location.href = url;
+window.location.href =
+url;
 
 });
 
-function listenPlayers(code){
+function startLeaderboard(code){
 
-const playersRef = query(
+const playersRef =
+query(
 
 collection(
 db,
@@ -480,13 +454,31 @@ orderBy("time","asc")
 
 );
 
-onSnapshot(playersRef,(snapshot)=>{
+unsubscribeLeaderboard =
+onSnapshot(
+
+playersRef,
+
+(snapshot)=>{
+
+const leaderboard =
+document.getElementById(
+"playersList"
+);
+
+if(snapshot.empty){
+
+leaderboard.innerHTML =
+"Nog geen spelers";
+
+return;
+
+}
 
 let html = "";
-
 let place = 1;
 
-snapshot.forEach(playerDoc=>{
+snapshot.forEach((playerDoc)=>{
 
 const player =
 playerDoc.data();
@@ -495,17 +487,13 @@ html += `
 
 <div class="player">
 
-<b>#${place}</b>
+<b>#${place}</b><br>
 
-${player.name}
+${player.name}<br>
 
-<br>
+Score: ${player.score ?? 0}<br>
 
-Score: ${player.score}
-
-<br>
-
-Tijd: ${player.time}
+Tijd: ${Math.floor((player.time ?? 0)/1000)} sec
 
 </div>
 
@@ -515,13 +503,30 @@ place++;
 
 });
 
+leaderboard.innerHTML =
+html;
+
+},
+
+(error)=>{
+
+console.error(
+"Leaderboard fout:",
+error
+);
+
 document.getElementById(
 "playersList"
 ).innerHTML =
 
-html || "Nog geen spelers";
+`
+Firestore fout:<br>
+${error.message}
+`;
 
-});
+}
+
+);
 
 }
 
