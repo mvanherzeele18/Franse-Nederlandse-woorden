@@ -221,6 +221,7 @@ const db = getFirestore(app);
 
 let currentCode = null;
 let unsubscribeLeaderboard = null;
+let latestSnapshot = null;
 
 const teachers = [
 "vanherzeelematteo@gmail.com"
@@ -242,6 +243,19 @@ Math.floor(Math.random()*chars.length)
 }
 
 return code;
+
+}
+
+function formatTime(totalSeconds){
+
+const minutes =
+Math.floor(totalSeconds / 60);
+
+const seconds =
+String(totalSeconds % 60)
+.padStart(2,"0");
+
+return `${minutes}:${seconds}`;
 
 }
 
@@ -288,8 +302,8 @@ code
 
 {
 active:true,
-year:year,
-exercise:exercise,
+year,
+exercise,
 createdAt:Date.now()
 }
 
@@ -298,7 +312,6 @@ createdAt:Date.now()
 document.getElementById(
 "generatedCode"
 ).innerHTML =
-
 `<div class="code">${code}</div>`;
 
 document.getElementById(
@@ -368,21 +381,20 @@ return;
 }
 
 const code =
-document.getElementById(
-"joinCode"
-).value
+document
+.getElementById("joinCode")
+.value
 .trim()
 .toUpperCase();
 
-const gameRef =
+const gameSnap =
+await getDoc(
 doc(
 db,
 "multiplayerGames",
 code
+)
 );
-
-const gameSnap =
-await getDoc(gameRef);
 
 if(!gameSnap.exists()){
 
@@ -414,7 +426,9 @@ user.uid
 {
 name:user.email,
 score:0,
-time:999999999,
+time:0,
+startTime:Date.now(),
+finished:false,
 joinedAt:Date.now()
 }
 
@@ -425,131 +439,17 @@ localStorage.setItem(
 code
 );
 
-let url =
+window.location.href =
+
 "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/" +
 game.year +
 "/oefeningen/" +
 game.exercise +
 ".html";
 
-window.location.href =
-url;
-
-});
-let latestSnapshot = null;
-function startLeaderboard(code){
-
-const playersRef =
-query(
-collection(
-db,
-"multiplayerGames",
-code,
-"players"
-),
-orderBy("score","desc")
-);
-
-unsubscribeLeaderboard =
-onSnapshot(
-
-playersRef,
-
-(snapshot)=>{
-
-latestSnapshot = snapshot;
-
-console.log(
-"Aantal spelers:",
-snapshot.size
-);
-
-const leaderboard =
-document.getElementById(
-"playersList"
-);
-
-if(snapshot.empty){
-
-leaderboard.innerHTML =
-"Nog geen spelers";
-
-return;
-
-}
-
-let html = "";
-
-let place = 1;
-
-snapshot.forEach((playerDoc)=>{
-
-const player =
-playerDoc.data();
-
-let seconds = 0;
-
-if(player.finished){
-
-seconds =
-Math.floor(
-(player.time ?? 0)/1000
-);
-
-}
-else{
-
-seconds =
-Math.floor(
-(Date.now() -
-(player.startTime ?? Date.now()))
-/1000
-);
-
-}
-
-html += `
-
-<div class="player">
-
-<b>#${place}</b><br>
-
-${player.name}<br>
-
-Score: ${player.score ?? 0}<br>
-
-Tijd: ${seconds} sec
-
-</div>
-
-`;
-
-place++;
-
 });
 
-leaderboard.innerHTML =
-html;
-
-},
-
-(error)=>{
-
-console.error(error);
-
-document.getElementById(
-"playersList"
-).innerHTML =
-
-error.message;
-
-}
-
-);
-
-}
-
-setInterval(()=>{
+function renderLeaderboard(){
 
 if(!latestSnapshot) return;
 
@@ -566,23 +466,23 @@ latestSnapshot.forEach((playerDoc)=>{
 const player =
 playerDoc.data();
 
-let seconds = 0;
+let seconds;
 
 if(player.finished){
 
 seconds =
 Math.floor(
-(player.time ?? 0)/1000
+(player.time || 0) / 1000
 );
 
-}
-else{
+}else{
 
 seconds =
 Math.floor(
-(Date.now() -
-(player.startTime ?? Date.now()))
-/1000
+(
+Date.now() -
+(player.startTime || Date.now())
+) / 1000
 );
 
 }
@@ -595,9 +495,9 @@ html += `
 
 ${player.name}<br>
 
-Score: ${player.score ?? 0}<br>
+Score: ${player.score || 0}<br>
 
-Tijd: ${seconds} sec
+Tijd: ${formatTime(seconds)}
 
 </div>
 
@@ -609,8 +509,67 @@ place++;
 
 leaderboard.innerHTML = html;
 
+}
+
+function startLeaderboard(code){
+
+const playersRef =
+query(
+
+collection(
+db,
+"multiplayerGames",
+code,
+"players"
+),
+
+orderBy("score","desc")
+
+);
+
+unsubscribeLeaderboard =
+onSnapshot(
+
+playersRef,
+
+(snapshot)=>{
+
+latestSnapshot = snapshot;
+
+if(snapshot.empty){
+
+document.getElementById(
+"playersList"
+).innerHTML =
+"Nog geen spelers";
+
+return;
+
+}
+
+renderLeaderboard();
+
+},
+
+(error)=>{
+
+document.getElementById(
+"playersList"
+).innerHTML =
+error.message;
+
+}
+
+);
+
+}
+
+setInterval(()=>{
+
+renderLeaderboard();
+
 },1000);
-  
+
 </script>
 
 </body>
