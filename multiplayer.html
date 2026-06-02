@@ -293,6 +293,8 @@ Nog geen spelers
 
 </div>
 
+<div id="studentPanel">
+
 <h2>Leerling</h2>
 
 <input
@@ -398,15 +400,31 @@ onAuthStateChanged(auth,(user)=>{
 
 if(!user) return;
 
+const teacherPanel =
+document.getElementById("teacherPanel");
+
+const studentPanel =
+document.getElementById("studentPanel");
+
 if(
 teachers.includes(
 user.email?.toLowerCase()
 )
 ){
 
-document.getElementById(
-"teacherPanel"
-).style.display = "block";
+teacherPanel.style.display =
+"block";
+
+studentPanel.style.display =
+"none";
+
+}else{
+
+teacherPanel.style.display =
+"none";
+
+studentPanel.style.display =
+"block";
 
 }
 
