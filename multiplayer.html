@@ -8,14 +8,14 @@
 
 <style>
 
-:root {
-  --green: #6BBE3A;
-  --green-light: #D4E8B8;
-  --green-dark: #2E7D32;
-  --yellow: #FDD835;
-  --bg: #F1F8E9;
-  --white: #FFFFFF;
-  --shadow: 0 2px 8px rgba(0,0,0,0.1);
+:root{
+  --green:#6BBE3A;
+  --green-light:#D4E8B8;
+  --green-dark:#2E7D32;
+  --yellow:#FDD835;
+  --bg:#F1F8E9;
+  --white:#FFFFFF;
+  --text:#1B5E20;
 }
 
 *{
@@ -26,18 +26,10 @@
 
 body{
   font-family:'DM Sans',sans-serif;
-  background:linear-gradient(
-    135deg,
-    var(--bg) 0%,
-    #e8f5e9 100%
-  );
-  color:var(--green-dark);
+  background:var(--bg);
   min-height:100vh;
-  display:flex;
-  flex-direction:column;
+  color:var(--text);
 }
-
-/* HEADER */
 
 header{
   background:linear-gradient(
@@ -45,14 +37,16 @@ header{
     var(--green-dark) 0%,
     var(--green) 100%
   );
+
   padding:2rem;
+
   border-bottom:4px solid var(--yellow);
+
   display:flex;
   justify-content:space-between;
   align-items:center;
   flex-wrap:wrap;
   gap:1rem;
-  box-shadow:var(--shadow);
 }
 
 header h1{
@@ -65,32 +59,29 @@ header h1{
   background:var(--yellow);
   color:var(--green-dark);
   text-decoration:none;
-  padding:0.7rem 1.3rem;
-  border-radius:8px;
+  padding:0.7rem 1.2rem;
+  border-radius:10px;
   font-weight:600;
-  transition:.3s;
+  transition:0.3s;
 }
 
 .nav-btn:hover{
-  background:white;
+  background:var(--green-light);
   transform:translateY(-2px);
 }
 
-/* MAIN */
-
 main{
-  flex:1;
   max-width:900px;
-  width:100%;
   margin:2rem auto;
   padding:0 1rem;
 }
 
 .box{
-  background:white;
+  background:var(--white);
+  border:3px solid var(--green);
   border-radius:16px;
   padding:2rem;
-  box-shadow:var(--shadow);
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
 }
 
 h2{
@@ -98,139 +89,114 @@ h2{
   margin-bottom:1rem;
 }
 
-/* FORM */
-
 label{
   display:block;
-  margin-bottom:.4rem;
+  margin-bottom:0.5rem;
   font-weight:600;
 }
 
 select,
 input{
   width:100%;
-  padding:.8rem;
-  border:2px solid var(--green-light);
+  padding:12px;
+  border:2px solid var(--green);
   border-radius:10px;
-  font-size:1rem;
   margin-bottom:1rem;
+  font-size:1rem;
 }
-
-select:focus,
-input:focus{
-  outline:none;
-  border-color:var(--green);
-}
-
-/* BUTTONS */
 
 button{
-  border:none;
-  border-radius:10px;
-  padding:.9rem 1.4rem;
-  cursor:pointer;
-  font-weight:600;
-  transition:.3s;
-}
-
-#createGame{
-  background:var(--green);
-  color:white;
-}
-
-#createGame:hover{
-  background:var(--green-dark);
-}
-
-#stopGame{
-  background:#d32f2f;
-  color:white;
-}
-
-#stopGame:hover{
-  background:#b71c1c;
-}
-
-#joinBtn{
   background:var(--yellow);
   color:var(--green-dark);
+  border:none;
+  padding:12px 20px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.3s;
+  margin-right:0.5rem;
+  margin-bottom:0.5rem;
 }
 
-#joinBtn:hover{
-  background:#fbc02d;
+button:hover{
+  background:var(--green-light);
+  transform:translateY(-2px);
 }
-
-/* CODE */
 
 .code{
-  margin-top:1.5rem;
+  margin-top:1rem;
+  padding:1rem;
+  background:var(--green-light);
+  border-radius:12px;
   text-align:center;
-  font-size:3rem;
+  font-size:2rem;
   font-weight:bold;
   color:var(--green-dark);
-  background:var(--green-light);
-  padding:1rem;
-  border-radius:12px;
 }
-
-/* LEADERBOARD */
 
 #leaderboardSection{
   margin-top:2rem;
 }
 
 .player{
-  background:linear-gradient(
-    135deg,
-    var(--green-light) 0%,
-    #c8e6c9 100%
-  );
+  background:var(--green-light);
   padding:1rem;
   border-radius:12px;
-  margin-bottom:.8rem;
-  border-left:5px solid var(--green);
+  margin-bottom:0.75rem;
+  border-left:6px solid var(--green);
 }
 
 .player b{
   color:var(--green-dark);
-  font-size:1.1rem;
 }
 
-/* FOOTER */
-
-footer{
-  text-align:center;
-  padding:2rem;
-  color:var(--green-dark);
-  font-size:.9rem;
+#teacherPanel{
+  display:none;
+  margin-bottom:2rem;
 }
-
-/* MOBILE */
 
 @media(max-width:600px){
 
   header{
     flex-direction:column;
-    align-items:stretch;
+    text-align:center;
   }
 
   .nav-btn{
+    width:100%;
     text-align:center;
+  }
+
+  button{
+    width:100%;
+    margin-right:0;
   }
 
   .box{
     padding:1.5rem;
   }
 
-  .code{
-    font-size:2rem;
-  }
-
 }
 
 </style>
 </head>
+
 <body>
+
+<header>
+
+  <h1>Multiplayer</h1>
+
+  <a
+    href="index.html"
+    class="nav-btn"
+  >
+    ← Terug
+  </a>
+
+</header>
+
+<main>
 
 <div class="box">
 
