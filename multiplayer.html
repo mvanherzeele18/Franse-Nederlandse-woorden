@@ -436,7 +436,7 @@ window.location.href =
 url;
 
 });
-
+let latestSnapshot = null;
 function startLeaderboard(code){
 
 const playersRef =
@@ -456,6 +456,8 @@ onSnapshot(
 playersRef,
 
 (snapshot)=>{
+
+latestSnapshot = snapshot;
 
 console.log(
 "Aantal spelers:",
@@ -485,18 +487,41 @@ snapshot.forEach((playerDoc)=>{
 const player =
 playerDoc.data();
 
+let seconds = 0;
+
+if(player.finished){
+
+seconds =
+Math.floor(
+(player.time ?? 0)/1000
+);
+
+}
+else{
+
+seconds =
+Math.floor(
+(Date.now() -
+(player.startTime ?? Date.now()))
+/1000
+);
+
+}
+
 html += `
+
 <div class="player">
 
 <b>#${place}</b><br>
 
 ${player.name}<br>
 
-Score: ${player.score}<br>
+Score: ${player.score ?? 0}<br>
 
-Tijd: ${player.time}
+Tijd: ${seconds} sec
 
 </div>
+
 `;
 
 place++;
@@ -524,6 +549,68 @@ error.message;
 
 }
 
+setInterval(()=>{
+
+if(!latestSnapshot) return;
+
+const leaderboard =
+document.getElementById(
+"playersList"
+);
+
+let html = "";
+let place = 1;
+
+latestSnapshot.forEach((playerDoc)=>{
+
+const player =
+playerDoc.data();
+
+let seconds = 0;
+
+if(player.finished){
+
+seconds =
+Math.floor(
+(player.time ?? 0)/1000
+);
+
+}
+else{
+
+seconds =
+Math.floor(
+(Date.now() -
+(player.startTime ?? Date.now()))
+/1000
+);
+
+}
+
+html += `
+
+<div class="player">
+
+<b>#${place}</b><br>
+
+${player.name}<br>
+
+Score: ${player.score ?? 0}<br>
+
+Tijd: ${seconds} sec
+
+</div>
+
+`;
+
+place++;
+
+});
+
+leaderboard.innerHTML = html;
+
+},1000);
+  
 </script>
 
 </body>
