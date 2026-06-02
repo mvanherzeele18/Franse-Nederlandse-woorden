@@ -552,7 +552,7 @@ async function updateMultiplayerScore() {
   const {
     getFirestore,
     doc,
-    setDoc
+    updateDoc
   } =
   await import(
     "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"
@@ -582,46 +582,23 @@ async function updateMultiplayerScore() {
 
   const user = auth.currentUser;
 
-  if (!user) {
-    console.log("Geen gebruiker gevonden");
-    return;
-  }
+  if (!user) return;
 
-  try {
+  await updateDoc(
 
-await setDoc(
+    doc(
+      db,
+      "multiplayerGames",
+      multiplayerCode,
+      "players",
+      user.uid
+    ),
 
-doc(
-db,
-"multiplayerGames",
-code,
-"players",
-user.uid
-),
+    {
+      score: score
+    }
 
-{
-name:user.email,
-score:0,
-time:0,
-startTime:Date.now(),
-finished:false,
-joinedAt:Date.now()
-}
-);
-
-    console.log(
-      "Multiplayer score opgeslagen:",
-      score
-    );
-
-  } catch(error){
-
-    console.error(
-      "Fout bij opslaan multiplayer score:",
-      error
-    );
-
-  }
+  );
 
 }
   
@@ -702,61 +679,66 @@ async function saveAchievement() {
 
 async function finishMultiplayer(){
 
-if(!multiplayerCode) return;
+  if(!multiplayerCode) return;
 
-const { initializeApp } =
-await import(
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
-);
+  const { initializeApp } =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
+  );
 
-const {
-getFirestore,
-doc,
-updateDoc
-} =
-await import(
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"
-);
+  const {
+    getFirestore,
+    doc,
+    updateDoc
+  } =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"
+  );
 
-const {
-getAuth
-} =
-await import(
-"https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
-);
+  const {
+    getAuth
+  } =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
+  );
 
-const app =
-initializeApp(firebaseConfig);
+  const firebaseConfig = {
+    apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+    authDomain: "vocabulairesite.firebaseapp.com",
+    projectId: "vocabulairesite",
+    storageBucket: "vocabulairesite.firebasestorage.app",
+    messagingSenderId: "1002919769364",
+    appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01"
+  };
 
-const db =
-getFirestore(app);
+  const app = initializeApp(firebaseConfig);
 
-const auth =
-getAuth(app);
+  const db = getFirestore(app);
 
-const user =
-auth.currentUser;
+  const auth = getAuth(app);
 
-if(!user) return;
+  const user = auth.currentUser;
 
-await updateDoc(
+  if(!user) return;
 
-doc(
-db,
-"multiplayerGames",
-multiplayerCode,
-"players",
-user.uid
-),
+  await updateDoc(
 
-{
-finished:true,
-time:Date.now() - startTime
+    doc(
+      db,
+      "multiplayerGames",
+      multiplayerCode,
+      "players",
+      user.uid
+    ),
+
+    {
+      finished:true,
+      time: Date.now() - startTime
+    }
+
+  );
+
 }
-
-);
-
-}  
 </script>
 
 </body>
