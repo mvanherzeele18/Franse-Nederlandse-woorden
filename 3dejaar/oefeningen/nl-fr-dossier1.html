@@ -512,6 +512,8 @@
     function showCompletion() {
     
       updateMultiplayerScore();
+
+      finishMultiplayer();
     const percentage = Math.round((score / words.length) * 100);
     if (percentage === 100) {
       saveAchievement();
@@ -587,26 +589,25 @@ async function updateMultiplayerScore() {
 
   try {
 
-    await setDoc(
+await setDoc(
 
-      doc(
-        db,
-        "multiplayerGames",
-        multiplayerCode,
-        "players",
-        user.uid
-      ),
+doc(
+db,
+"multiplayerGames",
+code,
+"players",
+user.uid
+),
 
-      {
-        name: user.email,
-        score: score,
-        time: Date.now() - startTime,
-        lastUpdated: Date.now()
-      },
-
-      { merge: true }
-
-    );
+{
+name:user.email,
+score:0,
+time:0,
+startTime:Date.now(),
+finished:false,
+joinedAt:Date.now()
+}
+);
 
     console.log(
       "Multiplayer score opgeslagen:",
@@ -698,6 +699,64 @@ async function saveAchievement() {
   );
 
 }
+
+async function finishMultiplayer(){
+
+if(!multiplayerCode) return;
+
+const { initializeApp } =
+await import(
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
+);
+
+const {
+getFirestore,
+doc,
+updateDoc
+} =
+await import(
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"
+);
+
+const {
+getAuth
+} =
+await import(
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
+);
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
+const auth =
+getAuth(app);
+
+const user =
+auth.currentUser;
+
+if(!user) return;
+
+await updateDoc(
+
+doc(
+db,
+"multiplayerGames",
+multiplayerCode,
+"players",
+user.uid
+),
+
+{
+finished:true,
+time:Date.now() - startTime
+}
+
+);
+
+}  
 </script>
 
 </body>
