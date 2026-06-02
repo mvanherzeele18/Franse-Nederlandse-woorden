@@ -314,7 +314,11 @@ Deelnemen
   
 <script type="module">
 
-import { initializeApp }
+import {
+initializeApp,
+getApps,
+getApp
+}
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
 import {
@@ -346,7 +350,11 @@ appId:"1:1002919769364:web:face9ebdbe3cb1db37fe01",
 measurementId:"G-5FVEW59WH3"
 };
 
-const app = initializeApp(firebaseConfig);
+const app =
+getApps().length
+? getApp()
+: initializeApp(firebaseConfig);
+
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -394,7 +402,11 @@ onAuthStateChanged(auth,(user)=>{
 
 if(!user) return;
 
-if(teachers.includes(user.email)){
+if(
+teachers.includes(
+user.email?.toLowerCase()
+)
+){
 
 document.getElementById(
 "teacherPanel"
@@ -443,6 +455,7 @@ createdAt:Date.now()
 document.getElementById(
 "generatedCode"
 ).innerHTML =
+
 `<div class="code">${code}</div>`;
 
 document.getElementById(
@@ -480,10 +493,6 @@ unsubscribeLeaderboard();
 }
 
 document.getElementById(
-"leaderboardSection"
-).style.display = "none";
-
-document.getElementById(
 "generatedCode"
 ).innerHTML = "";
 
@@ -491,9 +500,11 @@ document.getElementById(
 "playersList"
 ).innerHTML = "";
 
-currentCode = null;
+document.getElementById(
+"leaderboardSection"
+).style.display = "none";
 
-alert("Sessie gestopt");
+currentCode = null;
 
 });
 
@@ -518,14 +529,15 @@ document
 .trim()
 .toUpperCase();
 
-const gameSnap =
-await getDoc(
+const gameRef =
 doc(
 db,
 "multiplayerGames",
 code
-)
 );
+
+const gameSnap =
+await getDoc(gameRef);
 
 if(!gameSnap.exists()){
 
@@ -589,6 +601,15 @@ document.getElementById(
 "playersList"
 );
 
+if(latestSnapshot.empty){
+
+leaderboard.innerHTML =
+"Nog geen spelers";
+
+return;
+
+}
+
 let html = "";
 let place = 1;
 
@@ -597,7 +618,7 @@ latestSnapshot.forEach((playerDoc)=>{
 const player =
 playerDoc.data();
 
-let seconds;
+let seconds = 0;
 
 if(player.finished){
 
@@ -638,7 +659,8 @@ place++;
 
 });
 
-leaderboard.innerHTML = html;
+leaderboard.innerHTML =
+html;
 
 }
 
@@ -654,9 +676,18 @@ code,
 "players"
 ),
 
-orderBy("score","desc")
+orderBy(
+"score",
+"desc"
+)
 
 );
+
+if(unsubscribeLeaderboard){
+
+unsubscribeLeaderboard();
+
+}
 
 unsubscribeLeaderboard =
 onSnapshot(
@@ -665,18 +696,8 @@ playersRef,
 
 (snapshot)=>{
 
-latestSnapshot = snapshot;
-
-if(snapshot.empty){
-
-document.getElementById(
-"playersList"
-).innerHTML =
-"Nog geen spelers";
-
-return;
-
-}
+latestSnapshot =
+snapshot;
 
 renderLeaderboard();
 
