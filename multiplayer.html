@@ -441,17 +441,13 @@ function startLeaderboard(code){
 
 const playersRef =
 query(
-
 collection(
 db,
 "multiplayerGames",
 code,
 "players"
 ),
-
-orderBy("score","desc"),
-orderBy("time","asc")
-
+orderBy("score","desc")
 );
 
 unsubscribeLeaderboard =
@@ -460,6 +456,11 @@ onSnapshot(
 playersRef,
 
 (snapshot)=>{
+
+console.log(
+"Aantal spelers:",
+snapshot.size
+);
 
 const leaderboard =
 document.getElementById(
@@ -476,6 +477,7 @@ return;
 }
 
 let html = "";
+
 let place = 1;
 
 snapshot.forEach((playerDoc)=>{
@@ -484,19 +486,17 @@ const player =
 playerDoc.data();
 
 html += `
-
 <div class="player">
 
 <b>#${place}</b><br>
 
 ${player.name}<br>
 
-Score: ${player.score ?? 0}<br>
+Score: ${player.score}<br>
 
-Tijd: ${Math.floor((player.time ?? 0)/1000)} sec
+Tijd: ${player.time}
 
 </div>
-
 `;
 
 place++;
@@ -510,19 +510,13 @@ html;
 
 (error)=>{
 
-console.error(
-"Leaderboard fout:",
-error
-);
+console.error(error);
 
 document.getElementById(
 "playersList"
 ).innerHTML =
 
-`
-Firestore fout:<br>
-${error.message}
-`;
+error.message;
 
 }
 
