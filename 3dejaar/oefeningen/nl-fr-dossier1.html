@@ -403,11 +403,20 @@
   let currentIndex = 0;
   let score = 0;
   let answered = false;
-  
   let multiplayerCode =
   localStorage.getItem("multiplayerCode");
   
   let startTime = Date.now();
+  
+  const firebaseConfig = {
+    apiKey:"AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+    authDomain:"vocabulairesite.firebaseapp.com",
+    projectId:"vocabulairesite",
+    storageBucket:"vocabulairesite.firebasestorage.app",
+    messagingSenderId:"1002919769364",
+    appId:"1:1002919769364:web:face9ebdbe3cb1db37fe01",
+    measurementId:"G-5FVEW59WH3"
+  };
 
   // Extract words from the main page
   async function loadWords() {
@@ -509,14 +518,14 @@
     document.getElementById('progressText').textContent = currentIndex + ' / ' + words.length;
   }
 
-    function showCompletion() {
-    
-      updateMultiplayerScore();
-
-      finishMultiplayer();
+  function showCompletion() {
+    updateMultiplayerScore();
+    finishMultiplayer();
     const percentage = Math.round((score / words.length) * 100);
     if (percentage === 100) {
+
       saveAchievement();
+
     }
     document.getElementById('finalScore').textContent = percentage + '%';
     document.getElementById('completionMessage').classList.add('show');
@@ -540,68 +549,6 @@
   // Load words on page load
   loadWords();
 
-async function updateMultiplayerScore() {
-
-  if (!multiplayerCode) return;
-
-  const { initializeApp } =
-  await import(
-    "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
-  );
-
-  const {
-    getFirestore,
-    doc,
-    updateDoc
-  } =
-  await import(
-    "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"
-  );
-
-  const {
-    getAuth
-  } =
-  await import(
-    "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
-  );
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
-    authDomain: "vocabulairesite.firebaseapp.com",
-    projectId: "vocabulairesite",
-    storageBucket: "vocabulairesite.firebasestorage.app",
-    messagingSenderId: "1002919769364",
-    appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01"
-  };
-
-  const app = initializeApp(firebaseConfig);
-
-  const db = getFirestore(app);
-
-  const auth = getAuth(app);
-
-  const user = auth.currentUser;
-
-  if (!user) return;
-
-  await updateDoc(
-
-    doc(
-      db,
-      "multiplayerGames",
-      multiplayerCode,
-      "players",
-      user.uid
-    ),
-
-    {
-      score: score
-    }
-
-  );
-
-}
-  
 async function saveAchievement() {
 
   const { initializeApp } =
@@ -653,10 +600,6 @@ async function saveAchievement() {
 
   if (!user) return;
 
-  localStorage.removeItem(
-    "multiplayerCode"
-  );
-  
   await setDoc(
 
     doc(db, "achievements", user.uid),
@@ -677,11 +620,19 @@ async function saveAchievement() {
 
 }
 
-async function finishMultiplayer(){
+async function updateMultiplayerScore(){
 
   if(!multiplayerCode) return;
 
   const { initializeApp } =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
+  );
+
+  const {
+    getApps,
+    getApp
+  } =
   await import(
     "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
   );
@@ -702,43 +653,141 @@ async function finishMultiplayer(){
     "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
   );
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
-    authDomain: "vocabulairesite.firebaseapp.com",
-    projectId: "vocabulairesite",
-    storageBucket: "vocabulairesite.firebasestorage.app",
-    messagingSenderId: "1002919769364",
-    appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01"
-  };
+  const app =
+  getApps().length
+  ? getApp()
+  : initializeApp(firebaseConfig);
 
-  const app = initializeApp(firebaseConfig);
+  const db =
+  getFirestore(app);
 
-  const db = getFirestore(app);
+  const auth =
+  getAuth(app);
 
-  const auth = getAuth(app);
+  const user =
+  auth.currentUser;
 
-  const user = auth.currentUser;
+  if(!user){
+    console.error("Geen gebruiker");
+    return;
+  }
 
-  if(!user) return;
+  try{
 
-  await updateDoc(
+    await updateDoc(
 
-    doc(
-      db,
-      "multiplayerGames",
-      multiplayerCode,
-      "players",
-      user.uid
-    ),
+      doc(
+        db,
+        "multiplayerGames",
+        multiplayerCode,
+        "players",
+        user.uid
+      ),
 
-    {
-      finished:true,
-      time: Date.now() - startTime
-    }
+      {
+        score: score
+      }
 
-  );
+    );
+
+  }catch(error){
+
+    console.error(
+      "Score update mislukt:",
+      error
+    );
+
+  }
 
 }
+
+async function finishMultiplayer(){
+
+  if(!multiplayerCode) return;
+
+  const { initializeApp } =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
+  );
+
+  const {
+    getApps,
+    getApp
+  } =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
+  );
+
+  const {
+    getFirestore,
+    doc,
+    updateDoc
+  } =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"
+  );
+
+  const {
+    getAuth
+  } =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
+  );
+
+  const app =
+  getApps().length
+  ? getApp()
+  : initializeApp(firebaseConfig);
+
+  const db =
+  getFirestore(app);
+
+  const auth =
+  getAuth(app);
+
+  const user =
+  auth.currentUser;
+
+  if(!user){
+    console.error("Geen gebruiker");
+    return;
+  }
+
+  try{
+
+    await updateDoc(
+
+      doc(
+        db,
+        "multiplayerGames",
+        multiplayerCode,
+        "players",
+        user.uid
+      ),
+
+      {
+        score: score,
+        finished: true,
+        time: Date.now() - startTime
+      }
+
+    );
+
+    localStorage.removeItem(
+      "multiplayerCode"
+    );
+
+  }catch(error){
+
+    console.error(
+      "Finish multiplayer mislukt:",
+      error
+    );
+
+  }
+
+}
+  
 </script>
 
 </body>
