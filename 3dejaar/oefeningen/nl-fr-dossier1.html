@@ -489,6 +489,7 @@
 
     if (userAnswer === correctAnswer) {
       score++;
+      addXP(5);
       updateMultiplayerScore();
       feedback.textContent = 'Juist! Goed gedaan!';
       feedback.className = 'feedback correct';
@@ -519,11 +520,13 @@
   }
 
   function showCompletion() {
+    addXP(25);
     updateMultiplayerScore();
     finishMultiplayer();
     const percentage = Math.round((score / words.length) * 100);
     if (percentage === 100) {
 
+      addXP(50);
       saveAchievement();
 
     }
@@ -785,6 +788,88 @@ async function finishMultiplayer(){
     );
 
   }
+
+}
+
+async function addXP(amount){
+
+  const { initializeApp } =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
+  );
+
+  const {
+    getApps,
+    getApp
+  } =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
+  );
+
+  const {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc
+  } =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"
+  );
+
+  const {
+    getAuth
+  } =
+  await import(
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
+  );
+
+  const app =
+  getApps().length
+  ? getApp()
+  : initializeApp(firebaseConfig);
+
+  const db =
+  getFirestore(app);
+
+  const auth =
+  getAuth(app);
+
+  const user =
+  auth.currentUser;
+
+  if(!user) return;
+
+  const userRef =
+  doc(db,"users",user.uid);
+
+  const snap =
+  await getDoc(userRef);
+
+  let xp = 0;
+
+  if(snap.exists()){
+
+    xp = snap.data().xp || 0;
+
+  }
+
+  xp += amount;
+
+  await setDoc(
+
+    userRef,
+
+    {
+      xp: xp,
+      createdAt:
+      snap.exists()
+      ? snap.data().createdAt
+      : Date.now()
+    },
+
+    { merge:true }
+
+  );
 
 }
   
