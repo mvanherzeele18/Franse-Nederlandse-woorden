@@ -489,6 +489,7 @@
 
     if (userAnswer === correctAnswer) {
       score++;
+      addXP(5);
       updateMultiplayerScore();
       feedback.textContent = 'Juist! Goed gedaan!';
       feedback.className = 'feedback correct';
@@ -519,11 +520,12 @@
   }
 
   function showCompletion() {
+    addXP(25);
     updateMultiplayerScore();
     finishMultiplayer();
     const percentage = Math.round((score / words.length) * 100);
     if (percentage === 100) {
-
+      addXP(50);
       saveAchievement();
 
     }
