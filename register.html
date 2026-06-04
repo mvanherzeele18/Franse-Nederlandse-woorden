@@ -253,11 +253,42 @@
     const auth =
     getAuth(app);
 
+    const allowedDomains = [
+
+      "gmail.com",
+      "hotmail.com",
+      "outlook.com",
+      "live.com",
+      "live.be",
+      "icloud.com",
+      "me.com",
+      "mac.com",
+      "yahoo.com",
+      "telenet.be",
+      "proximus.be",
+      "skynet.be",
+      "groenhoveschool.be"
+
+    ];
+
     window.register = async function () {
 
       const email =
       document.getElementById("email").value;
+      const domain =
+email.split("@")[1]?.toLowerCase();
 
+if(
+  !allowedDomains.includes(domain)
+){
+
+  alert(
+    "Gebruik een geldig e-mailadres."
+  );
+
+  return;
+
+}
       const password =
       document.getElementById("password").value;
 
