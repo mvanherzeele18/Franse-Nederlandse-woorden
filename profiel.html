@@ -179,110 +179,296 @@ main { max-width: 640px; margin: 2rem auto; padding: 0 1rem 3rem; }
 
 import { initializeApp }
   from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import { getFirestore, doc, getDoc }
-  from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-import { getAuth, onAuthStateChanged }
-  from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
-  authDomain: "vocabulairesite.firebaseapp.com",
-  projectId: "vocabulairesite",
-  storageBucket: "vocabulairesite.firebasestorage.app",
-  messagingSenderId: "1002919769364",
-  appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
-  measurementId: "G-5FVEW59WH3"
+  apiKey:"AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+  authDomain:"vocabulairesite.firebaseapp.com",
+  projectId:"vocabulairesite",
+  storageBucket:"vocabulairesite.firebasestorage.app",
+  messagingSenderId:"1002919769364",
+  appId:"1:1002919769364:web:face9ebdbe3cb1db37fe01",
+  measurementId:"G-5FVEW59WH3"
 };
 
-const ADMIN_EMAIL = "vanherzeelematteo@gmail.com";
+const ADMIN_EMAIL =
+"vanherzeelematteo@gmail.com";
 
 const TITLES = [
-  { name: "Beginner",              minLevel: 1  },
-  { name: "Leerling",              minLevel: 5  },
-  { name: "Student",               minLevel: 10 },
-  { name: "Gevorderde",            minLevel: 20 },
-  { name: "Expert",                minLevel: 30 },
-  { name: "Professor",             minLevel: 40 },
-  { name: "Meester van het Frans", minLevel: 50 },
+
+  { name:"Beginner", minLevel:1 },
+  { name:"Leerling", minLevel:5 },
+  { name:"Student", minLevel:10 },
+  { name:"Gevorderde", minLevel:20 },
+  { name:"Expert", minLevel:30 },
+  { name:"Professor", minLevel:40 },
+  { name:"Meester van het Frans", minLevel:50 }
+
 ];
 
-const app  = initializeApp(firebaseConfig);
-const db   = getFirestore(app);
-const auth = getAuth(app);
+const app =
+initializeApp(firebaseConfig);
 
-function getLevel(xp)  { return Math.floor(xp / 100) + 1; }
-function xpForLevel(l) { return (l - 1) * 100; }
+const db =
+getFirestore(app);
 
-function getTitle(level) {
-  let t = TITLES[0].name;
-  for (const ti of TITLES) { if (level >= ti.minLevel) t = ti.name; }
-  return t;
-}
+const auth =
+getAuth(app);
 
-function renderProfile(xp, isAdmin) {
-  const level     = getLevel(xp);
-  const curFloor  = xpForLevel(level);
-  const nextFloor = xpForLevel(level + 1);
-  const progress  = Math.round(((xp - curFloor) / 100) * 100);
-  const needed    = nextFloor - xp;
-
-  const displayTitle = isAdmin ? "Admin" : getTitle(level);
-  const badgeIcon    = isAdmin ? "👑" : "🏅";
-
-  // Level bubble
-  document.getElementById("level-bubble").textContent =
-    isAdmin ? "👑 Admin" : "Lv. " + level;
-
-  // Titel badge
-  const badgeWrap = document.getElementById("title-badge-wrap");
-  badgeWrap.innerHTML = badgeIcon + " <span>" + displayTitle + "</span>";
-  badgeWrap.className = isAdmin ? "title-badge admin" : "title-badge";
-
-  // XP balk
-  document.getElementById("xp-cur").textContent  = xp - curFloor;
-  document.getElementById("xp-max").textContent  = 100;
-  document.getElementById("xp-hint").textContent =
-    "Nog " + needed + " XP tot level " + (level + 1);
-  setTimeout(() => {
-    document.getElementById("xp-bar").style.width = progress + "%";
-  }, 120);
-
-  // Stat vakjes
-  document.getElementById("stat-xp").textContent     = xp;
-  document.getElementById("stat-level").textContent  = level;
-  document.getElementById("stat-needed").textContent = needed + " XP";
-
-  // Titels lijst
-  const list = document.getElementById("titles-list");
-  list.innerHTML = "";
-  for (const ti of TITLES) {
-    const unlocked = level >= ti.minLevel;
-    const isNext   = !unlocked && TITLES.find(t => level < t.minLevel) === ti;
-    const dotClass = unlocked ? "done" : (isNext ? "next" : "future");
-    const row      = document.createElement("div");
-    row.className  = "title-row";
-    row.innerHTML  =
-      `<div class="t-dot ${dotClass}"></div>` +
-      `<span class="t-name ${unlocked ? "done" : "future"}">${ti.name}</span>` +
-      `<span class="t-lvl">Lv. ${ti.minLevel}</span>` +
-      (unlocked ? `<span class="t-check">✓</span>` : "");
-    list.appendChild(row);
-  }
-}
-
-onAuthStateChanged(auth, async (user) => {
-  if (!user) return;
-
-  document.getElementById("name").textContent  = user.displayName || "Gebruiker";
-  document.getElementById("email").textContent = user.email;
+function xpForLevel(level){
 
   let xp = 0;
-  const userDoc = await getDoc(doc(db, "users", user.uid));
-  if (userDoc.exists()) xp = userDoc.data().xp || 0;
 
-  const isAdmin = user.email === ADMIN_EMAIL;
-  renderProfile(xp, isAdmin);
-});
+  for(let i = 1; i < level; i++){
+
+    xp += 100 + ((i - 1) * 50);
+
+  }
+
+  return xp;
+
+}
+
+function getLevel(xp){
+
+  let level = 1;
+
+  while(xp >= xpForLevel(level + 1)){
+
+    level++;
+
+  }
+
+  return level;
+
+}
+
+function getTitle(level){
+
+  let title = TITLES[0].name;
+
+  for(const t of TITLES){
+
+    if(level >= t.minLevel){
+
+      title = t.name;
+
+    }
+
+  }
+
+  return title;
+
+}
+
+function renderProfile(xp,isAdmin){
+
+  const level =
+  getLevel(xp);
+
+  const currentLevelXP =
+  xpForLevel(level);
+
+  const nextLevelXP =
+  xpForLevel(level + 1);
+
+  const xpInsideLevel =
+  xp - currentLevelXP;
+
+  const xpNeededThisLevel =
+  nextLevelXP - currentLevelXP;
+
+  const xpRemaining =
+  nextLevelXP - xp;
+
+  const progress =
+  Math.round(
+    (xpInsideLevel / xpNeededThisLevel)
+    * 100
+  );
+
+  const displayTitle =
+  isAdmin
+  ? "Admin"
+  : getTitle(level);
+
+  const badgeIcon =
+  isAdmin
+  ? "👑"
+  : "🏅";
+
+  document.getElementById(
+    "level-bubble"
+  ).textContent =
+  isAdmin
+  ? "👑 Admin"
+  : "Lv. " + level;
+
+  const badge =
+  document.getElementById(
+    "title-badge-wrap"
+  );
+
+  badge.innerHTML =
+  badgeIcon +
+  " <span>" +
+  displayTitle +
+  "</span>";
+
+  badge.className =
+  isAdmin
+  ? "title-badge admin"
+  : "title-badge";
+
+  document.getElementById(
+    "xp-cur"
+  ).textContent =
+  xpInsideLevel;
+
+  document.getElementById(
+    "xp-max"
+  ).textContent =
+  xpNeededThisLevel;
+
+  document.getElementById(
+    "xp-hint"
+  ).textContent =
+  "Nog " +
+  xpRemaining +
+  " XP tot level " +
+  (level + 1);
+
+  setTimeout(()=>{
+
+    document.getElementById(
+      "xp-bar"
+    ).style.width =
+    progress + "%";
+
+  },100);
+
+  document.getElementById(
+    "stat-xp"
+  ).textContent =
+  xp;
+
+  document.getElementById(
+    "stat-level"
+  ).textContent =
+  level;
+
+  document.getElementById(
+    "stat-needed"
+  ).textContent =
+  xpRemaining + " XP";
+
+  const list =
+  document.getElementById(
+    "titles-list"
+  );
+
+  list.innerHTML = "";
+
+  const nextTitle =
+  TITLES.find(
+    t => level < t.minLevel
+  );
+
+  for(const t of TITLES){
+
+    const unlocked =
+    level >= t.minLevel;
+
+    const isNext =
+    !unlocked &&
+    nextTitle &&
+    nextTitle.name === t.name;
+
+    const dotClass =
+    unlocked
+    ? "done"
+    : (isNext ? "next" : "future");
+
+    const row =
+    document.createElement("div");
+
+    row.className =
+    "title-row";
+
+    row.innerHTML =
+
+      `<div class="t-dot ${dotClass}"></div>
+       <span class="t-name ${unlocked ? "done" : "future"}">
+         ${t.name}
+       </span>
+       <span class="t-lvl">
+         Lv. ${t.minLevel}
+       </span>
+       ${unlocked ? '<span class="t-check">✓</span>' : ''}`;
+
+    list.appendChild(row);
+
+  }
+
+}
+
+onAuthStateChanged(
+  auth,
+  async(user)=>{
+
+    if(!user) return;
+
+    document.getElementById(
+      "name"
+    ).textContent =
+    user.displayName ||
+    "Gebruiker";
+
+    document.getElementById(
+      "email"
+    ).textContent =
+    user.email;
+
+    let xp = 0;
+
+    const userDoc =
+    await getDoc(
+      doc(
+        db,
+        "users",
+        user.uid
+      )
+    );
+
+    if(userDoc.exists()){
+
+      xp =
+      userDoc.data().xp || 0;
+
+    }
+
+    const isAdmin =
+    user.email === ADMIN_EMAIL;
+
+    renderProfile(
+      xp,
+      isAdmin
+    );
+
+  }
+);
 
 </script>
 </body>
