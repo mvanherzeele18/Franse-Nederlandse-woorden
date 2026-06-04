@@ -306,14 +306,13 @@ function renderProfile(xp,isAdmin){
 
   const badgeIcon =
   isAdmin
-  ? "👑"
   : "🏅";
 
   document.getElementById(
     "level-bubble"
   ).textContent =
   isAdmin
-  ? "👑 Admin"
+  ? "Admin"
   : "Lv. " + level;
 
   const badge =
