@@ -137,7 +137,7 @@ main { max-width: 640px; margin: 2rem auto; padding: 0 1rem 3rem; }
     </div>
     <div class="profile-name" id="name">Laden...</div>
     <div class="profile-email" id="email">Laden...</div>
-    <div class="title-badge" <span id="title-badge">Beginner</span></div>
+    <div class="title-badge" id="title-badge-wrap">🏅 <span id="title-badge">Beginner</span></div>
   </div>
 
   <div class="xp-card">
@@ -303,7 +303,9 @@ function renderProfile(xp,isAdmin){
   isAdmin
   ? "Admin"
   : getTitle(level);
-
+  
+  const badgeIcon =
+  "🏅";
 
   document.getElementById(
     "level-bubble"
