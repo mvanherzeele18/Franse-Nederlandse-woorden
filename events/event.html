@@ -13,131 +13,102 @@
 
 <style>
 
-body{
+:root {
 
-margin:0;
-
-font-family:"DM Sans",sans-serif;
-
-background:#F1F8E9;
-
-color:#1B5E20;
-
-}
-
-header{
-
-background:#2E7D32;
-
-padding:20px;
-
-color:white;
-
-text-align:center;
+  --green: #6BBE3A;
+  --green-light: #D4E8B8;
+  --green-dark: #2E7D32;
+  --yellow: #FDD835;
+  --bg: #F1F8E9;
+  --white: #FFFFFF;
+  --text: #1B5E20;
 
 }
 
-.container{
+body {
 
-max-width:900px;
-
-margin:auto;
-
-padding:30px;
-
-}
-
-.card{
-
-background:white;
-
-padding:25px;
-
-border-radius:15px;
-
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-
-margin-bottom:25px;
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
 
 }
 
-h2{
+header {
 
-margin-top:0;
+  background: linear-gradient(
+    135deg,
+    var(--green-dark) 0%,
+    var(--green) 100%
+  );
 
-}
+  padding: 2rem;
 
-.hidden{
+  border-bottom: 4px solid var(--yellow);
 
-display:none;
+  display: flex;
 
-}
+  justify-content: space-between;
 
-.info{
+  align-items: center;
 
-font-size:18px;
+  flex-wrap: wrap;
 
-line-height:1.6;
-
-}
-
-.progress{
-
-height:20px;
-
-background:#ddd;
-
-border-radius:20px;
-
-overflow:hidden;
-
-margin-top:15px;
+  gap: 1rem;
 
 }
 
-.progressFill{
+header h1 {
 
-height:100%;
+  font-family: 'Playfair Display', serif;
 
-width:0%;
+  color: var(--yellow);
 
-background:#6BBE3A;
-
-transition:.5s;
+  font-size: 2rem;
 
 }
 
-.shopItem{
+.nav-btn {
 
-display:flex;
+  background: var(--yellow);
 
-justify-content:space-between;
+  color: var(--green-dark);
 
-padding:15px;
+  text-decoration: none;
 
-border-bottom:1px solid #ddd;
+  padding: 0.7rem 1.2rem;
 
-}
+  border-radius: 10px;
 
-button{
+  font-weight: 600;
 
-background:#6BBE3A;
-
-border:none;
-
-padding:10px 18px;
-
-border-radius:8px;
-
-color:white;
-
-cursor:pointer;
+  transition: all 0.3s;
 
 }
 
-button:hover{
+.nav-btn:hover {
 
-background:#4CAF50;
+  background: var(--green-light);
+
+  transform: translateY(-2px);
+
+}
+
+@media (max-width:600px){
+
+  header{
+
+    flex-direction:column;
+    text-align:center;
+
+  }
+
+  .nav-btn{
+
+    width:100%;
+    text-align:center;
+
+  }
 
 }
 
@@ -148,13 +119,14 @@ background:#4CAF50;
 <body>
 
 <header>
+  <h1>Events</h1>
 
-<h1 id="eventTitle">
-
-Events
-
-</h1>
-
+  <a
+    href="https://mvanherzeele.github.io/Franse-Nederlandse-woorden/index.html"
+    class="nav-btn"
+  >
+    ← Terug
+  </a>
 </header>
 
 <div class="container">
