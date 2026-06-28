@@ -1,1 +1,410 @@
+<!DOCTYPE html>
+<html lang="nl">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Events</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+
+margin:0;
+
+font-family:"DM Sans",sans-serif;
+
+background:#F1F8E9;
+
+color:#1B5E20;
+
+}
+
+header{
+
+background:#2E7D32;
+
+padding:20px;
+
+color:white;
+
+text-align:center;
+
+}
+
+.container{
+
+max-width:900px;
+
+margin:auto;
+
+padding:30px;
+
+}
+
+.card{
+
+background:white;
+
+padding:25px;
+
+border-radius:15px;
+
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+margin-bottom:25px;
+
+}
+
+h2{
+
+margin-top:0;
+
+}
+
+.hidden{
+
+display:none;
+
+}
+
+.info{
+
+font-size:18px;
+
+line-height:1.6;
+
+}
+
+.progress{
+
+height:20px;
+
+background:#ddd;
+
+border-radius:20px;
+
+overflow:hidden;
+
+margin-top:15px;
+
+}
+
+.progressFill{
+
+height:100%;
+
+width:0%;
+
+background:#6BBE3A;
+
+transition:.5s;
+
+}
+
+.shopItem{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:15px;
+
+border-bottom:1px solid #ddd;
+
+}
+
+button{
+
+background:#6BBE3A;
+
+border:none;
+
+padding:10px 18px;
+
+border-radius:8px;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#4CAF50;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1 id="eventTitle">
+
+Events
+
+</h1>
+
+</header>
+
+<div class="container">
+
+<div id="noEvent" class="card">
+
+<h2>🎉 Geen event</h2>
+
+<p class="info">
+
+Momenteel is er geen actief evenement.
+
+Kom later nog eens terug!
+
+</p>
+
+</div>
+
+<div id="christmas" class="hidden">
+
+<div class="card">
+
+<h2>🎄 Kerst Event</h2>
+
+<p class="info">
+
+Maak oefeningen.
+
+Soms krijg je een cadeau.
+
+In dat cadeau zit XP of een exclusieve titel.
+
+</p>
+
+</div>
+
+</div>
+
+<div id="halloween" class="hidden">
+
+<div class="card">
+
+<h2>🎃 Halloween</h2>
+
+<p>
+
+Snoepjes:
+
+<strong id="candyCount">
+
+0
+
+</strong>
+
+</p>
+
+<div class="progress">
+
+<div class="progressFill"
+
+id="dailyProgress">
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Halloween Winkel</h2>
+
+<div class="shopItem">
+
+<span>
+
+20 XP
+
+</span>
+
+<button>
+
+5 🍬
+
+</button>
+
+</div>
+
+<div class="shopItem">
+
+<span>
+
+100 XP
+
+</span>
+
+<button>
+
+30 🍬
+
+</button>
+
+</div>
+
+<div class="shopItem">
+
+<span>
+
+Titel
+
+Halloweenclown
+
+</span>
+
+<button>
+
+250 🍬
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="easter" class="hidden">
+
+<div class="card">
+
+<h2>🥚 Pasen</h2>
+
+<p class="info">
+
+Zoek vandaag alle paaseieren.
+
+Nieuwe locaties verschijnen elke dag.
+
+</p>
+
+</div>
+
+</div>
+
+<div id="birthday" class="hidden">
+
+<div class="card">
+
+<h2>🎂 Verjaardag Website</h2>
+
+<p>
+
+Dubbele XP actief!
+
+</p>
+
+<p>
+
+7 dagen streak:
+
+</p>
+
+<div class="progress">
+
+<div class="progressFill"
+
+id="birthdayProgress">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import{
+
+getCurrentEvent
+
+}
+
+from "./eventManager.js";
+
+const event=
+
+getCurrentEvent();
+
+if(event==null){
+
+document.getElementById(
+
+"noEvent"
+
+).classList.remove(
+
+"hidden"
+
+);
+
+}else{
+
+document.getElementById(
+
+"noEvent"
+
+).classList.add(
+
+"hidden"
+
+);
+
+document.getElementById(
+
+event
+
+).classList.remove(
+
+"hidden"
+
+);
+
+const names={
+
+christmas:"🎄 Kerst",
+
+halloween:"🎃 Halloween",
+
+easter:"🥚 Pasen",
+
+birthday:"🎂 Verjaardag"
+
+};
+
+document.getElementById(
+
+"eventTitle"
+
+).textContent=
+
+names[event];
+
+}
+
+</script>
+
+</body>
+
+</html>
