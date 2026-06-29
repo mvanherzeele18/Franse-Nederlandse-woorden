@@ -502,9 +502,17 @@ opacity:1;
 
 <script type="module" src="https://mvanherzeele.github.io/Franse-Nederlandse-woorden/auth-check.js"></script>
 
-<script type="module" src="https://mvanherzeele.github.io/Franse-Nederlandse-woorden/events/christmas.js"></script>  
-  
-<script>
+<script type="module" src="https://mvanherzeele.github.io/Franse-Nederlandse-woorden/events/christmasTheme.js"></script>
+
+<script type="module" src="https://mvanherzeele.github.io/Franse-Nederlandse-woorden/events/christmas.js"></script>
+
+<script type="module">
+import {
+    tryChristmasGift
+} from "https://mvanherzeele.github.io/Franse-Nederlandse-woorden/events/christmas.js";
+
+window.tryChristmasGift = tryChristmasGift;
+
   let words = [];
   let currentIndex = 0;
   let score = 0;
