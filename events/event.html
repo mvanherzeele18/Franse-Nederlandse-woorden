@@ -1,114 +1,183 @@
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<title>Events</title>
+<title>Event</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
-:root {
+:root{
 
-  --green: #6BBE3A;
-  --green-light: #D4E8B8;
-  --green-dark: #2E7D32;
-  --yellow: #FDD835;
-  --bg: #F1F8E9;
-  --white: #FFFFFF;
-  --text: #1B5E20;
-
-}
-
-body {
-
-  margin: 0;
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+--green:#6BBE3A;
+--green-light:#D4E8B8;
+--green-dark:#2E7D32;
+--yellow:#FDD835;
+--bg:#F1F8E9;
+--white:#FFFFFF;
+--text:#1B5E20;
 
 }
 
-header {
+*{
 
-  background: linear-gradient(
-    135deg,
-    var(--green-dark) 0%,
-    var(--green) 100%
-  );
-
-  padding: 2rem;
-
-  border-bottom: 4px solid var(--yellow);
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  flex-wrap: wrap;
-
-  gap: 1rem;
+margin:0;
+padding:0;
+box-sizing:border-box;
 
 }
 
-header h1 {
+body{
 
-  font-family: 'Playfair Display', serif;
-
-  color: var(--yellow);
-
-  font-size: 2rem;
-
-}
-
-.nav-btn {
-
-  background: var(--yellow);
-
-  color: var(--green-dark);
-
-  text-decoration: none;
-
-  padding: 0.7rem 1.2rem;
-
-  border-radius: 10px;
-
-  font-weight: 600;
-
-  transition: all 0.3s;
+font-family:'DM Sans',sans-serif;
+background:var(--bg);
+min-height:100vh;
+color:var(--text);
 
 }
 
-.nav-btn:hover {
+header{
 
-  background: var(--green-light);
+background:linear-gradient(
+135deg,
+var(--green-dark),
+var(--green)
+);
 
-  transform: translateY(-2px);
+padding:2rem;
+
+border-bottom:4px solid var(--yellow);
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+flex-wrap:wrap;
+
+gap:1rem;
 
 }
 
-@media (max-width:600px){
+header h1{
 
-  header{
+font-family:'Playfair Display',serif;
 
-    flex-direction:column;
-    text-align:center;
+color:var(--yellow);
 
-  }
+font-size:2rem;
 
-  .nav-btn{
+}
 
-    width:100%;
-    text-align:center;
+.nav-btn{
 
-  }
+background:var(--yellow);
+
+color:var(--green-dark);
+
+text-decoration:none;
+
+padding:.7rem 1.2rem;
+
+border-radius:10px;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.nav-btn:hover{
+
+background:var(--green-light);
+
+transform:translateY(-2px);
+
+}
+
+main{
+
+max-width:1000px;
+
+margin:2rem auto;
+
+padding:0 1rem;
+
+}
+
+.card{
+
+background:white;
+
+border:3px solid var(--green);
+
+border-radius:16px;
+
+padding:2rem;
+
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+margin-bottom:2rem;
+
+}
+
+.card h2{
+
+color:var(--green-dark);
+
+margin-bottom:1rem;
+
+}
+
+.card p{
+
+line-height:1.7;
+
+margin-bottom:1rem;
+
+}
+
+.reward{
+
+background:#eef8e6;
+
+padding:1rem;
+
+border-radius:10px;
+
+margin:.7rem 0;
+
+}
+
+.hidden{
+
+display:none;
+
+}
+
+@media(max-width:600px){
+
+header{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+.nav-btn{
+
+width:100%;
+text-align:center;
+
+}
 
 }
 
@@ -119,25 +188,34 @@ header h1 {
 <body>
 
 <header>
-  <h1>Events</h1>
 
-  <a
-    href="https://mvanherzeele.github.io/Franse-Nederlandse-woorden/index.html"
-    class="nav-btn"
-  >
-    ← Terug
-  </a>
+<h1 id="eventTitle">
+Event
+</h1>
+
+<a
+href="index.html"
+class="nav-btn">
+
+← Terug
+
+</a>
+
 </header>
 
-<div class="container">
+<main>
 
-<div id="noEvent" class="card">
+<div
+class="card"
+id="noEvent">
 
-<h2>🎉 Geen event</h2>
+<h2>
 
-<p class="info">
+Er is momenteel geen event actief
 
-Momenteel is er geen actief evenement.
+</h2>
+
+<p>
 
 Kom later nog eens terug!
 
@@ -145,169 +223,33 @@ Kom later nog eens terug!
 
 </div>
 
-<div id="christmas" class="hidden">
+<div
+class="card hidden"
+id="eventContent">
 
-<div class="card">
+<h2 id="eventName">
 
-<h2>🎄 Kerst Event</h2>
+Event
 
-<p class="info">
+</h2>
 
-Maak oefeningen.
+<p id="eventDescription">
 
-Soms krijg je een cadeau.
-
-In dat cadeau zit XP of een exclusieve titel.
-
-</p>
-
-</div>
-
-</div>
-
-<div id="halloween" class="hidden">
-
-<div class="card">
-
-<h2>🎃 Halloween</h2>
-
-<p>
-
-Snoepjes:
-
-<strong id="candyCount">
-
-0
-
-</strong>
+...
 
 </p>
 
-<div class="progress">
-
-<div class="progressFill"
-
-id="dailyProgress">
+<div
+id="eventExtra">
 
 </div>
 
 </div>
 
-</div>
-
-<div class="card">
-
-<h2>Halloween Winkel</h2>
-
-<div class="shopItem">
-
-<span>
-
-20 XP
-
-</span>
-
-<button>
-
-5 🍬
-
-</button>
-
-</div>
-
-<div class="shopItem">
-
-<span>
-
-100 XP
-
-</span>
-
-<button>
-
-30 🍬
-
-</button>
-
-</div>
-
-<div class="shopItem">
-
-<span>
-
-Titel
-
-Halloweenclown
-
-</span>
-
-<button>
-
-250 🍬
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div id="easter" class="hidden">
-
-<div class="card">
-
-<h2>🥚 Pasen</h2>
-
-<p class="info">
-
-Zoek vandaag alle paaseieren.
-
-Nieuwe locaties verschijnen elke dag.
-
-</p>
-
-</div>
-
-</div>
-
-<div id="birthday" class="hidden">
-
-<div class="card">
-
-<h2>🎂 Verjaardag Website</h2>
-
-<p>
-
-Dubbele XP actief!
-
-</p>
-
-<p>
-
-7 dagen streak:
-
-</p>
-
-<div class="progress">
-
-<div class="progressFill"
-
-id="birthdayProgress">
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+</main>
 <script type="module">
 
-import{
+import {
 
 getCurrentEvent
 
@@ -315,63 +257,190 @@ getCurrentEvent
 
 from "./eventManager.js";
 
-const event=
+const event = getCurrentEvent();
 
-getCurrentEvent();
+const noEvent =
+document.getElementById("noEvent");
 
-if(event==null){
+const eventContent =
+document.getElementById("eventContent");
 
-document.getElementById(
+const eventTitle =
+document.getElementById("eventTitle");
 
-"noEvent"
+const eventName =
+document.getElementById("eventName");
 
-).classList.remove(
+const eventDescription =
+document.getElementById("eventDescription");
 
-"hidden"
+const eventExtra =
+document.getElementById("eventExtra");
 
-);
+if(event){
 
-}else{
+noEvent.classList.add("hidden");
 
-document.getElementById(
+eventContent.classList.remove("hidden");
 
-"noEvent"
+eventTitle.textContent =
+event.name;
 
-).classList.add(
+eventName.textContent =
+event.name;
 
-"hidden"
+eventDescription.textContent =
+event.description;
 
-);
+switch(event.id){
 
-document.getElementById(
+case "christmas":
 
-event
+eventExtra.innerHTML = `
 
-).classList.remove(
+<h2>🎁 Cadeautjes</h2>
 
-"hidden"
+<p>
 
-);
+Maak oefeningen.
 
-const names={
+Bij elk juist antwoord heb je kans op een cadeautje.
 
-christmas:"🎄 Kerst",
+</p>
 
-halloween:"🎃 Halloween",
+<div class="reward">
 
-easter:"🥚 Pasen",
+🎁 65% kans → 10 XP
 
-birthday:"🎂 Verjaardag"
+</div>
 
-};
+<div class="reward">
 
-document.getElementById(
+🎁 20% kans → 50 XP
 
-"eventTitle"
+</div>
 
-).textContent=
+<div class="reward">
 
-names[event];
+🎁 10% kans → 100 XP
+
+</div>
+
+<div class="reward">
+
+🎁 5% kans → Exclusieve titel
+
+</div>
+
+`;
+
+break;
+
+case "halloween":
+
+eventExtra.innerHTML = `
+
+<h2>🍬 Snoepjes</h2>
+
+<p>
+
+Verdien snoepjes door oefeningen te maken.
+
+Ruil ze later in voor XP of exclusieve titels.
+
+</p>
+
+<h2>
+
+Dagelijkse opdrachten
+
+</h2>
+
+<div class="reward">
+
+Oefen 100 woorden
+
+<br>
+
+Beloning:
+10 snoepjes
+
+</div>
+
+<div class="reward">
+
+Maak 3 oefeningen af
+
+<br>
+
+Beloning:
+20 snoepjes
+
+</div>
+
+`;
+
+break;
+
+case "easter":
+
+eventExtra.innerHTML = `
+
+<h2>🥚 Paaseieren</h2>
+
+<p>
+
+Iedere dag worden 5 paaseieren opnieuw verstopt.
+
+Klik erop wanneer je ze vindt.
+
+</p>
+
+<div class="reward">
+
+XP
+
+</div>
+
+<div class="reward">
+
+Kleine kans op een exclusieve titel
+
+</div>
+
+`;
+
+break;
+
+case "birthday":
+
+eventExtra.innerHTML = `
+
+<h2>🎉 Verjaardag</h2>
+
+<div class="reward">
+
+✨ Dubbele XP op alle oefeningen
+
+</div>
+
+<div class="reward">
+
+🔥 7 dagen streak = exclusieve titel
+
+</div>
+
+<div class="reward">
+
+🎁 Gratis verjaardagsbeloning
+
+</div>
+
+`;
+
+break;
+
+}
 
 }
 
