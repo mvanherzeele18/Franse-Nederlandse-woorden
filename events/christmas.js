@@ -59,6 +59,7 @@ if(Math.random()>0.05){
 return;
 
 }
+window.tryChristmasGift = tryChristmasGift;
 
 const user=
 auth.currentUser;
