@@ -398,6 +398,8 @@
 
 <script type="module" src="https://mvanherzeele.github.io/Franse-Nederlandse-woorden/auth-check.js"></script>
 
+<script type="module" src="https://mvanherzeele.github.io/Franse-Nederlandse-woorden/events/christmas.js"></script>  
+  
 <script>
   let words = [];
   let currentIndex = 0;
@@ -491,6 +493,7 @@
       score++;
       addXP(5);
       updateMultiplayerScore();
+      tryChristmasGift();
       feedback.textContent = 'Juist! Goed gedaan!';
       feedback.className = 'feedback correct';
     } else {
