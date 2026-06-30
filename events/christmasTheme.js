@@ -10,7 +10,7 @@ if (!isChristmas()) {
 
     const style = document.createElement("style");
 
-    style.textContent = 
+    style.textContent = `
 
     body{
 
@@ -151,7 +151,7 @@ if (!isChristmas()) {
 
     }
 
-    ;
+    `;
 
     document.head.appendChild(style);
 
