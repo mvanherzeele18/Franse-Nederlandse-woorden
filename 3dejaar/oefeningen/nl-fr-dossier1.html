@@ -523,7 +523,10 @@ function showCompletion() {
   const percentage = Math.round((score / words.length) * 100);
   document.getElementById("finalScore").textContent = percentage + "%";
 
-  if (percentage === 100) saveAchievement();
+  if (percentage === 100) {
+    addXP(50);
+    saveAchievement();
+  }
 
   document.getElementById("completionMessage").classList.add("show");
   document.querySelector(".word-display").style.display = "none";
