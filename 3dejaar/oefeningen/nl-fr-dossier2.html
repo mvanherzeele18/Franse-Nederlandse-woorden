@@ -617,7 +617,7 @@ async function saveAchievement() {
   if (!user) return;
 
   await setDoc(doc(db, "achievements", user.uid), {
-    nlfr13: { date: Date.now() }
+    nlfr23: { date: Date.now() }
   }, { merge: true });
 }
 
