@@ -422,9 +422,15 @@ import { loadActiveEvents } from "https://mvanherzeele18.github.io/Franse-Nederl
 let activeEvents = [];
 
 async function initExercise() {
-  activeEvents = await loadActiveEvents();  // 1. Events ophalen
-  await loadWords();                        // 2. Woorden laden
-  document.body.style.display = "block";    // 3. Pagina tonen
+  try {
+    activeEvents = await loadActiveEvents();
+  } catch (e) {
+    console.error("Events konden niet geladen worden:", e);
+    activeEvents = [];
+  }
+
+  await loadWords();
+  document.body.style.display = "block";
 }
 
 initExercise();
