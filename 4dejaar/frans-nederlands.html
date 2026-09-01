@@ -437,10 +437,12 @@ body.maintenance {
 <div class="dossier-filter">
   <button class="dossier-btn all-btn active" onclick="filterDossier('all', this)">Alle dossiers</button>
   <button class="dossier-btn" onclick="filterDossier('1', this)">Dossier 1</button>
+  <!--
   <button class="dossier-btn" onclick="filterDossier('2', this)">Dossier 2</button>
   <button class="dossier-btn" onclick="filterDossier('3', this)">Dossier 3</button>
   <button class="dossier-btn" onclick="filterDossier('4', this)">Dossier 4</button>
   <button class="dossier-btn" onclick="filterDossier('5', this)">Dossier 5</button>
+  -->
 </div>
 
 <script>
@@ -549,7 +551,6 @@ body.maintenance {
   }
 </script>
 
-<!-- DOSSIER 1 -->
 <section class="dossier-section" data-dossier="1">
 
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
@@ -563,35 +564,145 @@ body.maintenance {
   </a>
 </div>
 
-  <div class="section-header">
-    <div class="section-title">Zelfstandige naamwoorden</div>
-  </div>
-  <div class="word-grid">
-    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
-  </div>
+<div class="section-header">
+  <div class="section-title">Zelfstandige naamwoorden</div>
+</div>
+<div class="word-grid">
+  <div class="word-card"><span class="nl">l'adrénaline</span><div class="divider"></div><span class="fr">de adrenaline</span></div>
+  <div class="word-card"><span class="nl">une aventure</span><div class="divider"></div><span class="fr">een avontuur</span></div>
+  <div class="word-card"><span class="nl">une compétition</span><div class="divider"></div><span class="fr">een competitie</span></div>
+  <div class="word-card"><span class="nl">la détente</span><div class="divider"></div><span class="fr">de ontspanning</span></div>
+  <div class="word-card"><span class="nl">une équipe</span><div class="divider"></div><span class="fr">een ploeg, een team</span></div>
+  <div class="word-card"><span class="nl">une expérience</span><div class="divider"></div><span class="fr">een ervaring</span></div>
+  <div class="word-card"><span class="nl">une piste</span><div class="divider"></div><span class="fr">een piste</span></div>
+  <div class="word-card"><span class="nl">un risque</span><div class="divider"></div><span class="fr">een risico</span></div>
+  <div class="word-card"><span class="nl">une salle de sport</span><div class="divider"></div><span class="fr">een sportzaal</span></div>
 
-  <div class="section-header"><div class="section-title">Adjectieven</div></div>
-  <div class="word-grid">
-    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
-  </div>
+  <div class="word-card"><span class="nl">l'athlétisme</span><div class="divider"></div><span class="fr">de atletiek</span></div>
+  <div class="word-card"><span class="nl">le badminton</span><div class="divider"></div><span class="fr">het badminton</span></div>
+  <div class="word-card"><span class="nl">le basketball</span><div class="divider"></div><span class="fr">het basketbal</span></div>
+  <div class="word-card"><span class="nl">le beachvolley</span><div class="divider"></div><span class="fr">het beachvolleybal</span></div>
+  <div class="word-card"><span class="nl">la course de haies</span><div class="divider"></div><span class="fr">de hordenloop</span></div>
+  <div class="word-card"><span class="nl">le cyclisme</span><div class="divider"></div><span class="fr">het wielrennen</span></div>
+  <div class="word-card"><span class="nl">l'équitation</span><div class="divider"></div><span class="fr">het paardrijden</span></div>
+  <div class="word-card"><span class="nl">l'escalade</span><div class="divider"></div><span class="fr">het rotsklimmen</span></div>
+  <div class="word-card"><span class="nl">le football</span><div class="divider"></div><span class="fr">het voetbal</span></div>
 
-  <div class="section-header"><div class="section-title">Werkwoorden</div></div>
-  <div class="word-grid">
-    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
-  </div>
+  <div class="word-card"><span class="nl">le golf</span><div class="divider"></div><span class="fr">het golf</span></div>
+  <div class="word-card"><span class="nl">le handball</span><div class="divider"></div><span class="fr">het handbal</span></div>
+  <div class="word-card"><span class="nl">le judo</span><div class="divider"></div><span class="fr">de judo</span></div>
+  <div class="word-card"><span class="nl">le kayaking</span><div class="divider"></div><span class="fr">het kajakken</span></div>
+  <div class="word-card"><span class="nl">la marche</span><div class="divider"></div><span class="fr">het wandelen</span></div>
+  <div class="word-card"><span class="nl">la natation</span><div class="divider"></div><span class="fr">het zwemmen</span></div>
+  <div class="word-card"><span class="nl">le rugby</span><div class="divider"></div><span class="fr">het rugby</span></div>
+  <div class="word-card"><span class="nl">le saut à la perche</span><div class="divider"></div><span class="fr">het polsstokspringen</span></div>
+  <div class="word-card"><span class="nl">le saut en hauteur</span><div class="divider"></div><span class="fr">het hoogspringen</span></div>
+  <div class="word-card"><span class="nl">le ski</span><div class="divider"></div><span class="fr">het skiën</span></div>
+  <div class="word-card"><span class="nl">le tennis</span><div class="divider"></div><span class="fr">het tennis</span></div>
+  <div class="word-card"><span class="nl">le tir à l'arc</span><div class="divider"></div><span class="fr">het boogschieten</span></div>
+  <div class="word-card"><span class="nl">le volleyball</span><div class="divider"></div><span class="fr">het volleybal</span></div>
 
-  <div class="section-header"><div class="section-title">Bijwoorden</div></div>
-  <div class="word-grid">
-    <div class="word-card"><span class="nl">...</span><div class="divider"></div><span class="fr">...</span></div>
-  </div>
+  <div class="word-card"><span class="nl">une balle</span><div class="divider"></div><span class="fr">een bal (klein)</span></div>
+  <div class="word-card"><span class="nl">un ballon</span><div class="divider"></div><span class="fr">een bal (groot)</span></div>
+  <div class="word-card"><span class="nl">un bâton</span><div class="divider"></div><span class="fr">een stok</span></div>
+  <div class="word-card"><span class="nl">un but</span><div class="divider"></div><span class="fr">een doel</span></div>
+  <div class="word-card"><span class="nl">un esprit d'équipe</span><div class="divider"></div><span class="fr">teamgeest</span></div>
+  <div class="word-card"><span class="nl">le fairplay</span><div class="divider"></div><span class="fr">fairplay</span></div>
+  <div class="word-card"><span class="nl">un filet</span><div class="divider"></div><span class="fr">een net</span></div>
+  <div class="word-card"><span class="nl">un match</span><div class="divider"></div><span class="fr">een wedstrijd</span></div>
+  <div class="word-card"><span class="nl">le matériel</span><div class="divider"></div><span class="fr">het materiaal</span></div>
+  <div class="word-card"><span class="nl">un panier (de basket)</span><div class="divider"></div><span class="fr">een basketkorf</span></div>
+  <div class="word-card"><span class="nl">une piscine</span><div class="divider"></div><span class="fr">een zwembad</span></div>
+  <div class="word-card"><span class="nl">une plage</span><div class="divider"></div><span class="fr">een strand</span></div>
+  <div class="word-card"><span class="nl">une raquette</span><div class="divider"></div><span class="fr">een racket</span></div>
+  <div class="word-card"><span class="nl">un set</span><div class="divider"></div><span class="fr">een set</span></div>
+  <div class="word-card"><span class="nl">un sport collectif</span><div class="divider"></div><span class="fr">een groepssport</span></div>
+  <div class="word-card"><span class="nl">un sport d'équipe</span><div class="divider"></div><span class="fr">een teamsport</span></div>
+  <div class="word-card"><span class="nl">un sport individuel</span><div class="divider"></div><span class="fr">een individuele sport</span></div>
+  <div class="word-card"><span class="nl">un stade</span><div class="divider"></div><span class="fr">een stadion</span></div>
+  <div class="word-card"><span class="nl">un terrain</span><div class="divider"></div><span class="fr">een terrein</span></div>
 
-  <div class="section-header"><div class="section-title">Uitdrukkingen</div></div>
-  <div class="word-grid">
-    <div class="word-card"><span class="nl">..</span><div class="divider"></div><span class="fr">...</span></div>
-  </div>
+  <div class="word-card"><span class="nl">un volant</span><div class="divider"></div><span class="fr">een pluimpje / shuttle</span></div>
+  <div class="word-card"><span class="nl">des baskets</span><div class="divider"></div><span class="fr">sportschoenen</span></div>
+  <div class="word-card"><span class="nl">une casquette</span><div class="divider"></div><span class="fr">een pet</span></div>
+  <div class="word-card"><span class="nl">des chaussures de randonnée</span><div class="divider"></div><span class="fr">wandelschoenen</span></div>
+  <div class="word-card"><span class="nl">des chaussures fermées</span><div class="divider"></div><span class="fr">gesloten schoenen</span></div>
+  <div class="word-card"><span class="nl">une crème solaire</span><div class="divider"></div><span class="fr">een zonnecrème</span></div>
+  <div class="word-card"><span class="nl">un départ</span><div class="divider"></div><span class="fr">een vertrek</span></div>
+  <div class="word-card"><span class="nl">une gourde</span><div class="divider"></div><span class="fr">een drinkfles</span></div>
+  <div class="word-card"><span class="nl">un goûter</span><div class="divider"></div><span class="fr">een tussendoortje</span></div>
+  <div class="word-card"><span class="nl">des lunettes de soleil</span><div class="divider"></div><span class="fr">een zonnebril</span></div>
+
+  <div class="word-card"><span class="nl">un nu-pieds</span><div class="divider"></div><span class="fr">een volledig open schoen</span></div>
+  <div class="word-card"><span class="nl">une paire</span><div class="divider"></div><span class="fr">een paar</span></div>
+  <div class="word-card"><span class="nl">un pique-nique</span><div class="divider"></div><span class="fr">een picknick</span></div>
+  <div class="word-card"><span class="nl">un polaire</span><div class="divider"></div><span class="fr">een fleecetrui</span></div>
+  <div class="word-card"><span class="nl">un pull</span><div class="divider"></div><span class="fr">een trui</span></div>
+  <div class="word-card"><span class="nl">un retour</span><div class="divider"></div><span class="fr">een terugkeer</span></div>
+  <div class="word-card"><span class="nl">des sandales</span><div class="divider"></div><span class="fr">sandalen</span></div>
+  <div class="word-card"><span class="nl">un vêtement de pluie</span><div class="divider"></div><span class="fr">regenkleding</span></div>
+</div>
+
+<div class="section-header">
+  <div class="section-title">Adjectieven</div>
+</div>
+<div class="word-grid">
+  <div class="word-card"><span class="nl">fatigant(e)</span><div class="divider"></div><span class="fr">vermoeiend</span></div>
+  <div class="word-card"><span class="nl">physique</span><div class="divider"></div><span class="fr">fysiek</span></div>
+  <div class="word-card"><span class="nl">préféré(e)</span><div class="divider"></div><span class="fr">lievelings-</span></div>
+  <div class="word-card"><span class="nl">sportif / sportive</span><div class="divider"></div><span class="fr">sportief</span></div>
+  <div class="word-card"><span class="nl">tranquille</span><div class="divider"></div><span class="fr">rustig</span></div>
+</div>
+
+<div class="section-header">
+  <div class="section-title">Werkwoorden</div>
+</div>
+<div class="word-grid">
+  <div class="word-card"><span class="nl">courir</span><div class="divider"></div><span class="fr">lopen</span></div>
+  <div class="word-card"><span class="nl">découvrir</span><div class="divider"></div><span class="fr">ontdekken</span></div>
+  <div class="word-card"><span class="nl">faire du / de la / de l'</span><div class="divider"></div><span class="fr">(aan sport) doen</span></div>
+
+  <div class="word-card"><span class="nl">gagner</span><div class="divider"></div><span class="fr">winnen</span></div>
+  <div class="word-card"><span class="nl">participer à</span><div class="divider"></div><span class="fr">deelnemen (aan)</span></div>
+  <div class="word-card"><span class="nl">perdre</span><div class="divider"></div><span class="fr">verliezen</span></div>
+
+  <div class="word-card"><span class="nl">marcher</span><div class="divider"></div><span class="fr">wandelen, stappen</span></div>
+  <div class="word-card"><span class="nl">consacrer à</span><div class="divider"></div><span class="fr">besteden (aan)</span></div>
+</div>
+
+<div class="section-header">
+  <div class="section-title">Uitdrukkingen</div>
+</div>
+<div class="word-grid">
+  <div class="word-card"><span class="nl">jouer au / à la / à l'</span><div class="divider"></div><span class="fr">(balsport) spelen</span></div>
+  <div class="word-card"><span class="nl">pratiquer le / la</span><div class="divider"></div><span class="fr">een sport beoefenen</span></div>
+  <div class="word-card"><span class="nl">à la portée de tous</span><div class="divider"></div><span class="fr">voor iedereen</span></div>
+  <div class="word-card"><span class="nl">à l'extérieur</span><div class="divider"></div><span class="fr">buiten</span></div>
+  <div class="word-card"><span class="nl">à l'intérieur</span><div class="divider"></div><span class="fr">binnen</span></div>
+
+  <div class="word-card"><span class="nl">en plein air</span><div class="divider"></div><span class="fr">in openlucht</span></div>
+  <div class="word-card"><span class="nl">faire des passes</span><div class="divider"></div><span class="fr">passes geven</span></div>
+  <div class="word-card"><span class="nl">lancer le ballon</span><div class="divider"></div><span class="fr">de bal gooien</span></div>
+  <div class="word-card"><span class="nl">marquer un but</span><div class="divider"></div><span class="fr">een doelpunt maken</span></div>
+  <div class="word-card"><span class="nl">marquer un point</span><div class="divider"></div><span class="fr">een punt scoren</span></div>
+  <div class="word-card"><span class="nl">sur herbe</span><div class="divider"></div><span class="fr">op gras</span></div>
+  <div class="word-card"><span class="nl">sur plage</span><div class="divider"></div><span class="fr">op het strand</span></div>
+</div>
+
+<div class="section-header">
+  <div class="section-title">Andere</div>
+</div>
+<div class="word-grid">
+  <div class="word-card"><span class="nl">étant donné que</span><div class="divider"></div><span class="fr">aangezien</span></div>
+  <div class="word-card"><span class="nl">lorsque</span><div class="divider"></div><span class="fr">wanneer</span></div>
+  <div class="word-card"><span class="nl">pendant que</span><div class="divider"></div><span class="fr">terwijl</span></div>
+  <div class="word-card"><span class="nl">puisque</span><div class="divider"></div><span class="fr">aangezien</span></div>
+  <div class="word-card"><span class="nl">tellement … que</span><div class="divider"></div><span class="fr">zo … dat</span></div>
+</div>
+
 </section>
 
-<!-- DOSSIER 2 -->
+<!--
 <section class="dossier-section" data-dossier="2">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
   <h2 class="chapter-title" style="margin-bottom:0;">
@@ -629,7 +740,6 @@ body.maintenance {
   </div>
 </section>
 
-<!-- DOSSIER 3 -->
 <section class="dossier-section" data-dossier="3">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
   <h2 class="chapter-title" style="margin-bottom:0;">
@@ -658,7 +768,6 @@ body.maintenance {
   </div>
 </section>
 
-<!-- DOSSIER 4 -->
 <section class="dossier-section" data-dossier="4">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
   <h2 class="chapter-title" style="margin-bottom:0;">
@@ -692,7 +801,6 @@ body.maintenance {
   </div>
 </section>
 
-<!-- DOSSIER 5 -->
 <section class="dossier-section" data-dossier="5">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
   <h2 class="chapter-title" style="margin-bottom:0;">
@@ -725,13 +833,12 @@ body.maintenance {
 
   </div>
 </section>
-
-
+-->
 
 </main>
 
 <script>
-const maintenanceMode = true; // true = aan, false = uit
+const maintenanceMode = false; // true = aan, false = uit
 
 if (maintenanceMode) {
     document.body.classList.add("maintenance");
