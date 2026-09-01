@@ -1,4 +1,4 @@
-import { halloweenConfig } from "./halloween2026.js";
+import { halloweenConfig } from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween2026.js";
 
 const ALL_EVENTS = [
   halloweenConfig
