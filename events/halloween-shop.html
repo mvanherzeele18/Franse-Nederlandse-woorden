@@ -8,8 +8,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.css">
-
 <style>
 :root {
   --green: #6BBE3A;
@@ -19,6 +17,10 @@
   --bg: #F1F8E9;
   --white: #FFFFFF;
   --text: #1B5E20;
+
+  /* Halloween accent */
+  --halloween-orange: #ff6f00;
+  --halloween-dark: #3a1f00;
 }
 
 /* Algemene stijl */
@@ -69,13 +71,13 @@ main {
   padding: 0 1rem;
 }
 
-/* Currency card */
+/* Snoepjes kaart */
 .currency-card {
   background: var(--white);
   border: 3px solid var(--green);
   border-radius: 16px;
   padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
@@ -128,6 +130,7 @@ main {
   color: var(--text);
 }
 
+/* Koopknop */
 .btn-buy {
   background: var(--yellow);
   color: var(--green-dark);
@@ -179,7 +182,6 @@ main {
 
 <script type="module">
 import { halloweenConfig } from "./halloween2026.js";
-import { applyHalloweenTheme } from "./halloween-theme.js";
 import { loadActiveEvents } from "./events-loader.js";
 
 /* Firebase */
@@ -271,4 +273,53 @@ async function handlePurchase(id) {
   }
 
   const { doc, getDoc, setDoc } =
-    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+
+  const currencyRef = doc(db, "users", user.uid, "eventCurrencies", halloweenConfig.id);
+  const currencySnap = await getDoc(currencyRef);
+
+  let current = currencySnap.exists()
+    ? (currencySnap.data()[halloweenConfig.currencyName] || 0)
+    : 0;
+
+  if (current < item.cost) {
+    statusEl.textContent = "Onvoldoende snoepjes.";
+    return;
+  }
+
+  current -= item.cost;
+
+  await setDoc(currencyRef, { [halloweenConfig.currencyName]: current }, { merge: true });
+
+  if (item.type === "xp") {
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+    let xp = userSnap.exists() ? (userSnap.data().xp || 0) : 0;
+    xp += item.amount;
+    await setDoc(userRef, { xp }, { merge: true });
+  }
+
+  if (item.type === "title") {
+    const achRef = doc(db, "achievements", user.uid);
+    await setDoc(achRef, {
+      [item.titleName]: { date: Date.now(), source: "halloween2026" }
+    }, { merge: true });
+  }
+
+  document.getElementById("candyAmount").textContent = current;
+  statusEl.textContent = "Aankoop gelukt!";
+}
+
+/* Init */
+renderShop();
+loadCandy();
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("btn-buy")) {
+    handlePurchase(e.target.dataset.id);
+  }
+});
+</script>
+
+</body>
+</html>
