@@ -317,3 +317,122 @@ body.halloween-active .back-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(255, 111, 0, 0.25) !important;
 }
+
+body.halloween-active header {
+  background: linear-gradient(135deg, #4a2c00 0%, #ff6f00 100%) !important;
+  border-bottom-color: #ffb74d !important;
+}
+
+body.halloween-active .header-left h1 {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .header-left p {
+  color: #ffe9c4 !important;
+}
+
+body.halloween-active .nav-btn {
+  background: #ffb74d !important;
+  color: #4a2c00 !important;
+}
+
+body.halloween-active .nav-btn:hover {
+  background: #ffd699 !important;
+}
+
+body.halloween-active .chapter-title {
+  color: #ffd699 !important;
+  border-left-color: #ff6f00 !important;
+}
+
+body.halloween-active .section-title {
+  background: #ff6f00 !important;
+  color: #1c1c1c !important;
+}
+
+body.halloween-active .exercise-btn {
+  background: #ffb74d !important;
+  color: #4a2c00 !important;
+}
+
+body.halloween-active .exercise-btn:hover {
+  background: #ffd699 !important;
+  box-shadow: 0 2px 8px rgba(255, 111, 0, 0.25) !important;
+}
+
+body.halloween-active .word-card {
+  background: #2b2b2b !important;
+  border-color: #ff6f00 !important;
+  color: #ffe9c4 !important;
+}
+
+body.halloween-active .word-card:hover {
+  border-color: #ffb74d !important;
+  box-shadow: 0 2px 12px rgba(255, 111, 0, 0.25) !important;
+}
+
+body.halloween-active .nl {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .fr {
+  color: #ffe9c4 !important;
+}
+
+body.halloween-active .divider {
+  background: #ff6f00 !important;
+}
+
+body.halloween-active .search-bar-wrapper input {
+  background: #2b2b2b !important;
+  border-color: #ff6f00 !important;
+  color: #ffe9c4 !important;
+}
+
+body.halloween-active .search-bar-wrapper input:focus {
+  border-color: #ffb74d !important;
+  box-shadow: 0 0 0 3px rgba(255, 111, 0, 0.25) !important;
+}
+
+body.halloween-active .search-bar-wrapper input::placeholder {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .search-icon {
+  color: #ffb74d !important;
+}
+
+body.halloween-active .search-clear {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .search-clear:hover {
+  color: #ffb74d !important;
+}
+
+body.halloween-active .search-count {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .word-card mark {
+  background: #ffb74d !important;
+  color: #4a2c00 !important;
+}
+
+body.halloween-active .no-results-msg {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .dossier-btn {
+  background: #2b2b2b !important;
+  border-color: #ff6f00 !important;
+  color: #ffe9c4 !important;
+}
+
+body.halloween-active .dossier-btn:hover {
+  background: #3a3a3a !important;
+}
+
+body.halloween-active .dossier-btn.active {
+  background: #ff6f00 !important;
+  color: #1c1c1c !important;
