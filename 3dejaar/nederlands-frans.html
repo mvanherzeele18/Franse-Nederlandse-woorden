@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nederlands-Frans</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.css">
 <style>
 
 /* Maintenance modus */
@@ -1263,6 +1264,17 @@ if (maintenanceMode) {
 </script>
 
 <script type="module" src="https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/auth-check.js"></script>
+
+<script type="module">
+
+import { loadActiveEvents } from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/events-loader.js";
+import { applyHalloweenTheme } from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.js";
+
+loadActiveEvents().then(events => {
+  applyHalloweenTheme(events);
+});
+
+</script>
   
 <footer>
   © 2026 Vanherzeele Matteo
