@@ -9,10 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-<style>
-
 :root {
-
   --green: #6BBE3A;
   --green-light: #D4E8B8;
   --green-dark: #2E7D32;
@@ -20,28 +17,26 @@
   --bg: #F1F8E9;
   --white: #FFFFFF;
   --text: #1B5E20;
-
 }
 
+/* RESET */
 * {
-
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
 }
 
 body {
-
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
   min-height: 100vh;
   color: var(--text);
-
 }
 
+/* ───────────────────────────────
+   PERFECTE HEADER (identiek)
+─────────────────────────────── */
 header {
-
   background: linear-gradient(
     135deg,
     var(--green-dark) 0%,
@@ -49,184 +44,55 @@ header {
   );
 
   padding: 2rem;
-
   border-bottom: 4px solid var(--yellow);
 
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
   flex-wrap: wrap;
-
   gap: 1rem;
-
 }
 
 header h1 {
-
   font-family: 'Playfair Display', serif;
-
   color: var(--yellow);
-
   font-size: 2rem;
-
 }
 
 .nav-btn {
-
   background: var(--yellow);
-
   color: var(--green-dark);
-
   text-decoration: none;
-
   padding: 0.7rem 1.2rem;
-
   border-radius: 10px;
-
   font-weight: 600;
-
   transition: all 0.3s;
-
 }
 
 .nav-btn:hover {
-
   background: var(--green-light);
-
   transform: translateY(-2px);
-
 }
 
 @media (max-width: 600px) {
-
   header {
-
     flex-direction: column;
-
     text-align: center;
-
   }
 
   .nav-btn {
-
     width: 100%;
-
     text-align: center;
-
   }
-
 }
 
+/* ───────────────────────────────
+   MAIN
+─────────────────────────────── */
 main {
-
   max-width: 900px;
   margin: 2rem auto;
   padding: 0 1rem;
-
-}
-
-.announcement {
-
-  background: var(--white);
-
-  border: 3px solid var(--green);
-
-  border-radius: 16px;
-
-  padding: 1.5rem;
-
-  margin-bottom: 1.5rem;
-
-  box-shadow:
-    0 6px 20px rgba(0,0,0,0.08);
-
-}
-
-.announcement h2 {
-
-  color: var(--green-dark);
-
-  margin-bottom: 0.8rem;
-
-  font-size: 1.3rem;
-
-}
-
-.announcement p {
-
-  line-height: 1.6;
-
-  margin-bottom: 1rem;
-
-}
-
-.date {
-
-  font-size: 0.85rem;
-
-  opacity: 0.7;
-
-}
-
-.delete-btn {
-
-  margin-top: 1rem;
-
-  background: #d32f2f;
-
-  color: white;
-
-  border: none;
-
-  padding: 0.7rem 1rem;
-
-  border-radius: 8px;
-
-  cursor: pointer;
-
-  font-weight: 600;
-
-  transition: 0.3s;
-
-}
-
-.delete-btn:hover {
-
-  background: #b71c1c;
-
-}
-
-.empty {
-
-  text-align: center;
-
-  padding: 3rem;
-
-  color: var(--green-dark);
-
-  font-size: 1.1rem;
-
-}
-
-@media (max-width: 600px) {
-
-  header {
-
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-
-  }
-
-  .back-btn {
-
-    text-align: center;
-
-  }
-
 }
 
 /* Snoepjes kaart */
@@ -317,8 +183,14 @@ main {
 <body>
 
 <header>
-  <h1>🎃 Halloween Shop</h1>
-  <a href="../index.html" class="nav-btn">← Terug</a>
+  <h1>Halloween Shop</h1>
+
+  <a 
+    href="../index.html"
+    class="nav-btn"
+  >
+    ← Terug
+  </a>
 </header>
 
 <main>
@@ -330,9 +202,7 @@ main {
     </div>
   </div>
 
-  <div class="shop-grid" id="shopGrid">
-    <!-- Wordt via JS gevuld -->
-  </div>
+  <div class="shop-grid" id="shopGrid"></div>
 
   <div class="status" id="statusMessage">Shop wordt geladen…</div>
 
@@ -471,4 +341,13 @@ waitForUser().then(user => {
 
   loadCandy(user);
 
-  document.addEventListener("click", (e) =>
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("btn-buy")) {
+      handlePurchase(e.target.dataset.id, user);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
