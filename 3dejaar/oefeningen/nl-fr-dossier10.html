@@ -338,6 +338,33 @@
       }
     }
 </style>
+
+<style>
+  #candyPopup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff6f00;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  #candyPopup.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #candyPopup.hidden {
+    display: none;
+  }
+</style>
+
+<div id="candyPopup" class="hidden"></div>
+  
 </head>
 <body style="display:none;">
 
