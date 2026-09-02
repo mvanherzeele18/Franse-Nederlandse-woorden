@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mijn Profiel</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.css">
 <style>
 :root {
   --green: #6BBE3A;
@@ -176,6 +177,13 @@ main { max-width: 640px; margin: 2rem auto; padding: 0 1rem 3rem; }
 </main>
 
 <script type="module">
+
+import { loadActiveEvents } from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/events-loader.js";
+import { applyHalloweenTheme } from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.js";
+
+loadActiveEvents().then(events => {
+  applyHalloweenTheme(events);
+});
 
 import { initializeApp }
   from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
