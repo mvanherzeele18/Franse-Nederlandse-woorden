@@ -1,79 +1,43 @@
 /* ───────────────────────────────
-   HALLOWEEN THEMA (automatisch)
-   Past bij jouw groene stijl
+   HALLOWEEN THEMA (lichte versie)
+   Past bovenop jouw groene stijl
 ─────────────────────────────── */
 
 body.halloween-active {
-  background: #1a1a1a !important;
-  color: #F1F8E9 !important;
-  position: relative;
+  background: #1c1c1c !important;
+  color: var(--white) !important;
 }
 
-/* Header */
+/* Header tint */
 body.halloween-active header {
   background: linear-gradient(135deg, #4a2c00 0%, #ff6f00 100%) !important;
-  border-bottom: 4px solid #FDD835 !important;
+  border-bottom-color: #ffb74d !important;
 }
 
 body.halloween-active header h1 {
-  color: #FDD835 !important;
+  color: #ffb74d !important;
 }
 
 /* Buttons */
 body.halloween-active .nav-btn,
-body.halloween-active button,
-body.halloween-active .btn {
-  background: #FDD835 !important;
+body.halloween-active .btn-buy {
+  background: #ffb74d !important;
   color: #4a2c00 !important;
-  border-radius: 10px !important;
-  transition: 0.3s;
 }
 
 body.halloween-active .nav-btn:hover,
-body.halloween-active button:hover,
-body.halloween-active .btn:hover {
-  background: #ffb74d !important;
-  transform: translateY(-2px);
+body.halloween-active .btn-buy:hover {
+  background: #ffd699 !important;
 }
 
 /* Cards */
-body.halloween-active .announcement,
-body.halloween-active .word-card,
+body.halloween-active .currency-card,
 body.halloween-active .shop-item {
   background: #2b2b2b !important;
-  border: 3px solid #ff6f00 !important;
-  color: #F1F8E9 !important;
+  border-color: #ff6f00 !important;
+  color: var(--white) !important;
+  box-shadow: 0 0 20px rgba(255, 111, 0, 0.25) !important;
 }
 
-/* Spooky glow */
-body.halloween-active .announcement,
-body.halloween-active .shop-item {
-  box-shadow: 0 0 20px rgba(255, 111, 0, 0.4) !important;
-}
+/* Geen banner, geen mist, geen extra spacing */
 
-/* Halloween banner */
-body.halloween-active::before {
-  content: "🎃 Halloween Event Actief!";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 0.5rem;
-  background: #ff6f00;
-  color: black;
-  font-weight: 700;
-  text-align: center;
-  z-index: 9999;
-  font-family: 'Playfair Display', serif;
-}
-
-/* Mist overlay */
-body.halloween-active::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: url("https://i.imgur.com/8fK4Q7F.png");
-  opacity: 0.15;
-  pointer-events: none;
-  z-index: 999;
-}
