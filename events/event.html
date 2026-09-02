@@ -147,6 +147,35 @@ main {
 .event-disabled h2 {
   color: #777;
 }
+
+.event-btn {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--green-dark);
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+  margin-top: 1rem;
+}
+
+.event-btn:hover {
+  background: var(--green-light);
+  transform: translateY(-2px);
+}
+
+.event-btn-disabled {
+  display: inline-block;
+  background: var(--disabled-gray);
+  color: #666;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  margin-top: 1rem;
+  cursor: not-allowed;
+}  
+  
 </style>
 </head>
 
