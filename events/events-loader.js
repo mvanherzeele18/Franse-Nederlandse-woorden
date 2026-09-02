@@ -7,7 +7,6 @@ const halloweenAllowed = [
   "vanherzeele.matteo@groenhoveschool.be",
 ];
 
-// Alle events
 const ALL_EVENTS = [
   halloweenConfig
 ];
@@ -31,39 +30,49 @@ async function firebaseBase() {
 }
 
 // ───────────────────────────────
-// Alleen events laden voor toegestane e-mails
+// Alleen events laden voor whitelist
 // ───────────────────────────────
-export async function loadActiveEvents(user) {
-  if (!user) return []; // niet ingelogd → geen events
-
+export async function loadActiveEvents() {
   const app = await firebaseBase();
-  const { getFirestore, doc, getDoc } =
-    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
 
-  const db = getFirestore(app);
-  const activeEvents = [];
+  const { getAuth, onAuthStateChanged } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
 
-  for (const event of ALL_EVENTS) {
-    try {
-      const snap = await getDoc(doc(db, "events", event.id));
-      if (!snap.exists()) continue;
+  const auth = getAuth(app);
 
-      const data = snap.data();
-      if (!data.active) continue;
+  return new Promise(resolve => {
+    onAuthStateChanged(auth, async user => {
+      if (!user) return resolve([]);
 
-      // ───────────────────────────────
-      // BELANGRIJK: alleen whitelist krijgt het event
-      // ───────────────────────────────
-      if (!halloweenAllowed.includes(user.email)) continue;
+      const { getFirestore, doc, getDoc } =
+        await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
 
-      activeEvents.push(event);
+      const db = getFirestore(app);
+      const activeEvents = [];
 
-    } catch (e) {
-      console.error("Event kon niet geladen worden:", e);
-    }
-  }
+      for (const event of ALL_EVENTS) {
+        try {
+          const snap = await getDoc(doc(db, "events", event.id));
+          if (!snap.exists()) continue;
 
-  return activeEvents;
+          const data = snap.data();
+          if (!data.active) continue;
+
+          // ───────────────────────────────
+          // BELANGRIJK: alleen whitelist krijgt het event
+          // ───────────────────────────────
+          if (!halloweenAllowed.includes(user.email)) continue;
+
+          activeEvents.push(event);
+
+        } catch (e) {
+          console.error("Event kon niet geladen worden:", e);
+        }
+      }
+
+      resolve(activeEvents);
+    });
+  });
 }
 
 
