@@ -38,8 +38,6 @@ export async function loadActiveEvents() {
 
       const data = snap.data();
       if (!data.active) continue;
-      if (data.start && now < data.start) continue;
-      if (data.end && now > data.end) continue;
 
       activeEvents.push(event);
     } catch (e) {
