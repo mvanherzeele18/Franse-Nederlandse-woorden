@@ -3,13 +3,11 @@
    Past bovenop jouw groene stijl
 ─────────────────────────────── */
 
-/* GLOBAL BACKGROUND & TEXT */
 body.halloween-active {
   background: #1c1c1c !important;
   color: #ffe9c4 !important;
 }
 
-/* HEADER */
 body.halloween-active header {
   background: linear-gradient(135deg, #4a2c00 0%, #ff6f00 100%) !important;
   border-bottom-color: #ffb74d !important;
@@ -20,7 +18,6 @@ body.halloween-active header p {
   color: #ffd699 !important;
 }
 
-/* NAV BUTTONS (Terug, etc.) */
 body.halloween-active .nav-btn,
 body.halloween-active .btn-buy {
   background: #ffb74d !important;
@@ -32,7 +29,6 @@ body.halloween-active .btn-buy:hover {
   background: #ffd699 !important;
 }
 
-/* TOP BUTTONS (logout/profile/bug report) */
 body.halloween-active #logoutBtn,
 body.halloween-active #profileBtn,
 body.halloween-active .bug-report-btn {
@@ -46,7 +42,6 @@ body.halloween-active .bug-report-btn:hover {
   background: #ffd699 !important;
 }
 
-/* PROFILE MENU */
 body.halloween-active #profileMenu {
   background: #2b2b2b !important;
   color: #ffe9c4 !important;
@@ -61,7 +56,6 @@ body.halloween-active #profileMenu button:hover {
   background: #4a4a4a !important;
 }
 
-/* CARDS (index: 3de jaar / 4de jaar) */
 body.halloween-active .choice-card {
   background: #2b2b2b !important;
   border-color: #ff6f00 !important;
@@ -73,13 +67,11 @@ body.halloween-active .choice-card:hover {
   color: #1c1c1c !important;
 }
 
-/* FOOTER */
 body.halloween-active footer {
   color: #ffd699 !important;
   border-top-color: #ffb74d !important;
 }
 
-/* SHOP CARDS */
 body.halloween-active .currency-card,
 body.halloween-active .shop-item {
   background: #2b2b2b !important;
@@ -88,7 +80,6 @@ body.halloween-active .shop-item {
   box-shadow: 0 0 20px rgba(255, 111, 0, 0.25) !important;
 }
 
-/* SHOP TEXT COLORS */
 body.halloween-active .shop-title,
 body.halloween-active .shop-meta,
 body.halloween-active .currency-title,
@@ -97,12 +88,10 @@ body.halloween-active .status {
   color: #ffe9c4 !important;
 }
 
-/* Candy-icoon */
 body.halloween-active .currency-amount span {
   color: #ffd699 !important;
 }
 
-/* EVENT CARDS (event.html) */
 body.halloween-active .event-card {
   background: #2b2b2b !important;
   border-color: #ff6f00 !important;
@@ -122,7 +111,6 @@ body.halloween-active .event-btn:hover {
   background: #ffd699 !important;
 }
 
-/* EVENT DISABLED CARDS */
 body.halloween-active .event-disabled {
   background: #3a3a3a !important;
   border-color: #555 !important;
@@ -132,4 +120,9 @@ body.halloween-active .event-disabled {
 body.halloween-active .event-btn-disabled {
   background: #555 !important;
   color: #ccc !important;
+}
+
+body.halloween-active .intro h2,
+body.halloween-active .intro p {
+  color: #ffe9c4 !important;
 }
