@@ -163,3 +163,145 @@ body.halloween-active .delete-btn:hover {
 body.halloween-active .empty {
   color: #ffd699 !important;
 }
+
+/* ───────────────────────────────
+   PROFIEL – TOP CARD
+─────────────────────────────── */
+
+body.halloween-active .profile-top {
+  background: #2b2b2b !important;
+  border-color: #ff6f00 !important;
+  color: #ffe9c4 !important;
+  box-shadow: 0 0 20px rgba(255, 111, 0, 0.25) !important;
+}
+
+/* Avatar */
+body.halloween-active .avatar-circle {
+  background: #3a3a3a !important;
+  border-color: #ff6f00 !important;
+  color: #ffd699 !important;
+}
+
+/* Level bubble */
+body.halloween-active .level-bubble {
+  background: #ff6f00 !important;
+  color: #1c1c1c !important;
+  border-color: #ffd699 !important;
+}
+
+/* Name + email */
+body.halloween-active .profile-name {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .profile-email {
+  color: #ffe9c4 !important;
+}
+
+/* Title badge */
+body.halloween-active .title-badge {
+  background: #3a3a3a !important;
+  border-color: #ff6f00 !important;
+  color: #ffd699 !important;
+}
+
+body.halloween-active .title-badge.admin {
+  background: #4a2c00 !important;
+  border-color: #ffb74d !important;
+  color: #ffd699 !important;
+}
+
+/* ───────────────────────────────
+   XP CARD
+─────────────────────────────── */
+
+body.halloween-active .xp-card {
+  background: #2b2b2b !important;
+  border-color: #ff6f00 !important;
+  color: #ffe9c4 !important;
+}
+
+body.halloween-active .section-title {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .xp-numbers {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .xp-numbers strong {
+  color: #ffb74d !important;
+}
+
+/* XP track */
+body.halloween-active .xp-track {
+  background: #3a3a3a !important;
+  border-color: #ff6f00 !important;
+}
+
+body.halloween-active .xp-fill {
+  background: linear-gradient(90deg, #ff6f00 0%, #ffb74d 100%) !important;
+}
+
+/* XP hint */
+body.halloween-active .xp-hint {
+  color: #ffd699 !important;
+}
+
+/* ───────────────────────────────
+   STATS GRID
+─────────────────────────────── */
+
+body.halloween-active .stat-box {
+  background: #2b2b2b !important;
+  border-color: #ff6f00 !important;
+  color: #ffe9c4 !important;
+}
+
+body.halloween-active .stat-label {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .stat-value {
+  color: #ffb74d !important;
+}
+
+/* ───────────────────────────────
+   TITLES LIST
+─────────────────────────────── */
+
+body.halloween-active .titles-card {
+  background: #2b2b2b !important;
+  border-color: #ff6f00 !important;
+  color: #ffe9c4 !important;
+}
+
+body.halloween-active .title-row {
+  border-bottom-color: #4a4a4a !important;
+}
+
+body.halloween-active .t-name.done {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .t-name.future {
+  color: #bbb !important;
+}
+
+body.halloween-active .t-dot.done {
+  background: #ff6f00 !important;
+}
+
+body.halloween-active .t-dot.next {
+  background: #ffd699 !important;
+  border-color: #ff6f00 !important;
+}
+
+body.halloween-active .t-dot.future {
+  background: #555 !important;
+  border-color: #777 !important;
+}
+
+body.halloween-active .t-check {
+  color: #ffb74d !important;
+}
