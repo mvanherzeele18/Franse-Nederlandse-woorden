@@ -1,307 +1,274 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <title>Halloween Shop 🎃</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    :root {
-      --bg: #0b0b10;
-      --card-bg: #151521;
-      --accent: #ff6f00;
-      --accent-soft: #ffb74d;
-      --text: #f5f5f5;
-      --muted: #9e9e9e;
-      --danger: #e53935;
-      --success: #43a047;
-    }
+<title>Halloween Shop 🎃</title>
 
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1f1f2e 0, #050509 60%);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    .page {
-      max-width: 900px;
-      width: 100%;
-      padding: 24px 16px 40px;
-      box-sizing: border-box;
-    }
+<link rel="stylesheet" href="https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.css">
 
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
+<style>
+:root {
+  --green: #6BBE3A;
+  --green-light: #D4E8B8;
+  --green-dark: #2E7D32;
+  --yellow: #FDD835;
+  --bg: #F1F8E9;
+  --white: #FFFFFF;
+  --text: #1B5E20;
+}
 
-    .header-icon {
-      font-size: 40px;
-    }
+/* Algemene stijl */
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  color: var(--text);
+}
 
-    .header-text h1 {
-      margin: 0;
-      font-size: 26px;
-      letter-spacing: 0.03em;
-    }
+/* Header */
+header {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+  padding: 2rem;
+  border-bottom: 4px solid var(--yellow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
 
-    .header-text p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
+header h1 {
+  font-family: 'Playfair Display', serif;
+  color: var(--yellow);
+  font-size: 2rem;
+}
 
-    .currency-card {
-      background: linear-gradient(135deg, #1b1b29, #12121b);
-      border-radius: 16px;
-      padding: 16px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
+.nav-btn {
+  background: var(--yellow);
+  color: var(--green-dark);
+  text-decoration: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s;
+}
 
-    .currency-info {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+.nav-btn:hover {
+  background: var(--green-light);
+  transform: translateY(-2px);
+}
 
-    .currency-label {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-    }
+/* Main */
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
 
-    .currency-value {
-      font-size: 22px;
-      font-weight: 600;
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-    }
+/* Currency card */
+.currency-card {
+  background: var(--white);
+  border: 3px solid var(--green);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
 
-    .currency-value span.icon {
-      font-size: 22px;
-    }
+.currency-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: var(--green-dark);
+}
 
-    .currency-value span.amount {
-      font-variant-numeric: tabular-nums;
-    }
+.currency-amount {
+  font-size: 1.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 
-    .currency-sub {
-      font-size: 12px;
-      color: var(--muted);
-    }
+/* Shop grid */
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
 
-    .shop-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
+/* Shop item */
+.shop-item {
+  background: var(--white);
+  border: 3px solid var(--green);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
 
-    .shop-item {
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 14px 14px 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.06);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      position: relative;
-      overflow: hidden;
-    }
+.shop-item:hover {
+  border-color: var(--yellow);
+  transform: translateY(-2px);
+}
 
-    .shop-item::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, rgba(255,111,0,0.18), transparent 55%);
-      opacity: 0;
-      transition: opacity 0.25s;
-      pointer-events: none;
-    }
+.shop-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: var(--green-dark);
+}
 
-    .shop-item:hover::before {
-      opacity: 1;
-    }
+.shop-meta {
+  margin-bottom: 1rem;
+  color: var(--text);
+}
 
-    .shop-title {
-      font-size: 16px;
-      font-weight: 600;
-    }
+.btn-buy {
+  background: var(--yellow);
+  color: var(--green-dark);
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-    .shop-type {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--muted);
-    }
+.btn-buy:hover {
+  background: var(--green-light);
+  transform: translateY(-2px);
+}
 
-    .shop-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .shop-cost {
-      color: var(--accent-soft);
-      font-weight: 500;
-    }
-
-    .shop-action {
-      margin-top: 8px;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    .btn {
-      border: none;
-      outline: none;
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: transform 0.12s, box-shadow 0.12s, background 0.12s, color 0.12s;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #1b1b1b;
-      box-shadow: 0 4px 12px rgba(255,111,0,0.5);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(255,111,0,0.6);
-    }
-
-    .btn-primary:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 8px rgba(255,111,0,0.4);
-    }
-
-    .btn-disabled {
-      background: #424242;
-      color: #bdbdbd;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-
-    .status-bar {
-      margin-top: 18px;
-      font-size: 13px;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .status-message {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .status-message span.icon {
-      font-size: 16px;
-    }
-
-    .status-message span.text {
-      font-size: 13px;
-    }
-
-    .status-ok {
-      color: var(--success);
-    }
-
-    .status-error {
-      color: var(--danger);
-    }
-
-    .status-loading {
-      color: var(--accent-soft);
-    }
-
-    @media (max-width: 600px) {
-      .header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .currency-card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-
-      .shop-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+/* Status */
+.status {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+</style>
 </head>
+
 <body>
-  <div class="page">
-    <header class="header">
-      <div class="header-icon">🎃</div>
-      <div class="header-text">
-        <h1>Halloween Candy Shop</h1>
-        <p>Gebruik je snoepjes om XP en een speciale titel te kopen.</p>
-      </div>
-    </header>
 
-    <section class="currency-card">
-      <div class="currency-info">
-        <div class="currency-label">Jouw snoepjes</div>
-        <div class="currency-value">
-          <span class="icon">🍬</span>
-          <span class="amount" id="candyAmount">–</span>
-        </div>
-        <div class="currency-sub">Verdiend door Halloween‑oefeningen te maken.</div>
-      </div>
-      <div>
-        <button class="btn btn-primary" id="refreshBtn">
-          <span>Vernieuwen</span>
-        </button>
-      </div>
-    </section>
+<header>
+  <h1>🎃 Halloween Shop</h1>
+  <a href="../index.html" class="nav-btn">← Terug</a>
+</header>
 
-    <section class="shop-grid" id="shopGrid">
-      <!-- items worden via JS ingevuld -->
-    </section>
+<main>
 
-    <section class="status-bar">
-      <div class="status-message" id="statusMessage">
-        <span class="icon">⏳</span>
-        <span class="text">Shop wordt geladen…</span>
-      </div>
-      <div class="status-message">
-        <span class="icon">🔐</span>
-        <span class="text">Je moet ingelogd zijn om te kopen.</span>
-      </div>
-    </section>
+  <div class="currency-card">
+    <div class="currency-title">Jouw snoepjes</div>
+    <div class="currency-amount">
+      🍬 <span id="candyAmount">–</span>
+    </div>
   </div>
 
-  <script type="module" src="./halloween-shop.js"></script>
-</body>
-</html>
+  <div class="shop-grid" id="shopGrid">
+    <!-- Wordt via JS gevuld -->
+  </div>
+
+  <div class="status" id="statusMessage">Shop wordt geladen…</div>
+
+</main>
+
+<script type="module">
+import { halloweenConfig } from "./halloween2026.js";
+import { applyHalloweenTheme } from "./halloween-theme.js";
+import { loadActiveEvents } from "./events-loader.js";
+
+/* Firebase */
+async function firebaseBase() {
+  const { initializeApp, getApps, getApp } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js");
+
+  const firebaseConfig = {
+    apiKey:"AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+    authDomain:"vocabulairesite.firebaseapp.com",
+    projectId:"vocabulairesite",
+    storageBucket:"vocabulairesite.firebasestorage.app",
+    messagingSenderId:"1002919769364",
+    appId:"1:1002919769364:web:face9ebdbe3cb1db37fe01",
+    measurementId:"G-5FVEW59WH3"
+  };
+
+  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  return app;
+}
+
+async function getUserAndDb() {
+  const app = await firebaseBase();
+  const { getFirestore } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+  const { getAuth } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
+
+  return {
+    db: getFirestore(app),
+    user: getAuth(app).currentUser
+  };
+}
+
+/* Load candy */
+async function loadCandy() {
+  const { db, user } = await getUserAndDb();
+  const statusEl = document.getElementById("statusMessage");
+
+  if (!user) {
+    statusEl.textContent = "Je bent niet ingelogd.";
+    return 0;
+  }
+
+  const { doc, getDoc } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+
+  const ref = doc(db, "users", user.uid, "eventCurrencies", halloweenConfig.id);
+  const snap = await getDoc(ref);
+
+  const amount = snap.exists() ? (snap.data()[halloweenConfig.currencyName] || 0) : 0;
+
+  document.getElementById("candyAmount").textContent = amount;
+  statusEl.textContent = "Shop klaar.";
+
+  return amount;
+}
+
+/* Render shop */
+function renderShop() {
+  const grid = document.getElementById("shopGrid");
+  grid.innerHTML = "";
+
+  for (const key of Object.keys(halloweenConfig.shop)) {
+    const item = halloweenConfig.shop[key];
+
+    const div = document.createElement("div");
+    div.className = "shop-item";
+
+    div.innerHTML = `
+      <div class="shop-title">${item.label}</div>
+      <div class="shop-meta">🍬 Kost: ${item.cost}</div>
+      <button class="btn-buy" data-id="${key}">Kopen</button>
+    `;
+
+    grid.appendChild(div);
+  }
+}
+
+/* Handle purchase */
+async function handlePurchase(id) {
+  const item = halloweenConfig.shop[id];
+  const { db, user } = await getUserAndDb();
+  const statusEl = document.getElementById("statusMessage");
+
+  if (!user) {
+    statusEl.textContent = "Je bent niet ingelogd.";
+    return;
+  }
+
+  const { doc, getDoc, setDoc } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase
