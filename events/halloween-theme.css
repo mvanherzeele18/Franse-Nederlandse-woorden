@@ -41,3 +41,19 @@ body.halloween-active .shop-item {
 
 /* Geen banner, geen mist, geen extra spacing */
 
+/* ───────────────────────────────
+   Tekstkleuren corrigeren
+─────────────────────────────── */
+
+body.halloween-active .shop-title,
+body.halloween-active .shop-meta,
+body.halloween-active .currency-title,
+body.halloween-active .currency-amount,
+body.halloween-active .status {
+  color: #ffe9c4 !important; /* zacht warm wit */
+}
+
+/* Candy-icoon */
+body.halloween-active .currency-amount span {
+  color: #ffd699 !important;
+}
