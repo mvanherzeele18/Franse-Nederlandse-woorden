@@ -5,12 +5,14 @@ import { halloweenConfig } from "./halloween2026.js";
 // ───────────────────────────────
 const halloweenAllowed = [
   "vanherzeele.matteo@groenhoveschool.be",
+  // extra e-mails hier
 ];
 
-const ALL_EVENTS = [
-  halloweenConfig
-];
+const ALL_EVENTS = [halloweenConfig];
 
+// ───────────────────────────────
+// Firebase init
+// ───────────────────────────────
 async function firebaseBase() {
   const { initializeApp, getApps, getApp } =
     await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js");
@@ -30,7 +32,7 @@ async function firebaseBase() {
 }
 
 // ───────────────────────────────
-// Alleen events laden voor whitelist
+// Load events ONLY for whitelist
 // ───────────────────────────────
 export async function loadActiveEvents() {
   const app = await firebaseBase();
@@ -42,14 +44,22 @@ export async function loadActiveEvents() {
 
   return new Promise(resolve => {
     onAuthStateChanged(auth, async user => {
+
+      // Niet ingelogd → geen events
       if (!user) return resolve([]);
 
+      // Alleen whitelist mag events zien
+      const allowed = halloweenAllowed.includes(user.email);
+      if (!allowed) return resolve([]);
+
+      // Firestore ophalen
       const { getFirestore, doc, getDoc } =
         await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
 
       const db = getFirestore(app);
       const activeEvents = [];
 
+      // Check elk event
       for (const event of ALL_EVENTS) {
         try {
           const snap = await getDoc(doc(db, "events", event.id));
@@ -58,11 +68,7 @@ export async function loadActiveEvents() {
           const data = snap.data();
           if (!data.active) continue;
 
-          // ───────────────────────────────
-          // BELANGRIJK: alleen whitelist krijgt het event
-          // ───────────────────────────────
-          if (!halloweenAllowed.includes(user.email)) continue;
-
+          // Alleen whitelist krijgt het event
           activeEvents.push(event);
 
         } catch (e) {
@@ -74,7 +80,6 @@ export async function loadActiveEvents() {
     });
   });
 }
-
 
 //import { halloweenConfig } from "./halloween2026.js";
 //
