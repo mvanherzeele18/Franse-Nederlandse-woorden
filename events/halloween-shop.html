@@ -17,10 +17,6 @@
   --bg: #F1F8E9;
   --white: #FFFFFF;
   --text: #1B5E20;
-
-  /* Halloween accent */
-  --halloween-orange: #ff6f00;
-  --halloween-dark: #3a1f00;
 }
 
 /* Algemene stijl */
@@ -182,7 +178,6 @@ main {
 
 <script type="module">
 import { halloweenConfig } from "./halloween2026.js";
-import { loadActiveEvents } from "./events-loader.js";
 
 /* Firebase */
 async function firebaseBase() {
@@ -203,39 +198,36 @@ async function firebaseBase() {
   return app;
 }
 
-async function getUserAndDb() {
+/* Auth correct detecteren */
+async function waitForUser() {
   const app = await firebaseBase();
-  const { getFirestore } =
-    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
-  const { getAuth } =
+  const { getAuth, onAuthStateChanged } =
     await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
 
-  return {
-    db: getFirestore(app),
-    user: getAuth(app).currentUser
-  };
+  const auth = getAuth(app);
+
+  return new Promise(resolve => {
+    onAuthStateChanged(auth, user => resolve(user));
+  });
 }
 
 /* Load candy */
-async function loadCandy() {
-  const { db, user } = await getUserAndDb();
-  const statusEl = document.getElementById("statusMessage");
-
-  if (!user) {
-    statusEl.textContent = "Je bent niet ingelogd.";
-    return 0;
-  }
-
-  const { doc, getDoc } =
+async function loadCandy(user) {
+  const app = await firebaseBase();
+  const { getFirestore, doc, getDoc } =
     await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+
+  const db = getFirestore(app);
 
   const ref = doc(db, "users", user.uid, "eventCurrencies", halloweenConfig.id);
   const snap = await getDoc(ref);
 
-  const amount = snap.exists() ? (snap.data()[halloweenConfig.currencyName] || 0) : 0;
+  const amount = snap.exists()
+    ? (snap.data()[halloweenConfig.currencyName] || 0)
+    : 0;
 
   document.getElementById("candyAmount").textContent = amount;
-  statusEl.textContent = "Shop klaar.";
+  document.getElementById("statusMessage").textContent = "Shop klaar.";
 
   return amount;
 }
@@ -262,18 +254,14 @@ function renderShop() {
 }
 
 /* Handle purchase */
-async function handlePurchase(id) {
+async function handlePurchase(id, user) {
   const item = halloweenConfig.shop[id];
-  const { db, user } = await getUserAndDb();
-  const statusEl = document.getElementById("statusMessage");
 
-  if (!user) {
-    statusEl.textContent = "Je bent niet ingelogd.";
-    return;
-  }
-
-  const { doc, getDoc, setDoc } =
+  const app = await firebaseBase();
+  const { getFirestore, doc, getDoc, setDoc } =
     await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+
+  const db = getFirestore(app);
 
   const currencyRef = doc(db, "users", user.uid, "eventCurrencies", halloweenConfig.id);
   const currencySnap = await getDoc(currencyRef);
@@ -283,7 +271,7 @@ async function handlePurchase(id) {
     : 0;
 
   if (current < item.cost) {
-    statusEl.textContent = "Onvoldoende snoepjes.";
+    document.getElementById("statusMessage").textContent = "Onvoldoende snoepjes.";
     return;
   }
 
@@ -307,19 +295,18 @@ async function handlePurchase(id) {
   }
 
   document.getElementById("candyAmount").textContent = current;
-  statusEl.textContent = "Aankoop gelukt!";
+  document.getElementById("statusMessage").textContent = "Aankoop gelukt!";
 }
 
 /* Init */
 renderShop();
-loadCandy();
 
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("btn-buy")) {
-    handlePurchase(e.target.dataset.id);
+waitForUser().then(user => {
+  if (!user) {
+    document.getElementById("statusMessage").textContent = "Je bent niet ingelogd.";
+    return;
   }
-});
-</script>
 
-</body>
-</html>
+  loadCandy(user);
+
+  document.addEventListener("click", (e) =>
