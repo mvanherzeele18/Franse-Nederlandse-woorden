@@ -7,7 +7,8 @@
 <title>Halloween Shop 🎃</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<link rel="stylesheet" href="./halloween-theme.css">
+  
 <style>
 :root {
   --green: #6BBE3A;
@@ -209,6 +210,15 @@ main {
 </main>
 
 <script type="module">
+
+import { loadActiveEvents } from "./events-loader.js";
+import { applyHalloweenTheme } from "./halloween-theme.js";
+
+loadActiveEvents().then(events => {
+  applyHalloweenTheme(events);
+});
+
+  
 import { halloweenConfig } from "./halloween2026.js";
 
 /* Firebase */
