@@ -1,11 +1,9 @@
 export function applyHalloweenTheme(activeEvents) {
-  if (!activeEvents || activeEvents.length === 0) {
-    document.body.classList.remove("halloween-active");
-    return;
-  }
+  const isActive = activeEvents.some(e => e.id === "halloween2026");
 
-  // Als Halloween actief is → thema aan
-  if (activeEvents.some(e => e.id === "halloween2026")) {
+  if (isActive) {
     document.body.classList.add("halloween-active");
+  } else {
+    document.body.classList.remove("halloween-active");
   }
 }
