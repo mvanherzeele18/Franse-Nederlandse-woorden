@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Halloween Event 🎃</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green: #6BBE3A;
+  --green-light: #D4E8B8;
+  --green-dark: #2E7D32;
+  --yellow: #FDD835;
+  --bg: #F1F8E9;
+  --white: #FFFFFF;
+  --text: #1B5E20;
+
+  --halloween-orange: #ff6f00;
+  --halloween-dark: #3a1f00;
+}
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  color: var(--text);
+}
+
+/* HEADER (identiek aan Aankondigingen) */
+header {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+  padding: 2rem;
+  border-bottom: 4px solid var(--yellow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  color: var(--yellow);
+  font-size: 2rem;
+}
+
+.nav-btn {
+  background: var(--yellow);
+  color: var(--green-dark);
+  text-decoration: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.nav-btn:hover {
+  background: var(--green-light);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .nav-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* MAIN */
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Event banner */
+.event-banner {
+  background: #fff4e6;
+  border: 3px solid var(--halloween-orange);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.event-banner h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: var(--halloween-dark);
+  margin-bottom: 0.5rem;
+}
+
+.event-banner p {
+  line-height: 1.6;
+}
+
+/* Section titles */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  margin: 1.5rem 0 1rem;
+  color: var(--green-dark);
+}
+
+/* Cards */
+.card {
+  background: var(--white);
+  border: 3px solid var(--green);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: var(--green-dark);
+}
+
+.card p {
+  line-height: 1.6;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--green-dark);
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+  margin-top: 1rem;
+}
+
+.btn:hover {
+  background: var(--green-light);
+  transform: translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Halloween Event</h1>
+  <a href="./event.html" class="nav-btn">← Terug</a>
+</header>
+
+<main>
+
+  <!-- Banner -->
+  <div class="event-banner">
+    <h2>🎃 Halloween</h2>
+    <p>
+      Tijdens het Halloween‑event verzamel je snoepjes door oefeningen correct te maken.
+      Met deze snoepjes kun je speciale beloningen kopen zoals XP en unieke titels.
+    </p>
+  </div>
+
+  <!-- Hoe werkt het -->
+  <div class="section-title">Hoe werkt het?</div>
+
+  <div class="card">
+    <h3>🍬 Snoepjes verdienen</h3>
+    <p>
+      Elke keer dat je een oefening correct maakt, verdien je snoepjes.
+      Per juiste oefening kun je 1-5 snoepjes krijgen.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🛒 Beloningen kopen</h3>
+    <p>
+      In de Halloween Shop kun je snoepjes uitgeven aan XP‑boosts, titels en andere speciale items.
+    </p>
+    <a href="./halloween-shop.html" class="btn">Ga naar de Halloween Shop</a>
+  </div>
+
+  <div class="card">
+    <h3>📚 Oefeningen maken</h3>
+    <p>
+      Hoe meer je oefent, hoe meer snoepjes je verzamelt. 
+      Oefen dagelijks om alle beloningen te kunnen kopen!
+    </p>
+    <a href="../Franse-Nederlandse-woorden/index.html" class="btn">Ga naar de oefeningen</a>
+  </div>
+
+</main>
+
+</body>
+</html>
