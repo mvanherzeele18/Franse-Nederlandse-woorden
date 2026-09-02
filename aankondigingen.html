@@ -7,6 +7,7 @@
 <title>Aankondigingen</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.css">
 
 <style>
 
@@ -253,6 +254,13 @@ main {
 </main>
 
 <script type="module">
+
+import { loadActiveEvents } from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/events-loader.js";
+import { applyHalloweenTheme } from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.js";
+
+loadActiveEvents().then(events => {
+  applyHalloweenTheme(events);
+});
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
