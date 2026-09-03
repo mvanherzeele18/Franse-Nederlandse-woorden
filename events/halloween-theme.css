@@ -3,45 +3,61 @@
    Past bovenop jouw groene stijl
 ─────────────────────────────── */
 
+/* GLOBAL */
 body.halloween-active {
   background: #1c1c1c !important;
   color: #ffe9c4 !important;
+
+  --green: #ff6f00;
+  --green-light: #ffcc80;
+  --green-dark: #e65100;
+  --yellow: #ffb74d;
+  --text: #ffe9c4;
+  --bg: #1c1c1c;
+  --white: #ffffff;
+  --shadow: 0 2px 12px rgba(255, 111, 0, 0.25);
 }
 
+/* HEADER */
 body.halloween-active header {
   background: linear-gradient(135deg, #4a2c00 0%, #ff6f00 100%) !important;
   border-bottom-color: #ffb74d !important;
+  box-shadow: 0 0 20px rgba(255, 111, 0, 0.35) !important;
 }
 
 body.halloween-active header h1,
-body.halloween-active header p {
+body.halloween-active header p,
+body.halloween-active .header-left h1,
+body.halloween-active .header-left p {
   color: #ffd699 !important;
 }
 
+/* NAV BUTTONS */
 body.halloween-active .nav-btn,
-body.halloween-active .btn-buy {
+body.halloween-active .btn-buy,
+body.halloween-active #logoutBtn,
+body.halloween-active #profileBtn,
+body.halloween-active .bug-report-btn,
+body.halloween-active .back-btn,
+body.halloween-active .exercise-btn {
   background: #ffb74d !important;
   color: #4a2c00 !important;
+  border: none !important;
 }
 
 body.halloween-active .nav-btn:hover,
-body.halloween-active .btn-buy:hover {
-  background: #ffd699 !important;
-}
-
-body.halloween-active #logoutBtn,
-body.halloween-active #profileBtn,
-body.halloween-active .bug-report-btn {
-  background: #ffb74d !important;
-  color: #4a2c00 !important;
-}
-
+body.halloween-active .btn-buy:hover,
 body.halloween-active #logoutBtn:hover,
 body.halloween-active #profileBtn:hover,
-body.halloween-active .bug-report-btn:hover {
+body.halloween-active .bug-report-btn:hover,
+body.halloween-active .back-btn:hover,
+body.halloween-active .exercise-btn:hover {
   background: #ffd699 !important;
+  box-shadow: 0 4px 12px rgba(255, 111, 0, 0.25) !important;
+  transform: translateY(-2px);
 }
 
+/* PROFILE MENU */
 body.halloween-active #profileMenu {
   background: #2b2b2b !important;
   color: #ffe9c4 !important;
@@ -56,30 +72,37 @@ body.halloween-active #profileMenu button:hover {
   background: #4a4a4a !important;
 }
 
-body.halloween-active .choice-card {
-  background: #2b2b2b !important;
-  border-color: #ff6f00 !important;
-  color: #ffe9c4 !important;
-}
-
-body.halloween-active .choice-card:hover {
-  background: #ff6f00 !important;
-  color: #1c1c1c !important;
-}
-
-body.halloween-active footer {
-  color: #ffd699 !important;
-  border-top-color: #ffb74d !important;
-}
-
+/* CHOICE CARDS */
+body.halloween-active .choice-card,
+body.halloween-active .word-card,
+body.halloween-active .titles-card,
+body.halloween-active .stat-box,
+body.halloween-active .xp-card,
+body.halloween-active .profile-top,
+body.halloween-active .announcement,
 body.halloween-active .currency-card,
-body.halloween-active .shop-item {
+body.halloween-active .shop-item,
+body.halloween-active .event-card {
   background: #2b2b2b !important;
   border-color: #ff6f00 !important;
   color: #ffe9c4 !important;
   box-shadow: 0 0 20px rgba(255, 111, 0, 0.25) !important;
 }
 
+body.halloween-active .choice-card:hover,
+body.halloween-active .word-card:hover {
+  border-color: #ffb74d !important;
+  background: #ff6f00 !important;
+  color: #1c1c1c !important;
+}
+
+/* FOOTER */
+body.halloween-active footer {
+  color: #ffd699 !important;
+  border-top-color: #ffb74d !important;
+}
+
+/* SHOP TEXT */
 body.halloween-active .shop-title,
 body.halloween-active .shop-meta,
 body.halloween-active .currency-title,
@@ -92,16 +115,7 @@ body.halloween-active .currency-amount span {
   color: #ffd699 !important;
 }
 
-body.halloween-active .event-card {
-  background: #2b2b2b !important;
-  border-color: #ff6f00 !important;
-  color: #ffe9c4 !important;
-}
-
-body.halloween-active .event-card h2 {
-  color: #ffd699 !important;
-}
-
+/* EVENT BUTTONS */
 body.halloween-active .event-btn {
   background: #ffb74d !important;
   color: #4a2c00 !important;
@@ -122,22 +136,13 @@ body.halloween-active .event-btn-disabled {
   color: #ccc !important;
 }
 
+/* INTRO */
 body.halloween-active .intro h2,
 body.halloween-active .intro p {
   color: #ffe9c4 !important;
 }
 
-/* ───────────────────────────────
-   AANKONDIGINGEN – CARDS
-─────────────────────────────── */
-
-body.halloween-active .announcement {
-  background: #2b2b2b !important;
-  border-color: #ff6f00 !important;
-  color: #ffe9c4 !important;
-  box-shadow: 0 0 20px rgba(255, 111, 0, 0.25) !important;
-}
-
+/* ANNOUNCEMENTS */
 body.halloween-active .announcement h2 {
   color: #ffd699 !important;
 }
@@ -148,9 +153,9 @@ body.halloween-active .announcement p {
 
 body.halloween-active .announcement .date {
   color: #ffcc99 !important;
-  opacity: 1 !important;
 }
 
+/* DELETE BUTTON */
 body.halloween-active .delete-btn {
   background: #ff6f00 !important;
   color: #1c1c1c !important;
@@ -160,36 +165,24 @@ body.halloween-active .delete-btn:hover {
   background: #ff8f33 !important;
 }
 
+/* EMPTY STATE */
 body.halloween-active .empty {
   color: #ffd699 !important;
 }
 
-/* ───────────────────────────────
-   PROFIEL – TOP CARD
-─────────────────────────────── */
-
-body.halloween-active .profile-top {
-  background: #2b2b2b !important;
-  border-color: #ff6f00 !important;
-  color: #ffe9c4 !important;
-  box-shadow: 0 0 20px rgba(255, 111, 0, 0.25) !important;
-}
-
-/* Avatar */
+/* PROFILE */
 body.halloween-active .avatar-circle {
   background: #3a3a3a !important;
   border-color: #ff6f00 !important;
   color: #ffd699 !important;
 }
 
-/* Level bubble */
 body.halloween-active .level-bubble {
   background: #ff6f00 !important;
   color: #1c1c1c !important;
   border-color: #ffd699 !important;
 }
 
-/* Name + email */
 body.halloween-active .profile-name {
   color: #ffd699 !important;
 }
@@ -198,7 +191,6 @@ body.halloween-active .profile-email {
   color: #ffe9c4 !important;
 }
 
-/* Title badge */
 body.halloween-active .title-badge {
   background: #3a3a3a !important;
   border-color: #ff6f00 !important;
@@ -208,19 +200,9 @@ body.halloween-active .title-badge {
 body.halloween-active .title-badge.admin {
   background: #4a2c00 !important;
   border-color: #ffb74d !important;
-  color: #ffd699 !important;
 }
 
-/* ───────────────────────────────
-   XP CARD
-─────────────────────────────── */
-
-body.halloween-active .xp-card {
-  background: #2b2b2b !important;
-  border-color: #ff6f00 !important;
-  color: #ffe9c4 !important;
-}
-
+/* XP */
 body.halloween-active .section-title {
   color: #ffd699 !important;
 }
@@ -233,7 +215,6 @@ body.halloween-active .xp-numbers strong {
   color: #ffb74d !important;
 }
 
-/* XP track */
 body.halloween-active .xp-track {
   background: #3a3a3a !important;
   border-color: #ff6f00 !important;
@@ -243,39 +224,11 @@ body.halloween-active .xp-fill {
   background: linear-gradient(90deg, #ff6f00 0%, #ffb74d 100%) !important;
 }
 
-/* XP hint */
 body.halloween-active .xp-hint {
   color: #ffd699 !important;
 }
 
-/* ───────────────────────────────
-   STATS GRID
-─────────────────────────────── */
-
-body.halloween-active .stat-box {
-  background: #2b2b2b !important;
-  border-color: #ff6f00 !important;
-  color: #ffe9c4 !important;
-}
-
-body.halloween-active .stat-label {
-  color: #ffd699 !important;
-}
-
-body.halloween-active .stat-value {
-  color: #ffb74d !important;
-}
-
-/* ───────────────────────────────
-   TITLES LIST
-─────────────────────────────── */
-
-body.halloween-active .titles-card {
-  background: #2b2b2b !important;
-  border-color: #ff6f00 !important;
-  color: #ffe9c4 !important;
-}
-
+/* TITLES LIST */
 body.halloween-active .title-row {
   border-bottom-color: #4a4a4a !important;
 }
@@ -306,71 +259,19 @@ body.halloween-active .t-check {
   color: #ffb74d !important;
 }
 
-body.halloween-active .back-btn {
-  background: #ffb74d !important;
-  color: #4a2c00 !important;
-  border: none !important;
-}
-
-body.halloween-active .back-btn:hover {
-  background: #ffd699 !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 111, 0, 0.25) !important;
-}
-
-body.halloween-active header {
-  background: linear-gradient(135deg, #4a2c00 0%, #ff6f00 100%) !important;
-  border-bottom-color: #ffb74d !important;
-}
-
-body.halloween-active .header-left h1 {
-  color: #ffd699 !important;
-}
-
-body.halloween-active .header-left p {
-  color: #ffe9c4 !important;
-}
-
-body.halloween-active .nav-btn {
-  background: #ffb74d !important;
-  color: #4a2c00 !important;
-}
-
-body.halloween-active .nav-btn:hover {
-  background: #ffd699 !important;
-}
-
+/* CHAPTER TITLES */
 body.halloween-active .chapter-title {
   color: #ffd699 !important;
   border-left-color: #ff6f00 !important;
 }
 
+/* SECTION TITLE */
 body.halloween-active .section-title {
   background: #ff6f00 !important;
   color: #1c1c1c !important;
 }
 
-body.halloween-active .exercise-btn {
-  background: #ffb74d !important;
-  color: #4a2c00 !important;
-}
-
-body.halloween-active .exercise-btn:hover {
-  background: #ffd699 !important;
-  box-shadow: 0 2px 8px rgba(255, 111, 0, 0.25) !important;
-}
-
-body.halloween-active .word-card {
-  background: #2b2b2b !important;
-  border-color: #ff6f00 !important;
-  color: #ffe9c4 !important;
-}
-
-body.halloween-active .word-card:hover {
-  border-color: #ffb74d !important;
-  box-shadow: 0 2px 12px rgba(255, 111, 0, 0.25) !important;
-}
-
+/* WORD CARDS */
 body.halloween-active .nl {
   color: #ffd699 !important;
 }
@@ -383,6 +284,7 @@ body.halloween-active .divider {
   background: #ff6f00 !important;
 }
 
+/* SEARCH BAR */
 body.halloween-active .search-bar-wrapper input {
   background: #2b2b2b !important;
   border-color: #ff6f00 !important;
@@ -423,6 +325,7 @@ body.halloween-active .no-results-msg {
   color: #ffd699 !important;
 }
 
+/* DOSSIER BUTTON */
 body.halloween-active .dossier-btn {
   background: #2b2b2b !important;
   border-color: #ff6f00 !important;
@@ -436,3 +339,4 @@ body.halloween-active .dossier-btn:hover {
 body.halloween-active .dossier-btn.active {
   background: #ff6f00 !important;
   color: #1c1c1c !important;
+}
