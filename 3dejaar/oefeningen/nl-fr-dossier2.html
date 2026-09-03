@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Oefening Dossier 2 - Nederlands → Frans</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.css">
   <style>
     :root {
       --green: #6BBE3A;
@@ -337,7 +338,34 @@
         flex-direction: column;
       }
     }
-  </style>
+</style>
+
+<style>
+  #candyPopup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff6f00;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  #candyPopup.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #candyPopup.hidden {
+    display: none;
+  }
+</style>
+
+<div id="candyPopup" class="hidden"></div>
+  
 </head>
 <body style="display:none;">
 
@@ -400,6 +428,13 @@
 
 <script type="module">
 
+import { loadActiveEvents } from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/events-loader.js";
+import { applyHalloweenTheme } from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.js";
+
+loadActiveEvents().then(events => {
+  applyHalloweenTheme(events);
+});
+  
 let words = [];
 let currentIndex = 0;
 let score = 0;
@@ -416,6 +451,23 @@ const firebaseConfig = {
   appId:"1:1002919769364:web:face9ebdbe3cb1db37fe01",
   measurementId:"G-5FVEW59WH3"
 };
+
+let activeEvents = [];
+
+async function initExercise() {
+  try {
+    activeEvents = await loadActiveEvents();
+    console.log("Actieve events:", activeEvents);
+  } catch (e) {
+    console.error("Events konden niet geladen worden:", e);
+    activeEvents = [];
+  }
+
+  await loadWords();
+  document.body.style.display = "block";
+}
+
+initExercise();
 
 async function loadWords() {
   try {
@@ -476,7 +528,49 @@ function showWord() {
   updateProgress();
 }
 
-function checkAnswer() {
+function giveEventCurrency(eventConfig) {
+  const chances = eventConfig.rewardChances;
+  const index = Math.floor(Math.random() * chances.length);
+  return chances[index];
+}
+
+async function addEventCurrency(eventConfig, amount) {
+  if (amount <= 0) return;
+
+  const app = await firebaseBase();
+  const { getFirestore, doc, getDoc, setDoc } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+  const { getAuth } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
+
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+  if (!user) return;
+
+  const ref = doc(db, "users", user.uid, "eventCurrencies", eventConfig.id);
+  const snap = await getDoc(ref);
+
+  const currencyName = eventConfig.currencyName;
+  let current = snap.exists() ? (snap.data()[currencyName] || 0) : 0;
+
+  current += amount;
+
+  await setDoc(ref, { [currencyName]: current }, { merge: true });
+}
+
+function showCandyPopup(amount) {
+  const popup = document.getElementById("candyPopup");
+  if (!popup) return;
+
+  popup.textContent = `🎃 +${amount} snoepjes!`;
+  popup.classList.remove("hidden");
+
+  setTimeout(() => popup.classList.add("show"), 10);
+  setTimeout(() => popup.classList.remove("show"), 2000);
+}
+
+async function checkAnswer() {
   if (answered) return;
 
   const userAnswer = document.getElementById("answer").value.toLowerCase().trim();
@@ -489,6 +583,12 @@ function checkAnswer() {
     score++;
     addXP(5);
     updateMultiplayerScore();
+
+    for (const event of activeEvents) {
+      const reward = giveEventCurrency(event);
+      await addEventCurrency(event, reward);
+      showCandyPopup(reward);
+    }
 
     feedback.textContent = "Juist! Goed gedaan!";
     feedback.className = "feedback correct";
@@ -546,15 +646,18 @@ document.getElementById("checkBtn").addEventListener("click", checkAnswer);
 document.getElementById("nextBtn").addEventListener("click", nextWord);
 
 async function firebaseBase() {
-  const { initializeApp, getApps, getApp } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js");
+  const { initializeApp, getApps, getApp } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js");
   const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
   return app;
 }
 
 async function addXP(amount) {
   const app = await firebaseBase();
-  const { getFirestore, doc, getDoc, setDoc } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
-  const { getAuth } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
+  const { getFirestore, doc, getDoc, setDoc } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+  const { getAuth } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
 
   const db = getFirestore(app);
   const auth = getAuth(app);
@@ -574,8 +677,10 @@ async function updateMultiplayerScore() {
   if (!multiplayerCode) return;
 
   const app = await firebaseBase();
-  const { getFirestore, doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
-  const { getAuth } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
+  const { getFirestore, doc, updateDoc } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+  const { getAuth } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
 
   const db = getFirestore(app);
   const auth = getAuth(app);
@@ -589,8 +694,10 @@ async function finishMultiplayer() {
   if (!multiplayerCode) return;
 
   const app = await firebaseBase();
-  const { getFirestore, doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
-  const { getAuth } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
+  const { getFirestore, doc, updateDoc } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+  const { getAuth } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
 
   const db = getFirestore(app);
   const auth = getAuth(app);
@@ -608,8 +715,10 @@ async function finishMultiplayer() {
 
 async function saveAchievement() {
   const app = await firebaseBase();
-  const { getFirestore, doc, setDoc } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
-  const { getAuth } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
+  const { getFirestore, doc, setDoc } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+  const { getAuth } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
 
   const db = getFirestore(app);
   const auth = getAuth(app);
@@ -617,13 +726,9 @@ async function saveAchievement() {
   if (!user) return;
 
   await setDoc(doc(db, "achievements", user.uid), {
-    nlfr23: { date: Date.now() }
+    nlfr103: { date: Date.now() }
   }, { merge: true });
 }
-
-loadWords();
-document.body.style.display = "block";
-
 </script>
 
 </body>
