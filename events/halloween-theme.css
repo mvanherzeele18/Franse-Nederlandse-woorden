@@ -40,7 +40,8 @@ body.halloween-active #profileBtn,
 body.halloween-active .bug-report-btn,
 body.halloween-active .back-btn,
 body.halloween-active .exercise-btn,
-body.halloween-active .event-btn {
+body.halloween-active .event-btn,
+body.halloween-active .btn {
   background: #ffb74d !important;
   color: #4a2c00 !important;
   border: none !important;
@@ -53,7 +54,8 @@ body.halloween-active #profileBtn:hover,
 body.halloween-active .bug-report-btn:hover,
 body.halloween-active .back-btn:hover,
 body.halloween-active .exercise-btn:hover,
-body.halloween-active .event-btn:hover {
+body.halloween-active .event-btn:hover,
+body.halloween-active .btn:hover {
   background: #ffd699 !important;
   box-shadow: 0 4px 12px rgba(255, 111, 0, 0.25) !important;
   transform: translateY(-2px);
@@ -74,7 +76,7 @@ body.halloween-active #profileMenu button:hover {
   background: #4a4a4a !important;
 }
 
-/* CARDS (alle soorten) */
+/* GENERIC CARDS */
 body.halloween-active .choice-card,
 body.halloween-active .word-card,
 body.halloween-active .titles-card,
@@ -84,13 +86,19 @@ body.halloween-active .profile-top,
 body.halloween-active .announcement,
 body.halloween-active .currency-card,
 body.halloween-active .shop-item,
-body.halloween-active .event-card {
+body.halloween-active .card {
   background: #2b2b2b !important;
-  border-color: #ff6f00 !important;
+  border-color: #3a3a3a !important;
   color: #ffe9c4 !important;
   box-shadow: 0 0 20px rgba(255, 111, 0, 0.25) !important;
 }
 
+body.halloween-active .card h3,
+body.halloween-active .card p {
+  color: #ffe9c4 !important;
+}
+
+/* HOVER EFFECTS */
 body.halloween-active .choice-card:hover,
 body.halloween-active .word-card:hover {
   border-color: #ffb74d !important;
@@ -118,34 +126,33 @@ body.halloween-active .currency-amount span {
 }
 
 /* EVENT BUTTONS */
-body.halloween-active .event-btn {
-  background: #ffb74d !important;
-  color: #4a2c00 !important;
-}
-
-body.halloween-active .event-btn:hover {
-  background: #ffd699 !important;
-}
-
 body.halloween-active .event-btn-disabled {
   background: #555 !important;
   color: #ccc !important;
 }
 
-/* EVENT CARDS SPECIFIEK */
+/* EVENT CARDS */
+body.halloween-active .event-card {
+  background: #2b2b2b !important;
+  border-color: #3a3a3a !important;
+  color: #ffe9c4 !important;
+}
+
 body.halloween-active .event-card h2 {
   color: #ffd699 !important;
 }
 
+/* HALLOWEEN EVENT CARD */
 body.halloween-active .event-halloween {
   background: #3a2a20 !important;
-  border-color: #ff6f00 !important;
+  border-color: #3a3a3a !important;
 }
 
 body.halloween-active .event-halloween h2 {
   color: #ffb74d !important;
 }
 
+/* DISABLED EVENT */
 body.halloween-active .event-disabled {
   background: #3a3a3a !important;
   border-color: #555 !important;
@@ -221,7 +228,7 @@ body.halloween-active .title-badge.admin {
 /* XP */
 body.halloween-active .section-title {
   background: transparent !important;
-  color: #ffd699 !important; /* tekst blijft Halloween */
+  color: #ffd699 !important;
 }
 
 body.halloween-active .xp-numbers {
@@ -280,12 +287,6 @@ body.halloween-active .t-check {
 body.halloween-active .chapter-title {
   color: #ffd699 !important;
   border-left-color: #ff6f00 !important;
-}
-
-/* SECTION TITLE */
-body.halloween-active .section-title {
-  background: transparent !important;
-  color: #ffd699 !important; /* tekst blijft Halloween */
 }
 
 /* WORD CARDS */
@@ -362,10 +363,17 @@ body.halloween-active .dossier-btn.active {
 body.halloween-active .event-card,
 body.halloween-active .event-card p,
 body.halloween-active .event-card h2 {
-  color: #ffd699 !important; /* iets donkerder geel */
+  color: #ffd699 !important;
 }
 
-body.halloween-active .event-halloween {
-  background: #3a2a20 !important; /* donkerder achtergrond */
+body.halloween-active .event-banner {
+  background: #3a2a20 !important;
 }
 
+body.halloween-active .event-banner h2 {
+  color: #ffb74d !important;
+}
+
+body.halloween-active .event-banner p {
+  color: #ffe9c4 !important;
+}
