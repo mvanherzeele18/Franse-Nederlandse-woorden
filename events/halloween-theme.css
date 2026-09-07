@@ -377,3 +377,51 @@ body.halloween-active .event-banner h2 {
 body.halloween-active .event-banner p {
   color: #ffe9c4 !important;
 }
+
+/* ───────────────────────────────
+   HALLOWEEN FIX — Achtergronden van kaders
+─────────────────────────────── */
+
+/* Event banner */
+body.halloween-active .event-banner {
+  background: #3a2a20 !important;   /* Donker Halloween */
+  border-color: #ff6f00 !important;
+}
+
+body.halloween-active .event-banner h2 {
+  color: #ffb74d !important;
+}
+
+body.halloween-active .event-banner p {
+  color: #ffe9c4 !important;
+}
+
+/* Algemene cards */
+body.halloween-active .card {
+  background: #2b2b2b !important;   /* Donker */
+  border-color: #3a3a3a !important;
+  color: #ffe9c4 !important;
+}
+
+body.halloween-active .card h3 {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .card p {
+  color: #ffe9c4 !important;
+}
+
+/* Event cards (zoals op event.html) */
+body.halloween-active .event-card {
+  background: #2b2b2b !important;
+  border-color: #3a3a3a !important;
+  color: #ffe9c4 !important;
+}
+
+body.halloween-active .event-card h2 {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .event-card p {
+  color: #ffe9c4 !important;
+}
