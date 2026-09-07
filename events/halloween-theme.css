@@ -220,7 +220,8 @@ body.halloween-active .title-badge.admin {
 
 /* XP */
 body.halloween-active .section-title {
-  color: #ffd699 !important;
+  background: transparent !important;
+  color: #ffd699 !important; /* tekst blijft Halloween */
 }
 
 body.halloween-active .xp-numbers {
@@ -283,8 +284,8 @@ body.halloween-active .chapter-title {
 
 /* SECTION TITLE */
 body.halloween-active .section-title {
-  background: #ff6f00 !important;
-  color: #1c1c1c !important;
+  background: transparent !important;
+  color: #ffd699 !important; /* tekst blijft Halloween */
 }
 
 /* WORD CARDS */
