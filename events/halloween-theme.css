@@ -357,3 +357,15 @@ body.halloween-active .dossier-btn.active {
   background: #ff6f00 !important;
   color: #1c1c1c !important;
 }
+
+/* EVENT PAGE FIX — leesbare tekst */
+body.halloween-active .event-card,
+body.halloween-active .event-card p,
+body.halloween-active .event-card h2 {
+  color: #ffd699 !important; /* iets donkerder geel */
+}
+
+body.halloween-active .event-halloween {
+  background: #3a2a20 !important; /* donkerder achtergrond */
+}
+
