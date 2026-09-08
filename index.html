@@ -591,8 +591,8 @@ function showHalloweenPopup() {
   const popup = document.createElement("div");
   popup.className = "halloween-event-popup";
   popup.innerHTML = `
-    <h3>🎃 Halloween Event!</h3>
-    <p>Er is een speciaal Halloween‑event gaande. Verzamel snoepjes en koop unieke beloningen!</p>
+    <h3>Halloween Event 🎃</h3>
+    <p>Er is een speciaal Halloween‑event bezig! Verzamel snoepjes en koop unieke beloningen.</p>
     <a href="./events/halloween.html">Ga naar event</a>
   `;
 
@@ -608,14 +608,13 @@ function showHalloweenPopup() {
   }, 5000);
 }
 
-// Alleen tonen als Halloween actief is
 document.addEventListener("DOMContentLoaded", () => {
+  // BELANGRIJK: dit moet true zijn
   if (document.body.classList.contains("halloween-active")) {
     showHalloweenPopup();
   }
 });
 </script>
-
   
 </body>
 </html>
