@@ -426,10 +426,7 @@ body.halloween-active .event-card p {
   color: #ffe9c4 !important;
 }
 
-/* ───────────────────────────────
-   HALLOWEEN EVENT POPUP
-─────────────────────────────── */
-
+/* HALLOWEEN EVENT POPUP */
 .halloween-event-popup {
   position: fixed;
   bottom: 30px;
@@ -440,7 +437,7 @@ body.halloween-active .event-card p {
   padding: 1.4rem 1.6rem;
   border-radius: 14px;
   box-shadow: 0 0 22px rgba(255, 111, 0, 0.45);
-  z-index: 999999;
+  z-index: 999999999; /* EXTREEM HOOG */
   width: 280px;
   opacity: 0;
   transform: translateY(20px);
@@ -479,3 +476,4 @@ body.halloween-active .event-card p {
   background: #ffd699;
   transform: translateY(-2px);
 }
+
