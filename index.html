@@ -387,6 +387,8 @@ footer {
 
 <body style="display:none;">
 
+<div id="eventPopup" class="hidden"></div>
+  
 <header>
 
 <div class="top-buttons">
@@ -587,31 +589,31 @@ if (
 </script>
 
 <script>
-function showHalloweenPopup() {
-  const popup = document.createElement("div");
-  popup.className = "halloween-event-popup";
+function showEventPopup() {
+  const popup = document.getElementById("eventPopup");
+  if (!popup) return;
+
   popup.innerHTML = `
-    <h3>Halloween Event 🎃</h3>
-    <p>Er is een speciaal Halloween‑event bezig! Verzamel snoepjes en koop unieke beloningen.</p>
+    🎃 <strong>Halloween Event!</strong><br>
+    <span>Er is een speciaal event bezig. Verzamel snoepjes en koop unieke beloningen!</span>
     <a href="./events/halloween.html">Ga naar event</a>
   `;
 
-  document.body.appendChild(popup);
+  popup.classList.remove("hidden");
 
-  // Fade-in
-  setTimeout(() => popup.classList.add("show"), 50);
+  // Fade-in (zoals candyPopup)
+  setTimeout(() => popup.classList.add("show"), 10);
 
-  // Verwijder na 5 seconden
-  setTimeout(() => {
-    popup.classList.remove("show");
-    setTimeout(() => popup.remove(), 400);
-  }, 5000);
+  // Fade-out na 5 seconden
+  setTimeout(() => popup.classList.remove("show"), 5000);
+
+  // Verwijderen na fade-out
+  setTimeout(() => popup.classList.add("hidden"), 5400);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // BELANGRIJK: dit moet true zijn
   if (document.body.classList.contains("halloween-active")) {
-    showHalloweenPopup();
+    showEventPopup();
   }
 });
 </script>
