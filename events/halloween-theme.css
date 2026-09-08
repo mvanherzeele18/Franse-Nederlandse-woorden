@@ -427,79 +427,98 @@ body.halloween-active .event-card p {
 }
 
 /* ───────────────────────────────
-   HALLOWEEN DECORATIES – EXTRA'S
+   SPINNENWEB ACHTERGROND (FIXED)
 ─────────────────────────────── */
 
-/* Pompoen in rechterbovenhoek */
-body.halloween-active::after {
-  content: "🎃";
-  position: fixed;
-  top: 12px;
-  right: 12px;
-  font-size: 2.4rem;
-  z-index: 9999;
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-/* Pompoen in linksonderhoek */
 body.halloween-active::before {
-  content: "🎃";
-  position: fixed;
-  bottom: 12px;
-  left: 12px;
-  font-size: 2.4rem;
-  z-index: 9999;
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-/* Spinnenweb in de bovenhoek */
-body.halloween-active .halloween-web {
+  content: "";
   position: fixed;
   top: 0;
   left: 0;
-  width: 180px;
-  height: 180px;
-  background: url("https://i.imgur.com/3YQF1uF.png") no-repeat;
-  background-size: contain;
+  width: 100%;
+  height: 100%;
+  background-image:
+    url("https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/assets/web-top-left.png"),
+    url("https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/assets/web-top-right.png"),
+    url("https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/assets/web-bottom-left.png"),
+    url("https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/assets/web-bottom-right.png");
+  background-repeat: no-repeat;
+  background-position:
+    top left,
+    top right,
+    bottom left,
+    bottom right;
+  background-size: 220px;
   opacity: 0.25;
   pointer-events: none;
-  z-index: 9998;
+  z-index: 0;
 }
 
-/* Automatisch toevoegen van spinnenweb */
-body.halloween-active main::before {
-  content: "";
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  width: 160px;
-  height: 160px;
-  background: url("https://i.imgur.com/3YQF1uF.png") no-repeat;
+/* ───────────────────────────────
+   VALLENDE OBJECTEN (ANIMATIE)
+─────────────────────────────── */
+
+@keyframes halloweenFall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.halloween-fall {
+  position: fixed;
+  top: -10vh;
+  width: var(--size);
+  height: var(--size);
   background-size: contain;
-  opacity: 0.18;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+  animation: halloweenFall var(--duration) linear forwards;
   pointer-events: none;
+  z-index: 9999;
 }
 
-/* Glow rond titels */
-body.halloween-active h1,
-body.halloween-active h2,
-body.halloween-active h3 {
-  text-shadow: 0 0 12px rgba(255, 111, 0, 0.6);
+/* ───────────────────────────────
+   JUMPSCARE SPIN
+─────────────────────────────── */
+
+@keyframes spiderJump {
+  0% {
+    transform: scale(0) translateY(-50vh);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0) translateY(50vh);
+    opacity: 0;
+  }
 }
 
-/* Kleine pompoen naast elke section-title */
-body.halloween-active .section-title::after {
-  content: " 🎃";
-  font-size: 1.4rem;
-  margin-left: 6px;
-}
-
-/* Mini spookje naast buttons */
-body.halloween-active .btn::after,
-body.halloween-active .event-btn::after,
-body.halloween-active .nav-btn::after {
-  content: " 👻";
-  margin-left: 6px;
+.halloween-spider {
+  position: fixed;
+  top: 40vh;
+  left: 50vw;
+  width: 180px;
+  height: 180px;
+  background-image: url("https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/assets/spider.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: translate(-50%, -50%);
+  animation: spiderJump 2.2s ease-out forwards;
+  pointer-events: none;
+  z-index: 99999;
 }
