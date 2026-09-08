@@ -425,3 +425,81 @@ body.halloween-active .event-card h2 {
 body.halloween-active .event-card p {
   color: #ffe9c4 !important;
 }
+
+/* ───────────────────────────────
+   HALLOWEEN DECORATIES – EXTRA'S
+─────────────────────────────── */
+
+/* Pompoen in rechterbovenhoek */
+body.halloween-active::after {
+  content: "🎃";
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  font-size: 2.4rem;
+  z-index: 9999;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* Pompoen in linksonderhoek */
+body.halloween-active::before {
+  content: "🎃";
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  font-size: 2.4rem;
+  z-index: 9999;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* Spinnenweb in de bovenhoek */
+body.halloween-active .halloween-web {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 180px;
+  height: 180px;
+  background: url("https://i.imgur.com/3YQF1uF.png") no-repeat;
+  background-size: contain;
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Automatisch toevoegen van spinnenweb */
+body.halloween-active main::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 160px;
+  height: 160px;
+  background: url("https://i.imgur.com/3YQF1uF.png") no-repeat;
+  background-size: contain;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+/* Glow rond titels */
+body.halloween-active h1,
+body.halloween-active h2,
+body.halloween-active h3 {
+  text-shadow: 0 0 12px rgba(255, 111, 0, 0.6);
+}
+
+/* Kleine pompoen naast elke section-title */
+body.halloween-active .section-title::after {
+  content: " 🎃";
+  font-size: 1.4rem;
+  margin-left: 6px;
+}
+
+/* Mini spookje naast buttons */
+body.halloween-active .btn::after,
+body.halloween-active .event-btn::after,
+body.halloween-active .nav-btn::after {
+  content: " 👻";
+  margin-left: 6px;
+}
