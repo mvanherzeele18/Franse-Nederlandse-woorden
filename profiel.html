@@ -184,10 +184,29 @@ import { applyHalloweenTheme } from "https://mvanherzeele18.github.io/Franse-Ned
 loadActiveEvents().then(events => applyHalloweenTheme(events));
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-const firebaseConfig = { /* jouw config */ };
+const firebaseConfig = {
+  apiKey:"AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+  authDomain:"vocabulairesite.firebaseapp.com",
+  projectId:"vocabulairesite",
+  storageBucket:"vocabulairesite.firebasestorage.app",
+  messagingSenderId:"1002919769364",
+  appId:"1:1002919769364:web:face9ebdbe3cb1db37fe01",
+  measurementId:"G-5FVEW59WH3"
+};
+
 const ADMIN_EMAIL = "vanherzeelematteo@gmail.com";
 
 const LEVEL_TITLES = [
@@ -204,6 +223,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+/* XP → Level */
 function xpForLevel(level){
   let xp = 0;
   for(let i = 1; i < level; i++){
@@ -220,36 +240,74 @@ function getLevel(xp){
   return level;
 }
 
-async function loadUnlockedTitles(user){
-  const titles = [];
+/* TITELS LADEN */
+async function loadTitles(user){
+  const userRef = doc(db, "users", user.uid);
+  const userSnap = await getDoc(userRef);
 
-  // Level-titels
-  const userDoc = await getDoc(doc(db, "users", user.uid));
-  const xp = userDoc.exists() ? (userDoc.data().xp || 0) : 0;
+  const xp = userSnap.exists() ? (userSnap.data().xp || 0) : 0;
+  const activeTitle = userSnap.exists() ? (userSnap.data().activeTitle || null) : null;
+
   const level = getLevel(xp);
 
+  const unlocked = [];
+
+  // Level-titels
   for (const t of LEVEL_TITLES) {
-    if (level >= t.minLevel) {
-      titles.push(t.name);
-    }
+    if (level >= t.minLevel) unlocked.push(t.name);
   }
 
-  // Gekochte titels
+  // Event-titels
   const col = collection(db, "users", user.uid, "titles");
   const snaps = await getDocs(col);
 
   snaps.forEach(s => {
-    if (s.data().unlocked) titles.push(s.id);
+    if (s.data().unlocked) unlocked.push(s.id);
   });
 
-  return { titles, xp, level, activeTitle: userDoc.data().activeTitle || null };
+  return { xp, level, unlocked, activeTitle };
 }
 
+/* TITEL KIEZEN */
 async function setActiveTitle(user, title){
   const userRef = doc(db, "users", user.uid);
   await setDoc(userRef, { activeTitle: title }, { merge: true });
 }
 
+/* PROFIEL RENDEREN */
+function renderProfile(xp, level, activeTitle, isAdmin){
+  const displayTitle = isAdmin ? "Admin" : (activeTitle || "Geen titel");
+
+  document.getElementById("level-bubble").textContent =
+    isAdmin ? "Admin" : "Lv. " + level;
+
+  const badge = document.getElementById("title-badge-wrap");
+  badge.innerHTML = "🏅 <span>" + displayTitle + "</span>";
+  badge.className = isAdmin ? "title-badge admin" : "title-badge";
+
+  const currentLevelXP = xpForLevel(level);
+  const nextLevelXP = xpForLevel(level + 1);
+  const xpInsideLevel = xp - currentLevelXP;
+  const xpNeededThisLevel = nextLevelXP - currentLevelXP;
+  const xpRemaining = nextLevelXP - xp;
+
+  const progress = Math.round((xpInsideLevel / xpNeededThisLevel) * 100);
+
+  document.getElementById("xp-cur").textContent = xpInsideLevel;
+  document.getElementById("xp-max").textContent = xpNeededThisLevel;
+  document.getElementById("xp-hint").textContent =
+    "Nog " + xpRemaining + " XP tot level " + (level + 1);
+
+  setTimeout(()=>{
+    document.getElementById("xp-bar").style.width = progress + "%";
+  },100);
+
+  document.getElementById("stat-xp").textContent = xp;
+  document.getElementById("stat-level").textContent = level;
+  document.getElementById("stat-needed").textContent = xpRemaining + " XP";
+}
+
+/* TITELLIJST RENDEREN */
 function renderTitlesList(titles, activeTitle, user){
   const list = document.getElementById("titles-list");
   list.innerHTML = "";
@@ -258,10 +316,12 @@ function renderTitlesList(titles, activeTitle, user){
     const row = document.createElement("div");
     row.className = "title-row";
 
+    const isActive = title === activeTitle;
+
     row.innerHTML = `
-      <div class="t-dot ${title === activeTitle ? "done" : "future"}"></div>
+      <div class="t-dot ${isActive ? "done" : "future"}"></div>
       <span class="t-name">${title}</span>
-      <button class="choose-title-btn">Kies</button>
+      <button class="choose-title-btn">${isActive ? "Gekozen" : "Kies"}</button>
     `;
 
     row.querySelector(".choose-title-btn").addEventListener("click", async () => {
@@ -273,30 +333,19 @@ function renderTitlesList(titles, activeTitle, user){
   });
 }
 
-function renderProfile(xp, level, activeTitle){
-  const isAdmin = auth.currentUser.email === ADMIN_EMAIL;
-
-  const displayTitle = isAdmin ? "Admin" : (activeTitle || "Geen titel");
-
-  document.getElementById("level-bubble").textContent = isAdmin ? "Admin" : "Lv. " + level;
-
-  const badge = document.getElementById("title-badge-wrap");
-  badge.innerHTML = "🏅 <span>" + displayTitle + "</span>";
-  badge.className = isAdmin ? "title-badge admin" : "title-badge";
-
-  // XP UI blijft hetzelfde
-}
-
+/* INIT */
 onAuthStateChanged(auth, async(user)=>{
   if(!user) return;
 
   document.getElementById("name").textContent = user.displayName || "Gebruiker";
   document.getElementById("email").textContent = user.email;
 
-  const { titles, xp, level, activeTitle } = await loadUnlockedTitles(user);
+  const isAdmin = user.email === ADMIN_EMAIL;
 
-  renderProfile(xp, level, activeTitle);
-  renderTitlesList(titles, activeTitle, user);
+  const { xp, level, unlocked, activeTitle } = await loadTitles(user);
+
+  renderProfile(xp, level, activeTitle, isAdmin);
+  renderTitlesList(unlocked, activeTitle, user);
 });
 
 </script>
