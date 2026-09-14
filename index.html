@@ -589,6 +589,13 @@ if (
 </script>
 
 <script>
+document.addEventListener("DOMContentLoaded", () => {
+  // BELANGRIJK: dit moet true zijn
+  if (document.body.classList.contains("halloween-active")) {
+    showEventPopup();   // <-- DIT ontbrak bij jou
+  }
+});
+
 function showEventPopup() {
   const popup = document.getElementById("eventPopup");
   if (!popup) return;
@@ -601,7 +608,7 @@ function showEventPopup() {
 
   popup.classList.remove("hidden");
 
-  // Fade-in (zoals candyPopup)
+  // Fade-in zoals candyPopup
   setTimeout(() => popup.classList.add("show"), 10);
 
   // Fade-out na 5 seconden
@@ -610,12 +617,6 @@ function showEventPopup() {
   // Verwijderen na fade-out
   setTimeout(() => popup.classList.add("hidden"), 5400);
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (document.body.classList.contains("halloween-active")) {
-    showEventPopup();
-  }
-});
 </script>
   
 </body>
