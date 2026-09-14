@@ -329,12 +329,21 @@ async function handlePurchase(id, user) {
     await setDoc(userRef, { xp }, { merge: true });
   }
 
-  if (item.type === "title") {
-    const achRef = doc(db, "achievements", user.uid);
-    await setDoc(achRef, {
-      [item.titleName]: { date: Date.now(), source: "halloween2026" }
-    }, { merge: true });
-  }
+if (item.type === "title") {
+  // Titel unlocken
+  const titleRef = doc(db, "users", user.uid, "titles", item.titleName);
+  await setDoc(titleRef, {
+    unlocked: true,
+    date: Date.now(),
+    source: "halloween2026"
+  });
+
+  // Als gebruiker nog geen actieve titel heeft → zet deze meteen
+  const userRef = doc(db, "users", user.uid);
+  await setDoc(userRef, {
+    activeTitle: item.titleName
+  }, { merge: true });
+}
 
   document.getElementById("candyAmount").textContent = current;
   document.getElementById("statusMessage").textContent = "Aankoop gelukt!";
