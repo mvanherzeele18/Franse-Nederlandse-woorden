@@ -3,10 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Mijn Profiel</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.css">
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap"
+  rel="stylesheet"
+>
+
+<link
+  rel="stylesheet"
+  href="https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.css"
+>
+
 <style>
+
 :root {
   --green: #6BBE3A;
   --green-light: #D4E8B8;
@@ -19,181 +30,798 @@
   --text-muted: #5a7a5a;
   --border: #c8e6a0;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* =========================
+   HEADER
+========================= */
+
 header {
-  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--green-dark) 0%,
+    var(--green) 100%
+  );
+
   padding: 1.5rem 2rem;
+
   border-bottom: 4px solid var(--yellow);
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 1rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  flex-wrap: wrap;
+  gap: 1rem;
 }
-header h1 { font-family: 'Playfair Display', serif; color: var(--yellow); font-size: 2rem; }
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  color: var(--yellow);
+  font-size: 2rem;
+}
+
 .nav-btn {
-  background: var(--yellow); color: var(--green-dark);
-  text-decoration: none; padding: 0.7rem 1.2rem;
-  border-radius: 10px; font-weight: 600; transition: 0.3s;
+  background: var(--yellow);
+  color: var(--green-dark);
+
+  text-decoration: none;
+
+  padding: 0.7rem 1.2rem;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
+  transition: 0.3s;
 }
-.nav-btn:hover { background: var(--green-light); transform: translateY(-2px); }
-main { max-width: 640px; margin: 2rem auto; padding: 0 1rem 3rem; }
+
+.nav-btn:hover {
+  background: var(--green-light);
+  transform: translateY(-2px);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+main {
+  max-width: 640px;
+
+  margin: 2rem auto;
+
+  padding: 0 1rem 3rem;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
 .profile-top {
-  background: var(--white); border: 2px solid var(--border);
-  border-radius: 20px; padding: 2rem; text-align: center;
-  margin-bottom: 1.25rem; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  background: var(--white);
+
+  border: 2px solid var(--border);
+
+  border-radius: 20px;
+
+  padding: 2rem;
+
+  text-align: center;
+
+  margin-bottom: 1.25rem;
+
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.06);
 }
-.avatar-wrap { position: relative; display: inline-block; margin-bottom: 1rem; }
+
+.avatar-wrap {
+  position: relative;
+
+  display: inline-block;
+
+  margin-bottom: 1rem;
+}
+
 .avatar-circle {
-  width: 80px; height: 80px; border-radius: 50%;
-  background: var(--bg); border: 3px solid var(--green);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2.5rem; margin: 0 auto;
+  width: 80px;
+  height: 80px;
+
+  border-radius: 50%;
+
+  background: var(--bg);
+
+  border: 3px solid var(--green);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2.5rem;
+
+  margin: 0 auto;
 }
+
 .level-bubble {
-  position: absolute; bottom: -4px; right: -4px;
-  background: var(--green-dark); color: var(--yellow);
-  font-size: 11px; font-weight: 700;
-  padding: 3px 8px; border-radius: 20px;
-  border: 2px solid var(--white); letter-spacing: 0.03em;
+  position: absolute;
+
+  bottom: -4px;
+  right: -4px;
+
+  background: var(--green-dark);
+
+  color: var(--yellow);
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  padding: 3px 8px;
+
+  border-radius: 20px;
+
+  border: 2px solid var(--white);
+
+  letter-spacing: 0.03em;
 }
-.profile-name { font-size: 1.6rem; font-weight: 700; color: var(--green-dark); margin-bottom: 0.2rem; }
-.profile-email { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; }
+
+.profile-name {
+  font-size: 1.6rem;
+
+  font-weight: 700;
+
+  color: var(--green-dark);
+
+  margin-bottom: 0.2rem;
+}
+
+.profile-email {
+  font-size: 0.9rem;
+
+  color: var(--text-muted);
+
+  margin-bottom: 1rem;
+}
+
 .title-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: #EAF3DE; color: var(--green-solid);
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  background: #EAF3DE;
+
+  color: var(--green-solid);
+
   border: 1.5px solid #C0DD97;
-  font-size: 0.85rem; font-weight: 600;
-  padding: 5px 14px; border-radius: 20px;
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+
+  padding: 5px 14px;
+
+  border-radius: 20px;
 }
-.title-badge.admin { background: #FFF8E1; color: #7B5800; border-color: #FFE082; }
+
+.title-badge.admin {
+  background: #FFF8E1;
+
+  color: #7B5800;
+
+  border-color: #FFE082;
+}
+
+/* =========================
+   XP
+========================= */
+
 .xp-card {
-  background: var(--white); border: 2px solid var(--border);
-  border-radius: 20px; padding: 1.5rem;
-  margin-bottom: 1.25rem; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  background: var(--white);
+
+  border: 2px solid var(--border);
+
+  border-radius: 20px;
+
+  padding: 1.5rem;
+
+  margin-bottom: 1.25rem;
+
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.06);
 }
-.xp-card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.75rem; }
-.section-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); font-weight: 600; }
-.xp-numbers { font-size: 0.85rem; color: var(--text-muted); }
-.xp-numbers strong { color: var(--green-dark); }
+
+.xp-card-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: baseline;
+
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-size: 0.8rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.07em;
+
+  color: var(--text-muted);
+
+  font-weight: 600;
+}
+
+.xp-numbers {
+  font-size: 0.85rem;
+
+  color: var(--text-muted);
+}
+
+.xp-numbers strong {
+  color: var(--green-dark);
+}
+
 .xp-track {
-  height: 14px; background: var(--bg);
-  border-radius: 7px; border: 1.5px solid var(--border);
-  overflow: hidden; margin-bottom: 0.4rem;
+  height: 14px;
+
+  background: var(--bg);
+
+  border-radius: 7px;
+
+  border: 1.5px solid var(--border);
+
+  overflow: hidden;
+
+  margin-bottom: 0.4rem;
 }
+
 .xp-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--green) 0%, var(--green-dark) 100%);
-  border-radius: 7px; transition: width 1s cubic-bezier(.4,0,.2,1); width: 0%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--green) 0%,
+      var(--green-dark) 100%
+    );
+
+  border-radius: 7px;
+
+  transition:
+    width 1s cubic-bezier(.4,0,.2,1);
+
+  width: 0%;
 }
-.xp-hint { font-size: 0.78rem; color: var(--text-muted); text-align: right; }
-.stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 1.25rem; }
+
+.xp-hint {
+  font-size: 0.78rem;
+
+  color: var(--text-muted);
+
+  text-align: right;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap: 1rem;
+
+  margin-bottom: 1.25rem;
+}
+
 .stat-box {
-  background: var(--white); border: 2px solid var(--border);
-  border-radius: 16px; padding: 1.1rem 0.75rem;
-  text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  background: var(--white);
+
+  border: 2px solid var(--border);
+
+  border-radius: 16px;
+
+  padding: 1.1rem 0.75rem;
+
+  text-align: center;
+
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.06);
 }
-.stat-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600; margin-bottom: 0.4rem; }
-.stat-value { font-size: 1.7rem; font-weight: 700; color: var(--green-dark); line-height: 1; }
-.stat-value.small { font-size: 1.15rem; }
+
+.stat-label {
+  font-size: 0.72rem;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.06em;
+
+  color: var(--text-muted);
+
+  font-weight: 600;
+
+  margin-bottom: 0.4rem;
+}
+
+.stat-value {
+  font-size: 1.7rem;
+
+  font-weight: 700;
+
+  color: var(--green-dark);
+
+  line-height: 1;
+}
+
+.stat-value.small {
+  font-size: 1.15rem;
+}
+
+/* =========================
+   TITELS
+========================= */
+
 .titles-card {
-  background: var(--white); border: 2px solid var(--border);
-  border-radius: 20px; padding: 1.5rem;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  background: var(--white);
+
+  border: 2px solid var(--border);
+
+  border-radius: 20px;
+
+  padding: 1.5rem;
+
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.06);
 }
-.titles-card .section-title { margin-bottom: 1rem; }
+
+.titles-card .section-title {
+  margin-bottom: 1rem;
+}
+
 .title-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 0.55rem 0; border-bottom: 1px solid #f0f7e8; font-size: 0.9rem;
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 0.65rem 0;
+
+  border-bottom:
+    1px solid #f0f7e8;
+
+  font-size: 0.9rem;
 }
-.title-row:last-child { border-bottom: none; }
-.t-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.t-dot.done   { background: var(--green); }
-.t-dot.next   { background: #D4E8B8; border: 2px solid var(--green); }
-.t-dot.future { background: #eee; border: 2px solid #ccc; }
-.t-name { flex: 1; }
-.t-name.done   { color: var(--green-dark); font-weight: 500; }
-.t-name.future { color: #aaa; }
-.t-lvl { font-size: 0.78rem; color: var(--text-muted); }
-.t-check { font-size: 1rem; color: var(--green); font-weight: 700; }
+
+.title-row:last-child {
+  border-bottom: none;
+}
+
+.t-dot {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  flex-shrink: 0;
+}
+
+.t-dot.done {
+  background: var(--green);
+}
+
+.t-dot.next {
+  background: #D4E8B8;
+
+  border: 2px solid var(--green);
+}
+
+.t-dot.future {
+  background: #eee;
+
+  border: 2px solid #ccc;
+}
+
+.t-name {
+  flex: 1;
+}
+
+.t-name.done {
+  color: var(--green-dark);
+
+  font-weight: 500;
+}
+
+.t-name.future {
+  color: #aaa;
+}
+
+.t-lvl {
+  font-size: 0.78rem;
+
+  color: var(--text-muted);
+}
+
+/* =========================
+   TITEL KNOP
+========================= */
+
+.title-use-btn {
+  background: var(--yellow);
+
+  color: var(--green-dark);
+
+  border: none;
+
+  padding: 5px 10px;
+
+  border-radius: 8px;
+
+  font-size: 0.75rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  white-space: nowrap;
+}
+
+.title-use-btn:hover {
+  background: var(--green-light);
+
+  transform: translateY(-1px);
+}
+
+.title-use-btn.active {
+  background: var(--green-dark);
+
+  color: var(--yellow);
+
+  cursor: default;
+
+  transform: none;
+}
+
+.title-use-btn:disabled {
+  opacity: 0.7;
+
+  cursor: default;
+}
+
+/* =========================
+   SHOP TITEL
+========================= */
+
+.shop-title {
+  color: var(--green-dark);
+
+  font-weight: 600;
+}
+
+.shop-title-label {
+  font-size: 0.72rem;
+
+  color: #b26a00;
+
+  background: #FFF8E1;
+
+  border: 1px solid #FFE082;
+
+  border-radius: 8px;
+
+  padding: 2px 6px;
+
+  white-space: nowrap;
+}
+
+/* =========================
+   LOGIN / LOADING
+========================= */
+
+.loading-message {
+  text-align: center;
+
+  padding: 2rem;
+
+  color: var(--text-muted);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
 @media (max-width: 480px) {
-  header { flex-direction: column; text-align: center; }
-  .nav-btn { width: 100%; text-align: center; }
-  .stats-grid { grid-template-columns: 1fr 1fr; }
-  .stat-value { font-size: 1.4rem; }
+
+  header {
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .nav-btn {
+    width: 100%;
+
+    text-align: center;
+  }
+
+  .stats-grid {
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .stat-value {
+    font-size: 1.4rem;
+  }
+
+  .title-row {
+    gap: 8px;
+  }
+
+  .title-use-btn {
+    padding: 5px 8px;
+
+    font-size: 0.7rem;
+  }
+
 }
+
 </style>
 </head>
+
 <body>
 
 <header>
+
   <h1>Mijn Profiel</h1>
-  <a href="index.html" class="nav-btn">← Terug</a>
+
+  <a
+    href="index.html"
+    class="nav-btn"
+  >
+    ← Terug
+  </a>
+
 </header>
+
 
 <main>
 
-  <div class="profile-top">
-    <div class="avatar-wrap">
-      <div class="avatar-circle">👤</div>
-      <div class="level-bubble" id="level-bubble">Lv. 1</div>
-    </div>
-    <div class="profile-name" id="name">Laden...</div>
-    <div class="profile-email" id="email">Laden...</div>
-    <div class="title-badge" id="title-badge-wrap">🏅 <span id="title-badge">Beginner</span></div>
-  </div>
+  <!-- PROFIEL -->
 
-  <div class="xp-card">
-    <div class="xp-card-header">
-      <span class="section-title">Voortgang</span>
-      <span class="xp-numbers">
-        <strong id="xp-cur">0</strong> / <span id="xp-max">100</span> XP
+  <div class="profile-top">
+
+    <div class="avatar-wrap">
+
+      <div class="avatar-circle">
+        👤
+      </div>
+
+      <div
+        class="level-bubble"
+        id="level-bubble"
+      >
+        Lv. 1
+      </div>
+
+    </div>
+
+    <div
+      class="profile-name"
+      id="name"
+    >
+      Laden...
+    </div>
+
+    <div
+      class="profile-email"
+      id="email"
+    >
+      Laden...
+    </div>
+
+    <div
+      class="title-badge"
+      id="title-badge-wrap"
+    >
+      🏅
+      <span id="title-badge">
+        Beginner
       </span>
     </div>
-    <div class="xp-track">
-      <div class="xp-fill" id="xp-bar"></div>
-    </div>
-    <div class="xp-hint" id="xp-hint">Nog 100 XP tot level 2</div>
+
   </div>
+
+
+  <!-- XP -->
+
+  <div class="xp-card">
+
+    <div class="xp-card-header">
+
+      <span class="section-title">
+        Voortgang
+      </span>
+
+      <span class="xp-numbers">
+
+        <strong id="xp-cur">
+          0
+        </strong>
+
+        /
+
+        <span id="xp-max">
+          100
+        </span>
+
+        XP
+
+      </span>
+
+    </div>
+
+    <div class="xp-track">
+
+      <div
+        class="xp-fill"
+        id="xp-bar"
+      ></div>
+
+    </div>
+
+    <div
+      class="xp-hint"
+      id="xp-hint"
+    >
+      Nog 100 XP tot level 2
+    </div>
+
+  </div>
+
+
+  <!-- STATISTIEKEN -->
 
   <div class="stats-grid">
+
     <div class="stat-box">
-      <div class="stat-label">Totaal XP</div>
-      <div class="stat-value" id="stat-xp">0</div>
+
+      <div class="stat-label">
+        Totaal XP
+      </div>
+
+      <div
+        class="stat-value"
+        id="stat-xp"
+      >
+        0
+      </div>
+
     </div>
+
+
     <div class="stat-box">
-      <div class="stat-label">Level</div>
-      <div class="stat-value" id="stat-level">1</div>
+
+      <div class="stat-label">
+        Level
+      </div>
+
+      <div
+        class="stat-value"
+        id="stat-level"
+      >
+        1
+      </div>
+
     </div>
+
+
     <div class="stat-box">
-      <div class="stat-label">Nog nodig</div>
-      <div class="stat-value small" id="stat-needed">100 XP</div>
+
+      <div class="stat-label">
+        Nog nodig
+      </div>
+
+      <div
+        class="stat-value small"
+        id="stat-needed"
+      >
+        100 XP
+      </div>
+
     </div>
+
   </div>
 
+
+  <!-- TITELS -->
+
   <div class="titles-card">
-    <div class="section-title">Titels</div>
-    <div id="titles-list"></div>
+
+    <div class="section-title">
+      Titels
+    </div>
+
+    <div id="titles-list">
+      <div class="loading-message">
+        Titels laden...
+      </div>
+    </div>
+
   </div>
 
 </main>
 
+
 <script type="module">
 
-import { loadActiveEvents } from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/events-loader.js";
-import { applyHalloweenTheme } from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.js";
+/* =========================================================
+   EVENTS / HALLOWEEN THEME
+========================================================= */
 
-loadActiveEvents().then(events => {
-  applyHalloweenTheme(events);
-});
+import {
+  loadActiveEvents
+}
+from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/events-loader.js";
 
-import { initializeApp }
-  from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import {
+  applyHalloweenTheme
+}
+from "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.js";
+
+
+loadActiveEvents()
+  .then(events => {
+
+    applyHalloweenTheme(events);
+
+  })
+  .catch(error => {
+
+    console.error(
+      "Event theme kon niet geladen worden:",
+      error
+    );
+
+  });
+
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+import {
+  initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
 
 import {
   getFirestore,
   doc,
-  getDoc
+  getDoc,
+  setDoc
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
 
 import {
   getAuth,
@@ -201,47 +829,109 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
+
 const firebaseConfig = {
-  apiKey:"AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
-  authDomain:"vocabulairesite.firebaseapp.com",
-  projectId:"vocabulairesite",
-  storageBucket:"vocabulairesite.firebasestorage.app",
-  messagingSenderId:"1002919769364",
-  appId:"1:1002919769364:web:face9ebdbe3cb1db37fe01",
-  measurementId:"G-5FVEW59WH3"
+
+  apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+
+  authDomain:
+    "vocabulairesite.firebaseapp.com",
+
+  projectId:
+    "vocabulairesite",
+
+  storageBucket:
+    "vocabulairesite.firebasestorage.app",
+
+  messagingSenderId:
+    "1002919769364",
+
+  appId:
+    "1:1002919769364:web:face9ebdbe3cb1db37fe01",
+
+  measurementId:
+    "G-5FVEW59WH3"
+
 };
 
+
 const ADMIN_EMAIL =
-"vanherzeelematteo@gmail.com";
+  "vanherzeelematteo@gmail.com";
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+
+const db =
+  getFirestore(app);
+
+
+const auth =
+  getAuth(app);
+
+
+/* =========================================================
+   LEVEL TITELS
+========================================================= */
 
 const TITLES = [
 
-  { name:"Beginner", minLevel:1 },
-  { name:"Leerling", minLevel:5 },
-  { name:"Student", minLevel:10 },
-  { name:"Gevorderde", minLevel:20 },
-  { name:"Expert", minLevel:30 },
-  { name:"Professor", minLevel:40 },
-  { name:"Meester van het Frans", minLevel:50 }
+  {
+    name: "Beginner",
+    minLevel: 1
+  },
+
+  {
+    name: "Leerling",
+    minLevel: 5
+  },
+
+  {
+    name: "Student",
+    minLevel: 10
+  },
+
+  {
+    name: "Gevorderde",
+    minLevel: 20
+  },
+
+  {
+    name: "Expert",
+    minLevel: 30
+  },
+
+  {
+    name: "Professor",
+    minLevel: 40
+  },
+
+  {
+    name: "Meester van het Frans",
+    minLevel: 50
+  }
 
 ];
 
-const app =
-initializeApp(firebaseConfig);
 
-const db =
-getFirestore(app);
+/* =========================================================
+   XP SYSTEEM
+========================================================= */
 
-const auth =
-getAuth(app);
-
-function xpForLevel(level){
+function xpForLevel(level) {
 
   let xp = 0;
 
-  for(let i = 1; i < level; i++){
+  for (
+    let i = 1;
+    i < level;
+    i++
+  ) {
 
-    xp += 100 + ((i - 1) * 50);
+    xp +=
+      100 +
+      ((i - 1) * 50);
 
   }
 
@@ -249,11 +939,14 @@ function xpForLevel(level){
 
 }
 
-function getLevel(xp){
+
+function getLevel(xp) {
 
   let level = 1;
 
-  while(xp >= xpForLevel(level + 1)){
+  while (
+    xp >= xpForLevel(level + 1)
+  ) {
 
     level++;
 
@@ -263,15 +956,27 @@ function getLevel(xp){
 
 }
 
-function getTitle(level){
 
-  let title = TITLES[0].name;
+/* =========================================================
+   STANDAARD LEVEL TITEL
+========================================================= */
 
-  for(const t of TITLES){
+function getDefaultTitle(level) {
 
-    if(level >= t.minLevel){
+  let title =
+    TITLES[0].name;
 
-      title = t.name;
+  for (
+    const titleData of TITLES
+  ) {
+
+    if (
+      level >=
+      titleData.minLevel
+    ) {
+
+      title =
+        titleData.name;
 
     }
 
@@ -281,201 +986,911 @@ function getTitle(level){
 
 }
 
-function renderProfile(xp,isAdmin){
 
-  const level =
-  getLevel(xp);
+/* =========================================================
+   TITEL BESCHIKBAARHEID
+========================================================= */
 
-  const currentLevelXP =
-  xpForLevel(level);
+function cleanOwnedTitles(
+  ownedTitles
+) {
 
-  const nextLevelXP =
-  xpForLevel(level + 1);
+  if (
+    !Array.isArray(ownedTitles)
+  ) {
 
-  const xpInsideLevel =
-  xp - currentLevelXP;
+    return [];
 
-  const xpNeededThisLevel =
-  nextLevelXP - currentLevelXP;
+  }
 
-  const xpRemaining =
-  nextLevelXP - xp;
+  return [
+    ...new Set(
+      ownedTitles.filter(
+        title =>
+          typeof title === "string" &&
+          title.trim() !== ""
+      )
+    )
+  ];
 
-  const progress =
-  Math.round(
-    (xpInsideLevel / xpNeededThisLevel)
-    * 100
-  );
+}
 
-  const displayTitle =
-  isAdmin
-  ? "Admin"
-  : getTitle(level);
-  
-  const badgeIcon =
-  "🏅";
 
-  document.getElementById(
-    "level-bubble"
-  ).textContent =
-  isAdmin
-  ? "Admin"
-  : "Lv. " + level;
+/* =========================================================
+   TITEL KIEZEN
+========================================================= */
 
-  const badge =
-  document.getElementById(
-    "title-badge-wrap"
-  );
+async function selectTitle(
+  titleName,
+  user
+) {
 
-  badge.innerHTML =
-  badgeIcon +
-  " <span>" +
-  displayTitle +
-  "</span>";
+  if (!titleName) {
+    return;
+  }
 
-  badge.className =
-  isAdmin
-  ? "title-badge admin"
-  : "title-badge";
+  if (!user) {
+    return;
+  }
 
-  document.getElementById(
-    "xp-cur"
-  ).textContent =
-  xpInsideLevel;
 
-  document.getElementById(
-    "xp-max"
-  ).textContent =
-  xpNeededThisLevel;
+  try {
 
-  document.getElementById(
-    "xp-hint"
-  ).textContent =
-  "Nog " +
-  xpRemaining +
-  " XP tot level " +
-  (level + 1);
+    const userRef =
+      doc(
+        db,
+        "users",
+        user.uid
+      );
 
-  setTimeout(()=>{
 
-    document.getElementById(
-      "xp-bar"
-    ).style.width =
-    progress + "%";
+    await setDoc(
+      userRef,
+      {
+        customTitle:
+          titleName
+      },
+      {
+        merge: true
+      }
+    );
 
-  },100);
 
-  document.getElementById(
-    "stat-xp"
-  ).textContent =
-  xp;
+    /*
+      De pagina wordt opnieuw geladen zodat
+      de nieuwe titel onmiddellijk overal zichtbaar is.
+    */
 
-  document.getElementById(
-    "stat-level"
-  ).textContent =
-  level;
+    location.reload();
 
-  document.getElementById(
-    "stat-needed"
-  ).textContent =
-  xpRemaining + " XP";
+  }
 
-  const list =
-  document.getElementById(
-    "titles-list"
-  );
+  catch (error) {
 
-  list.innerHTML = "";
+    console.error(
+      "Titel kiezen mislukt:",
+      error
+    );
 
-  const nextTitle =
-  TITLES.find(
-    t => level < t.minLevel
-  );
-
-  for(const t of TITLES){
-
-    const unlocked =
-    level >= t.minLevel;
-
-    const isNext =
-    !unlocked &&
-    nextTitle &&
-    nextTitle.name === t.name;
-
-    const dotClass =
-    unlocked
-    ? "done"
-    : (isNext ? "next" : "future");
-
-    const row =
-    document.createElement("div");
-
-    row.className =
-    "title-row";
-
-    row.innerHTML =
-
-      `<div class="t-dot ${dotClass}"></div>
-       <span class="t-name ${unlocked ? "done" : "future"}">
-         ${t.name}
-       </span>
-       <span class="t-lvl">
-         Lv. ${t.minLevel}
-       </span>
-       ${unlocked ? '<span class="t-check">✓</span>' : ''}`;
-
-    list.appendChild(row);
+    alert(
+      "De titel kon niet gekozen worden. Probeer opnieuw."
+    );
 
   }
 
 }
 
-onAuthStateChanged(
-  auth,
-  async(user)=>{
 
-    if(!user) return;
+/* =========================================================
+   TITEL LIJST RENDEREN
+========================================================= */
 
+function renderTitles(
+  level,
+  isAdmin,
+  ownedTitles,
+  activeTitle,
+  user
+) {
+
+  const list =
     document.getElementById(
-      "name"
-    ).textContent =
-    user.displayName ||
-    "Gebruiker";
-
-    document.getElementById(
-      "email"
-    ).textContent =
-    user.email;
-
-    let xp = 0;
-
-    const userDoc =
-    await getDoc(
-      doc(
-        db,
-        "users",
-        user.uid
-      )
+      "titles-list"
     );
 
-    if(userDoc.exists()){
 
-      xp =
-      userDoc.data().xp || 0;
+  list.innerHTML = "";
+
+
+  /*
+    Alle leveltitels
+  */
+
+  const nextLevelTitle =
+    TITLES.find(
+      title =>
+        level <
+        title.minLevel
+    );
+
+
+  for (
+    const titleData of TITLES
+  ) {
+
+    const unlocked =
+      level >=
+      titleData.minLevel;
+
+
+    const isNext =
+      !unlocked &&
+      nextLevelTitle &&
+      nextLevelTitle.name ===
+        titleData.name;
+
+
+    const dotClass =
+      unlocked
+        ? "done"
+        : (
+            isNext
+              ? "next"
+              : "future"
+          );
+
+
+    const row =
+      document.createElement(
+        "div"
+      );
+
+
+    row.className =
+      "title-row";
+
+
+    const name =
+      document.createElement(
+        "span"
+      );
+
+
+    name.className =
+      unlocked
+        ? "t-name done"
+        : "t-name future";
+
+
+    name.textContent =
+      titleData.name;
+
+
+    const level =
+      document.createElement(
+        "span"
+      );
+
+
+    level.className =
+      "t-lvl";
+
+
+    level.textContent =
+      "Lv. " +
+      titleData.minLevel;
+
+
+    const dot =
+      document.createElement(
+        "div"
+      );
+
+
+    dot.className =
+      "t-dot " +
+      dotClass;
+
+
+    row.appendChild(dot);
+
+    row.appendChild(name);
+
+    row.appendChild(level);
+
+
+    /*
+      Leveltitels mogen gebruikt worden
+      zodra je het benodigde level hebt.
+    */
+
+    if (unlocked) {
+
+      const useButton =
+        document.createElement(
+          "button"
+        );
+
+
+      useButton.className =
+        "title-use-btn";
+
+
+      if (
+        activeTitle ===
+        titleData.name
+      ) {
+
+        useButton.textContent =
+          "Gebruikt";
+
+        useButton.classList.add(
+          "active"
+        );
+
+        useButton.disabled =
+          true;
+
+      }
+
+      else {
+
+        useButton.textContent =
+          "Gebruiken";
+
+
+        useButton.addEventListener(
+          "click",
+          () => {
+
+            selectTitle(
+              titleData.name,
+              user
+            );
+
+          }
+        );
+
+      }
+
+
+      row.appendChild(
+        useButton
+      );
 
     }
 
-    const isAdmin =
-    user.email === ADMIN_EMAIL;
 
-    renderProfile(
-      xp,
-      isAdmin
+    list.appendChild(row);
+
+  }
+
+
+  /*
+    Nu komen de gekochte shop-titels.
+  */
+
+  const shopTitles =
+    ownedTitles.filter(
+      ownedTitle =>
+
+        !TITLES.some(
+          titleData =>
+            titleData.name ===
+            ownedTitle
+        )
     );
+
+
+  for (
+    const shopTitle of shopTitles
+  ) {
+
+    const row =
+      document.createElement(
+        "div"
+      );
+
+
+    row.className =
+      "title-row";
+
+
+    const dot =
+      document.createElement(
+        "div"
+      );
+
+
+    dot.className =
+      "t-dot done";
+
+
+    const name =
+      document.createElement(
+        "span"
+      );
+
+
+    name.className =
+      "t-name shop-title";
+
+
+    name.textContent =
+      shopTitle;
+
+
+    const label =
+      document.createElement(
+        "span"
+      );
+
+
+    label.className =
+      "shop-title-label";
+
+
+    label.textContent =
+      "Shop";
+
+
+    const useButton =
+      document.createElement(
+        "button"
+      );
+
+
+    useButton.className =
+      "title-use-btn";
+
+
+    if (
+      activeTitle ===
+      shopTitle
+    ) {
+
+      useButton.textContent =
+        "Gebruikt";
+
+      useButton.classList.add(
+        "active"
+      );
+
+      useButton.disabled =
+        true;
+
+    }
+
+    else {
+
+      useButton.textContent =
+        "Gebruiken";
+
+
+      useButton.addEventListener(
+        "click",
+        () => {
+
+          selectTitle(
+            shopTitle,
+            user
+          );
+
+        }
+      );
+
+    }
+
+
+    row.appendChild(dot);
+
+    row.appendChild(name);
+
+    row.appendChild(label);
+
+    row.appendChild(useButton);
+
+
+    list.appendChild(row);
+
+  }
+
+
+  /*
+    Als er helemaal geen titels zijn,
+    tonen we een bericht.
+  */
+
+  if (
+    list.children.length === 0
+  ) {
+
+    list.innerHTML = `
+
+      <div class="loading-message">
+        Je hebt nog geen titels.
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================================
+   PROFIEL RENDEREN
+========================================================= */
+
+function renderProfile(
+  xp,
+  isAdmin,
+  customTitle,
+  ownedTitles,
+  user
+) {
+
+  const level =
+    getLevel(xp);
+
+
+  const currentLevelXP =
+    xpForLevel(level);
+
+
+  const nextLevelXP =
+    xpForLevel(level + 1);
+
+
+  const xpInsideLevel =
+    xp -
+    currentLevelXP;
+
+
+  const xpNeededThisLevel =
+    nextLevelXP -
+    currentLevelXP;
+
+
+  const xpRemaining =
+    nextLevelXP -
+    xp;
+
+
+  let progress =
+    Math.round(
+      (
+        xpInsideLevel /
+        xpNeededThisLevel
+      ) * 100
+    );
+
+
+  /*
+    Veiligheid voor rare XP-waarden.
+  */
+
+  progress =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        progress
+      )
+    );
+
+
+  /*
+    Admin blijft altijd Admin.
+    Voor gewone gebruikers:
+      gekozen titel -> customTitle
+      geen gekozen titel -> leveltitel
+  */
+
+  const displayTitle =
+    isAdmin
+      ? "Admin"
+      : (
+          customTitle ||
+          getDefaultTitle(level)
+        );
+
+
+  /* LEVEL BUBBLE */
+
+  document.getElementById(
+    "level-bubble"
+  ).textContent =
+    isAdmin
+      ? "Admin"
+      : "Lv. " + level;
+
+
+  /* TITEL BADGE */
+
+  const badge =
+    document.getElementById(
+      "title-badge-wrap"
+    );
+
+
+  badge.innerHTML = "";
+
+
+  const icon =
+    document.createElement(
+      "span"
+    );
+
+  icon.textContent =
+    "🏅";
+
+
+  const titleSpan =
+    document.createElement(
+      "span"
+    );
+
+  titleSpan.textContent =
+    displayTitle;
+
+
+  badge.appendChild(icon);
+
+  badge.appendChild(
+    titleSpan
+  );
+
+
+  badge.className =
+    isAdmin
+      ? "title-badge admin"
+      : "title-badge";
+
+
+  /* XP */
+
+  document.getElementById(
+    "xp-cur"
+  ).textContent =
+    xpInsideLevel;
+
+
+  document.getElementById(
+    "xp-max"
+  ).textContent =
+    xpNeededThisLevel;
+
+
+  document.getElementById(
+    "xp-hint"
+  ).textContent =
+
+    "Nog " +
+    xpRemaining +
+    " XP tot level " +
+    (level + 1);
+
+
+  setTimeout(
+    () => {
+
+      document.getElementById(
+        "xp-bar"
+      ).style.width =
+        progress + "%";
+
+    },
+    100
+  );
+
+
+  /* STATISTIEKEN */
+
+  document.getElementById(
+    "stat-xp"
+  ).textContent =
+    xp;
+
+
+  document.getElementById(
+    "stat-level"
+  ).textContent =
+    level;
+
+
+  document.getElementById(
+    "stat-needed"
+  ).textContent =
+    xpRemaining + " XP";
+
+
+  /* TITELS */
+
+  renderTitles(
+    level,
+    isAdmin,
+    ownedTitles,
+    displayTitle,
+    user
+  );
+
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    if (!user) {
+
+      document.getElementById(
+        "name"
+      ).textContent =
+        "Niet ingelogd";
+
+
+      document.getElementById(
+        "email"
+      ).textContent =
+        "Log in om je profiel te bekijken";
+
+
+      document.getElementById(
+        "titles-list"
+      ).innerHTML = `
+
+        <div class="loading-message">
+          Je bent niet ingelogd.
+        </div>
+
+      `;
+
+
+      return;
+
+    }
+
+
+    try {
+
+      /* ================================================
+         USER DOCUMENT
+      ================================================ */
+
+      const userRef =
+        doc(
+          db,
+          "users",
+          user.uid
+        );
+
+
+      const userSnap =
+        await getDoc(
+          userRef
+        );
+
+
+      const userData =
+        userSnap.exists()
+          ? userSnap.data()
+          : {};
+
+
+      /* ================================================
+         NAAM
+      ================================================ */
+
+      const displayName =
+        user.displayName ||
+        userData.displayName ||
+        userData.name ||
+        "Gebruiker";
+
+
+      document.getElementById(
+        "name"
+      ).textContent =
+        displayName;
+
+
+      document.getElementById(
+        "email"
+      ).textContent =
+        user.email || "";
+
+
+      /* ================================================
+         XP
+      ================================================ */
+
+      let xp =
+        Number(
+          userData.xp
+        );
+
+
+      if (
+        !Number.isFinite(xp)
+      ) {
+
+        xp = 0;
+
+      }
+
+
+      xp =
+        Math.max(
+          0,
+          Math.floor(xp)
+        );
+
+
+      /* ================================================
+         ADMIN
+      ================================================ */
+
+      const isAdmin =
+        user.email ===
+        ADMIN_EMAIL;
+
+
+      /* ================================================
+         GEKOCHTE TITELS
+      ================================================ */
+
+      let ownedTitles =
+        cleanOwnedTitles(
+          userData.ownedTitles
+        );
+
+
+      /*
+        BELANGRIJK:
+
+        De huidige Halloween-shop schrijft
+        momenteel alleen:
+
+          customTitle: "Spooky Master"
+
+        Daarom zetten we die bestaande customTitle
+        automatisch ook in ownedTitles.
+
+        Zo verlies je je reeds gekochte
+        Spooky Master niet.
+      */
+
+      const oldCustomTitle =
+        typeof userData.customTitle === "string"
+          ? userData.customTitle.trim()
+          : "";
+
+
+      if (
+        oldCustomTitle &&
+        !ownedTitles.includes(
+          oldCustomTitle
+        )
+      ) {
+
+        ownedTitles.push(
+          oldCustomTitle
+        );
+
+
+        /*
+          We slaan de lijst meteen op,
+          zodat de titel vanaf nu echt
+          als gekochte titel bewaard blijft.
+        */
+
+        try {
+
+          await setDoc(
+            userRef,
+            {
+              ownedTitles:
+                ownedTitles
+            },
+            {
+              merge: true
+            }
+          );
+
+        }
+
+        catch (saveError) {
+
+          console.error(
+            "ownedTitles kon niet opgeslagen worden:",
+            saveError
+          );
+
+        }
+
+      }
+
+
+      /* ================================================
+         ACTIEVE TITEL
+      ================================================ */
+
+      let activeTitle =
+        oldCustomTitle;
+
+
+      /*
+        Als er nog geen customTitle bestaat,
+        gebruiken we de normale leveltitel.
+      */
+
+      if (
+        !activeTitle
+      ) {
+
+        activeTitle =
+          getDefaultTitle(
+            getLevel(xp)
+          );
+
+      }
+
+
+      /* ================================================
+         PROFIEL WEERGEVEN
+      ================================================ */
+
+      renderProfile(
+        xp,
+        isAdmin,
+        activeTitle,
+        ownedTitles,
+        user
+      );
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "Profiel kon niet geladen worden:",
+        error
+      );
+
+
+      document.getElementById(
+        "name"
+      ).textContent =
+        "Fout bij laden";
+
+
+      document.getElementById(
+        "email"
+      ).textContent =
+        "Probeer de pagina opnieuw te laden";
+
+
+      document.getElementById(
+        "titles-list"
+      ).innerHTML = `
+
+        <div class="loading-message">
+          Er ging iets mis bij het laden van je profiel.
+        </div>
+
+      `;
+
+    }
 
   }
 );
 
 </script>
+
 </body>
 </html>
