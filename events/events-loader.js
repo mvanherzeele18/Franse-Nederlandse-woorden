@@ -1,18 +1,9 @@
 import { halloweenConfig } from "./halloween2026.js";
 
-// ───────────────────────────────
-// E-mails die Halloween mogen zien
-// ───────────────────────────────
-const halloweenAllowed = [
-  "vanherzeele.matteo@groenhoveschool.be",
-  // extra e-mails hier
+const ALL_EVENTS = [
+  halloweenConfig
 ];
 
-const ALL_EVENTS = [halloweenConfig];
-
-// ───────────────────────────────
-// Firebase init
-// ───────────────────────────────
 async function firebaseBase() {
   const { initializeApp, getApps, getApp } =
     await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js");
@@ -31,101 +22,27 @@ async function firebaseBase() {
   return app;
 }
 
-// ───────────────────────────────
-// Load events ONLY for whitelist
-// ───────────────────────────────
 export async function loadActiveEvents() {
   const app = await firebaseBase();
+  const { getFirestore, doc, getDoc } =
+    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
 
-  const { getAuth, onAuthStateChanged } =
-    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
+  const db = getFirestore(app);
+  const now = Date.now();
+  const activeEvents = [];
 
-  const auth = getAuth(app);
+  for (const event of ALL_EVENTS) {
+    try {
+      const snap = await getDoc(doc(db, "events", event.id));
+    if (!snap.exists()) continue;
+      const data = snap.data();
+      if (!data.active) continue;
 
-  return new Promise(resolve => {
-    onAuthStateChanged(auth, async user => {
+      activeEvents.push(event);
+    } catch (e) {
+      console.error("Event kon niet geladen worden:", e);
+    }
+  }
 
-      // Niet ingelogd → geen events
-      if (!user) return resolve([]);
-
-      // Alleen whitelist mag events zien
-      const allowed = halloweenAllowed.includes(user.email);
-      if (!allowed) return resolve([]);
-
-      // Firestore ophalen
-      const { getFirestore, doc, getDoc } =
-        await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
-
-      const db = getFirestore(app);
-      const activeEvents = [];
-
-      // Check elk event
-      for (const event of ALL_EVENTS) {
-        try {
-          const snap = await getDoc(doc(db, "events", event.id));
-          if (!snap.exists()) continue;
-
-          const data = snap.data();
-          if (!data.active) continue;
-
-          // Alleen whitelist krijgt het event
-          activeEvents.push(event);
-
-        } catch (e) {
-          console.error("Event kon niet geladen worden:", e);
-        }
-      }
-
-      resolve(activeEvents);
-    });
-  });
+  return activeEvents;
 }
-
-//import { halloweenConfig } from "./halloween2026.js";
-//
-//const ALL_EVENTS = [
-//  halloweenConfig
-//];
-//
-//async function firebaseBase() {
-//  const { initializeApp, getApps, getApp } =
-//    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js");
-//
-//  const firebaseConfig = {
-//    apiKey:"AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
-//    authDomain:"vocabulairesite.firebaseapp.com",
-//    projectId:"vocabulairesite",
-//    storageBucket:"vocabulairesite.firebasestorage.app",
-//    messagingSenderId:"1002919769364",
-//    appId:"1:1002919769364:web:face9ebdbe3cb1db37fe01",
-//    measurementId:"G-5FVEW59WH3"
-//  };
-//
-//  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-//  return app;
-//}
-//
-//export async function loadActiveEvents() {
-//  const app = await firebaseBase();
-//  const { getFirestore, doc, getDoc } =
-//    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
-//
-//  const db = getFirestore(app);
-//  const now = Date.now();
-//  const activeEvents = [];
-//
-//  for (const event of ALL_EVENTS) {
-//    try {
-//      const snap = await getDoc(doc(db, "events", event.id));
-//    if (!snap.exists()) continue;
-//      const data = snap.data();
-//      if (!data.active) continue;
-//
-//      activeEvents.push(event);
-//    } catch (e) {
-//      console.error("Event kon niet geladen worden:", e);
-//    }
-//  }
-//
-//  return activeEvents;
-//}
