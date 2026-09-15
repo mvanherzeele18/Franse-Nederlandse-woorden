@@ -1086,7 +1086,7 @@ async function selectTitle(
 ========================================================= */
 
 function renderTitles(
-  level,
+  userLevel,
   isAdmin,
   ownedTitles,
   activeTitle,
@@ -1098,18 +1098,17 @@ function renderTitles(
       "titles-list"
     );
 
-
   list.innerHTML = "";
 
 
-  /*
-    Alle leveltitels
-  */
+  /* ================================================
+     LEVEL-TITELS
+  ================================================ */
 
   const nextLevelTitle =
     TITLES.find(
       title =>
-        level <
+        userLevel <
         title.minLevel
     );
 
@@ -1119,7 +1118,7 @@ function renderTitles(
   ) {
 
     const unlocked =
-      level >=
+      userLevel >=
       titleData.minLevel;
 
 
@@ -1145,64 +1144,61 @@ function renderTitles(
         "div"
       );
 
-
     row.className =
       "title-row";
 
 
-    const name =
-      document.createElement(
-        "span"
-      );
-
-
-    name.className =
-      unlocked
-        ? "t-name done"
-        : "t-name future";
-
-
-    name.textContent =
-      titleData.name;
-
-
-    const level =
-      document.createElement(
-        "span"
-      );
-
-
-    level.className =
-      "t-lvl";
-
-
-    level.textContent =
-      "Lv. " +
-      titleData.minLevel;
-
+    /* Bolletje */
 
     const dot =
       document.createElement(
         "div"
       );
 
-
     dot.className =
       "t-dot " +
       dotClass;
 
 
+    /* Titelnaam */
+
+    const name =
+      document.createElement(
+        "span"
+      );
+
+    name.className =
+      unlocked
+        ? "t-name done"
+        : "t-name future";
+
+    name.textContent =
+      titleData.name;
+
+
+    /* Vereist level */
+
+    const levelLabel =
+      document.createElement(
+        "span"
+      );
+
+    levelLabel.className =
+      "t-lvl";
+
+    levelLabel.textContent =
+      "Lv. " +
+      titleData.minLevel;
+
+
     row.appendChild(dot);
-
     row.appendChild(name);
+    row.appendChild(levelLabel);
 
-    row.appendChild(level);
 
-
-    /*
-      Leveltitels mogen gebruikt worden
-      zodra je het benodigde level hebt.
-    */
+    /* ================================================
+       GEBRUIKEN-KNOP
+    ================================================ */
 
     if (unlocked) {
 
@@ -1210,7 +1206,6 @@ function renderTitles(
         document.createElement(
           "button"
         );
-
 
       useButton.className =
         "title-use-btn";
@@ -1266,9 +1261,9 @@ function renderTitles(
   }
 
 
-  /*
-    Nu komen de gekochte shop-titels.
-  */
+  /* ================================================
+     GEKOCHTE SHOP-TITELS
+  ================================================ */
 
   const shopTitles =
     ownedTitles.filter(
@@ -1291,54 +1286,55 @@ function renderTitles(
         "div"
       );
 
-
     row.className =
       "title-row";
 
+
+    /* Bolletje */
 
     const dot =
       document.createElement(
         "div"
       );
 
-
     dot.className =
       "t-dot done";
 
+
+    /* Titelnaam */
 
     const name =
       document.createElement(
         "span"
       );
 
-
     name.className =
       "t-name shop-title";
-
 
     name.textContent =
       shopTitle;
 
 
-    const label =
+    /* Shop-label */
+
+    const shopLabel =
       document.createElement(
         "span"
       );
 
-
-    label.className =
+    shopLabel.className =
       "shop-title-label";
 
-
-    label.textContent =
+    shopLabel.textContent =
       "Shop";
 
+
+    /* Knop */
 
     const useButton =
       document.createElement(
         "button"
       );
-
 
     useButton.className =
       "title-use-btn";
@@ -1383,11 +1379,8 @@ function renderTitles(
 
 
     row.appendChild(dot);
-
     row.appendChild(name);
-
-    row.appendChild(label);
-
+    row.appendChild(shopLabel);
     row.appendChild(useButton);
 
 
@@ -1396,10 +1389,9 @@ function renderTitles(
   }
 
 
-  /*
-    Als er helemaal geen titels zijn,
-    tonen we een bericht.
-  */
+  /* ================================================
+     GEEN TITELS
+  ================================================ */
 
   if (
     list.children.length === 0
