@@ -337,7 +337,7 @@ if (item.type === "title") {
 
   const userRef = doc(db, "users", user.uid);
   await setDoc(userRef, {
-    customTitle: item.titleName
+    ownedTitles: item.titleName
   }, { merge: true });
 }
 
