@@ -4,44 +4,17 @@ const ALL_EVENTS = [
   halloweenConfig
 ];
 
-async function firebaseBase() {
-  const { initializeApp, getApps, getApp } =
-    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js");
-
-  const firebaseConfig = {
-    apiKey:"AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
-    authDomain:"vocabulairesite.firebaseapp.com",
-    projectId:"vocabulairesite",
-    storageBucket:"vocabulairesite.firebasestorage.app",
-    messagingSenderId:"1002919769364",
-    appId:"1:1002919769364:web:face9ebdbe3cb1db37fe01",
-    measurementId:"G-5FVEW59WH3"
-  };
-
-  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-  return app;
-}
+// ⭐ Kies hier jouw datums
+const HALLOWEEN_START = new Date("2026-09-01T00:00:00");
+const HALLOWEEN_END   = new Date("2026-11-07T23:59:59");
 
 export async function loadActiveEvents() {
-  const app = await firebaseBase();
-  const { getFirestore, doc, getDoc } =
-    await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
-
-  const db = getFirestore(app);
-  const now = Date.now();
   const activeEvents = [];
+  const now = new Date();
 
-  for (const event of ALL_EVENTS) {
-    try {
-      const snap = await getDoc(doc(db, "events", event.id));
-    if (!snap.exists()) continue;
-      const data = snap.data();
-      if (!data.active) continue;
-
-      activeEvents.push(event);
-    } catch (e) {
-      console.error("Event kon niet geladen worden:", e);
-    }
+  // ⭐ Automatische activatie op datum
+  if (now >= HALLOWEEN_START && now <= HALLOWEEN_END) {
+    activeEvents.push(halloweenConfig);
   }
 
   return activeEvents;
