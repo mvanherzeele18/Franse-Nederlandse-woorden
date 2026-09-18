@@ -471,3 +471,11 @@ body.halloween-active .event-card p {
 .hidden {
   display: none;
 }
+
+body.halloween-active .stat-label {
+  color: #ffd699 !important;
+}
+
+body.halloween-active .t-lvl {
+  color: #ffd699 !important;
+}
