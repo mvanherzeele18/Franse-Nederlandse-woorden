@@ -5,7 +5,7 @@ const ALL_EVENTS = [
 ];
 
 // ⭐ Kies hier jouw datums
-const HALLOWEEN_START = new Date("2026-09-01T00:00:00");
+const HALLOWEEN_START = new Date("2026-10-01T00:00:00");
 const HALLOWEEN_END   = new Date("2026-11-07T23:59:59");
 
 export async function loadActiveEvents() {
