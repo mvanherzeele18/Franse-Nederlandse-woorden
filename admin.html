@@ -153,6 +153,59 @@ button:hover {
 
 }
 
+.users-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--green-light);
+}
+
+.users-section h2 {
+  color: var(--green-dark);
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+.user-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  background: #f8f8f8;
+  border: 1px solid var(--green-light);
+  border-radius: 10px;
+}
+
+.user-name {
+  font-weight: 600;
+  color: var(--green-dark);
+}
+
+.user-email {
+  color: #555;
+  font-size: 0.9rem;
+  word-break: break-word;
+}
+
+.users-status {
+  color: var(--green-dark);
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+  .user-row {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+}
+
 .secondary-btn {
 
   background:var(--green);
@@ -234,7 +287,8 @@ import {
 
   getFirestore,
   collection,
-  addDoc
+  addDoc,
+  getDocs
 
 }
 from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
@@ -290,6 +344,8 @@ onAuthStateChanged(auth, (user) => {
 
   document.body.style.display = "flex";
 
+  loadUsers();
+
 });
 
 window.logout = async function () {
@@ -300,6 +356,90 @@ window.logout = async function () {
   "/Franse-Nederlandse-woorden/login.html";
 
 };
+
+async function loadUsers() {
+
+  const status = document.getElementById("usersStatus");
+  const list = document.getElementById("usersList");
+
+  status.textContent = "Gebruikers laden...";
+  list.innerHTML = "";
+
+  try {
+
+    const snapshot = await getDocs(
+      collection(db, "users")
+    );
+
+    if (snapshot.empty) {
+
+      status.textContent = "Geen gebruikersprofielen gevonden.";
+      return;
+
+    }
+
+    const users = [];
+
+    snapshot.forEach((userDoc) => {
+
+      const data = userDoc.data();
+
+      const name =
+        data.displayName ||
+        data.name ||
+        "Onbekende naam";
+
+      const email =
+        data.email ||
+        "E-mailadres niet opgeslagen";
+
+      users.push({
+        name,
+        email
+      });
+
+    });
+
+    users.sort((a, b) =>
+      a.name.localeCompare(b.name, "nl")
+    );
+
+    status.textContent =
+      users.length === 1
+        ? "1 account"
+        : `${users.length} accounts`;
+
+    users.forEach((user) => {
+
+      const row = document.createElement("div");
+
+      row.className = "user-row";
+
+      const name = document.createElement("div");
+      name.className = "user-name";
+      name.textContent = user.name;
+
+      const email = document.createElement("div");
+      email.className = "user-email";
+      email.textContent = user.email;
+
+      row.appendChild(name);
+      row.appendChild(email);
+
+      list.appendChild(row);
+
+    });
+
+  } catch (error) {
+
+    console.error("Gebruikers konden niet geladen worden:", error);
+
+    status.textContent =
+      "Gebruikers konden niet geladen worden.";
+
+  }
+
+}
 
 window.postAnnouncement = async function () {
 
