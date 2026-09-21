@@ -3,7 +3,7 @@ export const halloweenConfig = {
 
   currencyName: "candy",
 
-  rewardChances: [1, 1, 2, 3, 5],
+  rewardChances: [1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 5],
 
   shop: {
     xp100: { cost: 20, type: "xp", amount: 100, label: "100 XP" },
