@@ -175,12 +175,13 @@ button:hover {
 
 .user-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  grid-template-columns: 1.3fr 1.3fr 0.7fr 0.8fr;
+  gap: 0.8rem;
   padding: 0.9rem 1rem;
   background: #f8f8f8;
   border: 1px solid var(--green-light);
   border-radius: 10px;
+  align-items: center;
 }
 
 .user-name {
@@ -194,6 +195,17 @@ button:hover {
   word-break: break-word;
 }
 
+.user-xp,
+.user-title {
+  color: var(--green-dark);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.user-title {
+  text-align: right;
+}
+
 .users-status {
   color: var(--green-dark);
   margin-bottom: 1rem;
@@ -203,6 +215,10 @@ button:hover {
   .user-row {
     grid-template-columns: 1fr;
     gap: 0.3rem;
+  }
+
+  .user-title {
+    text-align: left;
   }
 }
 
@@ -405,9 +421,66 @@ async function loadUsers() {
         data.email ||
         "E-mailadres niet opgeslagen";
 
+      const xp = Number.isFinite(Number(data.xp))
+        ? Math.max(0, Math.floor(Number(data.xp)))
+        : 0;
+
+      function xpForLevel(level) {
+        let total = 0;
+
+        for (let i = 1; i < level; i++) {
+          total += 100 + ((i - 1) * 50);
+        }
+
+        return total;
+      }
+
+      function getLevel(xpValue) {
+        let level = 1;
+
+        while (xpValue >= xpForLevel(level + 1)) {
+          level++;
+        }
+
+        return level;
+      }
+
+      function getDefaultTitle(level) {
+        const titles = [
+          { name: "Beginner", minLevel: 1 },
+          { name: "Leerling", minLevel: 5 },
+          { name: "Student", minLevel: 10 },
+          { name: "Gevorderde", minLevel: 20 },
+          { name: "Expert", minLevel: 30 },
+          { name: "Professor", minLevel: 40 },
+          { name: "Meester van het Frans", minLevel: 50 }
+        ];
+
+        let title = titles[0].name;
+
+        for (const titleData of titles) {
+          if (level >= titleData.minLevel) {
+            title = titleData.name;
+          }
+        }
+
+        return title;
+      }
+
+      const level = getLevel(xp);
+
+      const title =
+        typeof data.customTitle === "string" &&
+        data.customTitle.trim()
+          ? data.customTitle.trim()
+          : getDefaultTitle(level);
+
       users.push({
         name,
-        email
+        email,
+        xp,
+        level,
+        title
       });
 
     });
@@ -435,8 +508,18 @@ async function loadUsers() {
       email.className = "user-email";
       email.textContent = user.email;
 
+      const xp = document.createElement("div");
+      xp.className = "user-xp";
+      xp.textContent = `⭐ ${user.xp} XP · Lv. ${user.level}`;
+
+      const title = document.createElement("div");
+      title.className = "user-title";
+      title.textContent = `🏅 ${user.title}`;
+
       row.appendChild(name);
       row.appendChild(email);
+      row.appendChild(xp);
+      row.appendChild(title);
 
       list.appendChild(row);
 
