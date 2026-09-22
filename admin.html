@@ -415,59 +415,6 @@ async function loadUsers() {
       const email =
         data.email ||
         "E-mailadres niet opgeslagen";
-      
-      let name =
-        data.displayName ||
-        data.name ||
-        "";
-
-      if (!name && email !== "E-mailadres niet opgeslagen") {
-        const username = email.split("@")[0];
-        const parts = username
-          .split(/[._-]+/)
-          .filter(Boolean);
-
-        const knownFirstNames = new Set([
-          "aaron", "adam", "alex", "alexander", "alice", "amber", "amelie", "arnaud",
-          "ben", "bram", "charlotte", "daan", "daniel", "david", "emma", "femke",
-          "florian", "fran", "françois", "gabriel", "hannah", "ines", "jan", "jasper",
-          "jens", "jonas", "julie", "kato", "laura", "lena", "louis", "lucas", "maarten",
-          "manon", "marie", "matteo", "max", "milan", "nathan", "noah", "olivia", "pieter",
-          "ruben", "sarah", "simon", "sophie", "thomas", "tim", "timo", "victor", "wout"
-        ]);
-
-        if (parts.length >= 2) {
-          const lowerParts = parts.map(part => part.toLowerCase());
-          const firstNameIndex = lowerParts.findIndex(part => knownFirstNames.has(part));
-
-          let orderedParts;
-
-          if (firstNameIndex >= 0) {
-            orderedParts = [
-              parts[firstNameIndex],
-              ...parts.filter((_, index) => index !== firstNameIndex)
-            ];
-          } else {
-            // Als de voornaam niet in de lijst staat, behouden we de volgorde uit het e-mailadres.
-            orderedParts = parts;
-          }
-
-          name = orderedParts
-            .map(part =>
-              part.charAt(0).toUpperCase() +
-              part.slice(1).toLowerCase()
-            )
-            .join(" ");
-        } else if (parts.length === 1) {
-          name =
-            parts[0].charAt(0).toUpperCase() +
-            parts[0].slice(1).toLowerCase();
-        }
-      }
-
-      if (!name) {
-        name = "Onbekende naam";
-      }
 
       const xp = Number.isFinite(Number(data.xp))
         ? Math.max(0, Math.floor(Number(data.xp)))
@@ -524,7 +471,6 @@ async function loadUsers() {
           : getDefaultTitle(level);
 
       users.push({
-        name,
         email,
         xp,
         level,
