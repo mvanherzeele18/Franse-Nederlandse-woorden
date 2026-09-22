@@ -412,10 +412,52 @@ async function loadUsers() {
 
       const data = userDoc.data();
 
-      const name =
+      const email =
+        data.email ||
+        "E-mailadres niet opgeslagen";
+      
+      let name =
         data.displayName ||
         data.name ||
-        "Onbekende naam";
+        "";
+      
+      if (!name && email !== "E-mailadres niet opgeslagen") {
+      
+        const username = email.split("@")[0];
+      
+        const parts = username
+          .split(/[._-]+/)
+          .filter(Boolean);
+      
+        if (parts.length >= 2) {
+      
+          // Herkenning:
+          // voornaam.achternaam
+          // achternaam.voornaam
+          //
+          // We kunnen niet 100% zeker weten welke volgorde
+          // iemand gebruikt, dus tonen we de twee delen als naam.
+          name =
+            parts
+              .map(part =>
+                part.charAt(0).toUpperCase() +
+                part.slice(1).toLowerCase()
+              )
+              .join(" ");
+      
+        } else if (parts.length === 1) {
+      
+          name =
+            parts[0].charAt(0).toUpperCase() +
+            parts[0].slice(1).toLowerCase();
+      
+        }
+      
+      }
+      
+      if (!name) {
+        name = "Onbekende naam";
+      }
 
       const email =
         data.email ||
