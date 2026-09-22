@@ -480,7 +480,7 @@ async function loadUsers() {
     });
 
     users.sort((a, b) =>
-      a.name.localeCompare(b.name, "nl")
+      a.email.localeCompare(b.email, "nl")
     );
 
     status.textContent =
@@ -494,10 +494,6 @@ async function loadUsers() {
 
       row.className = "user-row";
 
-      const name = document.createElement("div");
-      name.className = "user-name";
-      name.textContent = user.name;
-
       const email = document.createElement("div");
       email.className = "user-email";
       email.textContent = user.email;
@@ -510,7 +506,6 @@ async function loadUsers() {
       title.className = "user-title";
       title.textContent = `🏅 ${user.title}`;
 
-      row.appendChild(name);
       row.appendChild(email);
       row.appendChild(xp);
       row.appendChild(title);
