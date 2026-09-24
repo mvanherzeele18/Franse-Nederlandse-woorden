@@ -175,7 +175,7 @@ button:hover {
 
 .user-row {
   display: grid;
-  grid-template-columns: 1.6fr 0.9fr 1fr;
+  grid-template-columns: minmax(0, 1.6fr) minmax(120px, 0.9fr) minmax(145px, 1.2fr);
   gap: 0.8rem;
   padding: 0.9rem 1rem;
   background: #f8f8f8;
@@ -200,6 +200,10 @@ button:hover {
   color: var(--green-dark);
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+.user-xp {
+  white-space: nowrap;
 }
 
 .user-title {
