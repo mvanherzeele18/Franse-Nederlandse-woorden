@@ -522,38 +522,6 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-
-        /* ================================================
-           USER-PROFIEL AANMAKEN
-           Als deze gebruiker nog geen document heeft in
-           Firestore, maken we het automatisch aan met
-           het e-mailadres en 0 XP.
-        ================================================ */
-
-        const user = userCredential.user;
-
-        const userRef =
-          doc(
-            db,
-            "users",
-            user.uid
-          );
-
-        const userSnap =
-          await getDoc(userRef);
-
-        if (!userSnap.exists()) {
-
-          await setDoc(
-            userRef,
-            {
-              email: user.email || email,
-              xp: 0
-            }
-          );
-
-        }
-
 document.getElementById("logoutBtn")
 
 .addEventListener("click", async () => {
