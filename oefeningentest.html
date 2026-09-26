@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Oefeningen</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .exercise-card {
+      width: 100%;
+      max-width: 650px;
+      background: white;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
+    }
+
+    h1 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .info {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .progress-container {
+      margin-bottom: 25px;
+    }
+
+    .progress-bar-background {
+      width: 100%;
+      height: 12px;
+      background: #e5e7eb;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    #progressBar {
+      height: 100%;
+      width: 0%;
+      background: #4f46e5;
+      transition: width 0.3s ease;
+    }
+
+    #progressText {
+      display: block;
+      text-align: center;
+      margin-top: 8px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .word-label {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    #word {
+      font-size: 32px;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0 30px;
+      word-break: break-word;
+    }
+
+    #answer {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 18px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    #answer:focus {
+      border-color: #4f46e5;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 13px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.1s, opacity 0.2s;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #checkBtn {
+      width: 100%;
+      margin-top: 15px;
+      background: #4f46e5;
+      color: white;
+    }
+
+    #nextBtn {
+      width: 100%;
+      margin-top: 10px;
+      background: #111827;
+      color: white;
+      display: none;
+    }
+
+    #feedback {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .feedback-correct {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .feedback-half {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .feedback-wrong {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .score {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #completionMessage {
+      display: none;
+      text-align: center;
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 15px;
+      background: #eef2ff;
+    }
+
+    #finalScore {
+      font-size: 25px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    #candyPopup {
+      display: none;
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .answer-comparison {
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .answer-comparison strong {
+      font-weight: bold;
+    }
+
+    .not-found {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body style="display:none;">
+
+  <div class="exercise-card" id="exerciseCard">
+
+    <h1>📝 Oefeningen</h1>
+
+    <div class="info" id="directionText"></div>
+
+    <div class="progress-container">
+      <div class="progress-bar-background">
+        <div id="progressBar"></div>
+      </div>
+
+      <span id="progressText">0 / 0</span>
+    </div>
+
+    <div class="word-label" id="questionLabel">
+      Woord:
+    </div>
+
+    <div id="word">Laden...</div>
+
+    <input
+      type="text"
+      id="answer"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="Typ je antwoord..."
+    >
+
+    <button id="checkBtn">
+      Nakijken
+    </button>
+
+    <button id="nextBtn">
+      Volgend woord
+    </button>
+
+    <div id="feedback"></div>
+
+    <div class="score">
+      Score: <span id="score">0</span> / <span id="total">0</span>
+    </div>
+
+    <div id="completionMessage">
+      <h2>🎉 Oefening voltooid!</h2>
+
+      <div id="finalScore"></div>
+
+      <p id="completionDetails"></p>
+
+      <div id="candyPopup"></div>
+    </div>
+
+  </div>
+
+  <div class="not-found" id="notFound" style="display:none;">
+    Oefeningen niet gevonden.
+  </div>
+
+
+  <!-- Auth -->
+  <script src="auth-check.js"></script>
+
+  <!-- Events -->
+  <script src="events/events-loader.js"></script>
+  <script src="events/halloween-theme.js"></script>
+
+
+  <script type="module">
+
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+    /* =========================================================
+       FIREBASE
+    ========================================================= */
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+      authDomain: "vocabulairesite.firebaseapp.com",
+      projectId: "vocabulairesite",
+      storageBucket: "vocabulairesite.firebasestorage.app",
+      messagingSenderId: "1002919769364",
+      appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
+      measurementId: "G-5FVEW59WH3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+
+    /* =========================================================
+       ELEMENTEN
+    ========================================================= */
+
+    const exerciseCard = document.getElementById("exerciseCard");
+    const notFound = document.getElementById("notFound");
+
+    const directionTextElement =
+      document.getElementById("directionText");
+
+    const questionLabel =
+      document.getElementById("questionLabel");
+
+    const wordElement =
+      document.getElementById("word");
+
+    const answerInput =
+      document.getElementById("answer");
+
+    const checkBtn =
+      document.getElementById("checkBtn");
+
+    const nextBtn =
+      document.getElementById("nextBtn");
+
+    const feedbackElement =
+      document.getElementById("feedback");
+
+    const scoreElement =
+      document.getElementById("score");
+
+    const totalElement =
+      document.getElementById("total");
+
+    const progressBar =
+      document.getElementById("progressBar");
+
+    const progressText =
+      document.getElementById("progressText");
+
+    const completionMessage =
+      document.getElementById("completionMessage");
+
+    const finalScore =
+      document.getElementById("finalScore");
+
+    const completionDetails =
+      document.getElementById("completionDetails");
+
+    const candyPopup =
+      document.getElementById("candyPopup");
+
+
+    /* =========================================================
+       URL PARSEN
+       
+       Voorbeelden:
+       ?31nlfr
+       ?45frnl
+       ?310nlfr
+       ?43nlfr
+    ========================================================= */
+
+    const params = new URLSearchParams(window.location.search);
+    const code = params.keys().next().value;
+
+
+    if (!code) {
+      showNotFound();
+      throw new Error("Geen oefening opgegeven.");
+    }
+
+
+    /*
+      Eerste cijfer = leerjaar
+      Middelste cijfers = dossier
+      Laatste vier letters = richting
+    */
+
+    const match = /^([1-9])([0-9]+)(nlfr|frnl)$/.exec(code);
+
+    if (!match) {
+      showNotFound();
+      throw new Error("Ongeldige oefening.");
+    }
+
+
+    const year = match[1];
+    const dossier = match[2];
+    const richting = match[3];
+
+    const isNlFr = richting === "nlfr";
+
+
+    /* =========================================================
+       BRONPAGINA
+    ========================================================= */
+
+    const sourcePage =
+      isNlFr
+        ? "nederlands-frans.html"
+        : "frans-nederlands.html";
+
+
+    /*
+      BELANGRIJK:
+
+      Op beide bronpagina's gebruiken we:
+
+      .nl = vraag
+      .fr = antwoord
+
+      De bronpagina zelf bepaalt de richting.
+    */
+
+    const questionKey = "nl";
+    const answerKey = "fr";
+
+
+    const directionText =
+      isNlFr
+        ? "Nederlands → Frans"
+        : "Frans → Nederlands";
+
+
+    const questionLabelText =
+      isNlFr
+        ? "Nederlands woord:"
+        : "Frans woord:";
+
+
+    directionTextElement.textContent = directionText;
+    questionLabel.textContent = questionLabelText;
+
+
+    /* =========================================================
+       DATA
+    ========================================================= */
+
+    let words = [];
+
+    let currentIndex = 0;
+
+    let score = 0;
+
+    let correctAnswers = 0;
+    let halfAnswers = 0;
+    let wrongAnswers = 0;
+
+    let checked = false;
+
+    let currentWord = null;
+
+
+    /* =========================================================
+       NIET GEVONDEN
+    ========================================================= */
+
+    function showNotFound() {
+
+      document.body.style.display = "flex";
+
+      exerciseCard.style.display = "none";
+
+      notFound.style.display = "block";
+    }
+
+
+    /* =========================================================
+       TEKST NORMALISEREN
+    ========================================================= */
+
+    function normalizeBasic(text) {
+
+      return String(text || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
+    }
+
+
+    /*
+      Accenten verwijderen.
+
+      é → e
+      è → e
+      ê → e
+      ë → e
+      ç → c
+      etc.
+    */
+
+    function removeAccents(text) {
+
+      return String(text || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
+
+    /*
+      Voor vergelijkingen waarbij accenten niet meetellen.
+    */
+
+    function normalizeWithoutAccents(text) {
+
+      return removeAccents(
+        normalizeBasic(text)
+      );
+    }
+
+
+    /* =========================================================
+       LEVENSHTEIN-AFSTAND
+    ========================================================= */
+
+    function levenshtein(a, b) {
+
+      a = normalizeBasic(a);
+      b = normalizeBasic(b);
+
+      if (a === b) {
+        return 0;
+      }
+
+      if (!a.length) {
+        return b.length;
+      }
+
+      if (!b.length) {
+        return a.length;
+      }
+
+      const matrix = [];
+
+      for (let i = 0; i <= b.length; i++) {
+        matrix[i] = [i];
+      }
+
+      for (let j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+      }
+
+      for (let i = 1; i <= b.length; i++) {
+
+        for (let j = 1; j <= a.length; j++) {
+
+          if (b.charAt(i - 1) === a.charAt(j - 1)) {
+
+            matrix[i][j] =
+              matrix[i - 1][j - 1];
+
+          } else {
+
+            matrix[i][j] = Math.min(
+              matrix[i - 1][j - 1] + 1,
+              matrix[i][j - 1] + 1,
+              matrix[i - 1][j] + 1
+            );
+          }
+        }
+      }
+
+      return matrix[b.length][a.length];
+    }
+
+
+    /* =========================================================
+       ACCENTVERSCHIL
+    ========================================================= */
+
+    function isOnlyAccentDifference(input, correct) {
+
+      const inputWithout =
+        normalizeWithoutAccents(input);
+
+      const correctWithout =
+        normalizeWithoutAccents(correct);
+
+      return (
+        inputWithout === correctWithout &&
+        normalizeBasic(input) !== normalizeBasic(correct)
+      );
+    }
+
+
+    /* =========================================================
+       KLEINE FOUT BEPALEN
+    ========================================================= */
+
+    function isSmallSpellingMistake(input, correct) {
+
+      const inputNormalized =
+        normalizeBasic(input);
+
+      const correctNormalized =
+        normalizeBasic(correct);
+
+
+      if (!inputNormalized || !correctNormalized) {
+        return false;
+      }
+
+
+      /*
+        Exact antwoord.
+      */
+
+      if (inputNormalized === correctNormalized) {
+        return false;
+      }
+
+
+      /*
+        Alleen een accentverschil.
+      */
+
+      if (isOnlyAccentDifference(input, correct)) {
+        return true;
+      }
+
+
+      /*
+        Vergelijk zonder accenten.
+
+        Hierdoor wordt bijvoorbeeld:
+
+        ecole
+        école
+
+        geen volledige fout.
+      */
+
+      const inputNoAccent =
+        normalizeWithoutAccents(input);
+
+      const correctNoAccent =
+        normalizeWithoutAccents(correct);
+
+
+      if (inputNoAccent === correctNoAccent) {
+        return true;
+      }
+
+
+      /*
+        Bereken de schrijffoutafstand.
+      */
+
+      const distance =
+        levenshtein(
+          inputNoAccent,
+          correctNoAccent
+        );
+
+
+      const length =
+        correctNoAccent.length;
+
+
+      /*
+        Toegestane foutmarge.
+
+        Korte woorden:
+        maximaal 1 fout.
+
+        Middellange woorden:
+        maximaal 1 fout.
+
+        Lange woorden:
+        maximaal 2 fouten.
+
+        Zo wordt bijvoorbeeld:
+
+        maison → maisn
+
+        wel half goed,
+
+        maar een compleet ander woord
+        niet.
+      */
+
+      let allowedDistance = 1;
+
+      if (length >= 8) {
+        allowedDistance = 2;
+      }
+
+
+      if (distance > allowedDistance) {
+        return false;
+      }
+
+
+      /*
+        Bescherming tegen te grote afwijkingen.
+
+        Bij een woord van 3 letters is
+        1 fout relatief groot, maar nog
+        steeds acceptabel.
+
+        Bij langere woorden moet minstens
+        een groot deel overeenkomen.
+      */
+
+      const similarity =
+        1 - (distance / Math.max(length, inputNoAccent.length));
+
+
+      if (length >= 6 && similarity < 0.65) {
+        return false;
+      }
+
+
+      return true;
+    }
+
+
+    /* =========================================================
+       ALTERNATIEVE ANTWOORDEN VERWERKEN
+    ========================================================= */
+
+    function splitAnswers(text) {
+
+      if (!text) {
+        return [];
+      }
+
+
+      /*
+        We ondersteunen meerdere vertalingen
+        die in de bron bijvoorbeeld gescheiden
+        zijn door:
+
+        /
+        ,
+        ;
+        |
+
+        Voorbeeld:
+
+        voiture / auto
+
+        wordt:
+
+        ["voiture", "auto"]
+      */
+
+      return String(text)
+        .split(/\s*(?:\/|;|\||,)\s*/)
+        .map(answer => answer.trim())
+        .filter(Boolean);
+    }
+
+
+    /* =========================================================
+       ANTWOORDEN UIT EEN WORD-CARD
+    ========================================================= */
+
+    function getCorrectAnswers(card) {
+
+      const answerElement =
+        card.querySelector(`.${answerKey}`);
+
+      if (!answerElement) {
+        return [];
+      }
+
+
+      const text =
+        answerElement.textContent.trim();
+
+
+      return splitAnswers(text);
+    }
+
+
+    /* =========================================================
+       BESTE MATCH ZOEKEN
+    ========================================================= */
+
+    function evaluateAnswer(input, correctAnswers) {
+
+      const normalizedInput =
+        normalizeBasic(input);
+
+
+      if (!normalizedInput) {
+
+        return {
+          points: 0,
+          type: "wrong",
+          matchedAnswer: null
+        };
+      }
+
+
+      let bestResult = {
+        points: 0,
+        type: "wrong",
+        matchedAnswer: null
+      };
+
+
+      for (const correct of correctAnswers) {
+
+        const normalizedCorrect =
+          normalizeBasic(correct);
+
+
+        /*
+          Volledig correct.
+        */
+
+        if (
+          normalizedInput ===
+          normalizedCorrect
+        ) {
+
+          return {
+            points: 1,
+            type: "correct",
+            matchedAnswer: correct
+          };
+        }
+
+
+        /*
+          Kleine schrijffout.
+        */
+
+        if (
+          isSmallSpellingMistake(
+            input,
+            correct
+          )
+        ) {
+
+          if (bestResult.points < 0.5) {
+
+            bestResult = {
+              points: 0.5,
+              type: "half",
+              matchedAnswer: correct
+            };
+          }
+        }
+      }
+
+
+      return bestResult;
+    }
+
+
+    /* =========================================================
+       FEEDBACK
+    ========================================================= */
+
+    function showFeedback(result, input, correctAnswers) {
+
+      feedbackElement.style.display = "block";
+
+      feedbackElement.className = "";
+
+
+      if (result.type === "correct") {
+
+        feedbackElement.classList.add(
+          "feedback-correct"
+        );
+
+        feedbackElement.innerHTML = `
+          <strong>✅ Helemaal goed!</strong>
+          <div class="answer-comparison">
+            +1 punt
+          </div>
+        `;
+
+        return;
+      }
+
+
+      if (result.type === "half") {
+
+        feedbackElement.classList.add(
+          "feedback-half"
+        );
+
+        feedbackElement.innerHTML = `
+          <strong>🟡 Bijna goed!</strong>
+          <div class="answer-comparison">
+            Jouw antwoord:
+            <strong>${escapeHtml(input)}</strong>
+          </div>
+
+          <div class="answer-comparison">
+            Correct:
+            <strong>${escapeHtml(
+              result.matchedAnswer
+            )}</strong>
+          </div>
+
+          <div class="answer-comparison">
+            +0,5 punt
+          </div>
+        `;
+
+        return;
+      }
+
+
+      feedbackElement.classList.add(
+        "feedback-wrong"
+      );
+
+      feedbackElement.innerHTML = `
+        <strong>❌ Niet correct</strong>
+
+        <div class="answer-comparison">
+          Jouw antwoord:
+          <strong>${escapeHtml(input || "(leeg)")}</strong>
+        </div>
+
+        <div class="answer-comparison">
+          Correct:
+          <strong>${escapeHtml(
+            correctAnswers.join(" / ")
+          )}</strong>
+        </div>
+
+        <div class="answer-comparison">
+          +0 punten
+        </div>
+      `;
+    }
+
+
+    /* =========================================================
+       HTML VEILIG MAKEN
+    ========================================================= */
+
+    function escapeHtml(text) {
+
+      return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    /* =========================================================
+       WOORDEN LADEN
+    ========================================================= */
+
+    async function loadWords() {
+
+      const url =
+        `${year}/${sourcePage}`;
+
+
+      const response =
+        await fetch(url);
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          `Kon woordenlijst niet laden: ${url}`
+        );
+      }
+
+
+      const html =
+        await response.text();
+
+
+      const parser =
+        new DOMParser();
+
+
+      const document =
+        parser.parseFromString(
+          html,
+          "text/html"
+        );
+
+
+      const dossierElement =
+        document.querySelector(
+          `[data-dossier="${dossier}"]`
+        );
+
+
+      if (!dossierElement) {
+
+        throw new Error(
+          `Dossier ${dossier} niet gevonden.`
+        );
+      }
+
+
+      const cards =
+        dossierElement.querySelectorAll(
+          ".word-card"
+        );
+
+
+      words = [];
+
+
+      cards.forEach(card => {
+
+        const questionElement =
+          card.querySelector(
+            `.${questionKey}`
+          );
+
+
+        const answerElement =
+          card.querySelector(
+            `.${answerKey}`
+          );
+
+
+        if (
+          !questionElement ||
+          !answerElement
+        ) {
+          return;
+        }
+
+
+        const question =
+          questionElement.textContent.trim();
+
+
+        const answers =
+          getCorrectAnswers(card);
+
+
+        if (
+          question &&
+          answers.length
+        ) {
+
+          words.push({
+            question,
+            answers
+          });
+        }
+      });
+
+
+      if (!words.length) {
+
+        throw new Error(
+          "Geen woorden gevonden."
+        );
+      }
+
+
+      shuffle(words);
+
+      totalElement.textContent =
+        words.length;
+    }
+
+
+    /* =========================================================
+       SHUFFLE
+    ========================================================= */
+
+    function shuffle(array) {
+
+      for (
+        let i = array.length - 1;
+        i > 0;
+        i--
+      ) {
+
+        const j =
+          Math.floor(
+            Math.random() * (i + 1)
+          );
+
+
+        [
+          array[i],
+          array[j]
+        ] = [
+          array[j],
+          array[i]
+        ];
+      }
+
+
+      return array;
+    }
+
+
+    /* =========================================================
+       WOORD TONEN
+    ========================================================= */
+
+    function showWord() {
+
+      if (
+        currentIndex >= words.length
+      ) {
+
+        finishExercise();
+        return;
+      }
+
+
+      currentWord =
+        words[currentIndex];
+
+
+      wordElement.textContent =
+        currentWord.question;
+
+
+      answerInput.value = "";
+
+      answerInput.disabled = false;
+
+      checkBtn.disabled = false;
+
+      checkBtn.style.display = "block";
+
+      nextBtn.style.display = "none";
+
+
+      feedbackElement.style.display =
+        "none";
+
+      feedbackElement.innerHTML = "";
+
+
+      checked = false;
+
+
+      updateProgress();
+
+
+      setTimeout(() => {
+        answerInput.focus();
+      }, 50);
+    }
+
+
+    /* =========================================================
+       PROGRESS
+    ========================================================= */
+
+    function updateProgress() {
+
+      const current =
+        currentIndex + 1;
+
+
+      const percentage =
+        (current / words.length) * 100;
+
+
+      progressBar.style.width =
+        `${percentage}%`;
+
+
+      progressText.textContent =
+        `${current} / ${words.length}`;
+    }
+
+
+    /* =========================================================
+       ANTWOORD CONTROLEREN
+    ========================================================= */
+
+    async function checkAnswer() {
+
+      if (checked) {
+        return;
+      }
+
+
+      checked = true;
+
+
+      const input =
+        answerInput.value.trim();
+
+
+      const result =
+        evaluateAnswer(
+          input,
+          currentWord.answers
+        );
+
+
+      /*
+        Score verhogen.
+      */
+
+      score += result.points;
+
+
+      /*
+        Statistieken.
+      */
+
+      if (result.points === 1) {
+
+        correctAnswers++;
+
+      } else if (result.points === 0.5) {
+
+        halfAnswers++;
+
+      } else {
+
+        wrongAnswers++;
+      }
+
+
+      /*
+        UI.
+      */
+
+      scoreElement.textContent =
+        formatScore(score);
+
+
+      answerInput.disabled = true;
+
+      checkBtn.disabled = true;
+
+
+      showFeedback(
+        result,
+        input,
+        currentWord.answers
+      );
+
+
+      nextBtn.style.display =
+        "block";
+
+
+      /*
+        XP:
+
+        volledig goed = 5 XP
+        half goed = 2 XP
+        fout = 0 XP
+      */
+
+      if (result.points === 1) {
+
+        await addXP(5);
+
+      } else if (result.points === 0.5) {
+
+        await addXP(2);
+      }
+
+
+      /*
+        Event-beloning.
+      */
+
+      await giveEventReward(
+        result.points
+      );
+    }
+
+
+    /* =========================================================
+       SCORE FORMATTEREN
+    ========================================================= */
+
+    function formatScore(value) {
+
+      if (
+        Number.isInteger(value)
+      ) {
+
+        return String(value);
+      }
+
+
+      return value
+        .toFixed(1)
+        .replace(".", ",");
+    }
+
+
+    /* =========================================================
+       VOLGEND WOORD
+    ========================================================= */
+
+    function nextWord() {
+
+      currentIndex++;
+
+      showWord();
+    }
+
+
+    /* =========================================================
+       OEFENING AFGEROND
+    ========================================================= */
+
+    async function finishExercise() {
+
+      exerciseCard.querySelector(
+        ".progress-container"
+      ).style.display = "none";
+
+
+      document.querySelector(
+        ".word-label"
+      ).style.display = "none";
+
+
+      wordElement.style.display =
+        "none";
+
+
+      answerInput.style.display =
+        "none";
+
+
+      checkBtn.style.display =
+        "none";
+
+
+      nextBtn.style.display =
+        "none";
+
+
+      feedbackElement.style.display =
+        "none";
+
+
+      completionMessage.style.display =
+        "block";
+
+
+      const percentage =
+        words.length > 0
+          ? (score / words.length) * 100
+          : 0;
+
+
+      finalScore.textContent =
+        `${formatScore(score)} / ${words.length}`;
+
+
+      completionDetails.innerHTML = `
+        ${correctAnswers} volledig goed<br>
+        ${halfAnswers} half goed<br>
+        ${wrongAnswers} fout<br><br>
+        ${Math.round(percentage)}% van de punten
+      `;
+
+
+      /*
+        Voltooiingsbonus.
+      */
+
+      await addXP(25);
+
+
+      /*
+        Extra bonus bij 100%.
+      */
+
+      if (
+        score === words.length
+      ) {
+
+        await addXP(50);
+
+        completionDetails.innerHTML +=
+          `<br><strong>🏆 Perfecte score! +50 XP</strong>`;
+      }
+    }
+
+
+    /* =========================================================
+       XP TOEVOEGEN
+    ========================================================= */
+
+    async function addXP(amount) {
+
+      try {
+
+        if (
+          typeof getCurrentUser !==
+          "function"
+        ) {
+          return;
+        }
+
+
+        const user =
+          await getCurrentUser();
+
+
+        if (!user) {
+          return;
+        }
+
+
+        const userRef =
+          doc(
+            db,
+            "users",
+            user.uid
+          );
+
+
+        const snap =
+          await getDoc(userRef);
+
+
+        const currentXP =
+          snap.exists()
+            ? Number(
+                snap.data().xp || 0
+              )
+            : 0;
+
+
+        /*
+          Geen createdAt undefined
+          opslaan.
+
+          Dat voorkwam eerder de
+          Firebase-fout.
+        */
+
+        await setDoc(
+          userRef,
+          {
+            xp: currentXP + amount
+          },
+          {
+            merge: true
+          }
+        );
+
+      } catch (error) {
+
+        console.error(
+          "XP kon niet worden toegevoegd:",
+          error
+        );
+      }
+    }
+
+
+    /* =========================================================
+       EVENT REWARD
+    ========================================================= */
+
+    async function giveEventReward(points) {
+
+      try {
+
+        if (
+          typeof loadActiveEvents !==
+          "function"
+        ) {
+          return;
+        }
+
+
+        /*
+          Alleen een reward als het antwoord
+          minstens half goed was.
+        */
+
+        if (points < 0.5) {
+          return;
+        }
+
+
+        const events =
+          await loadActiveEvents();
+
+
+        if (!events) {
+          return;
+        }
+
+
+        /*
+          Deze functie ondersteunt bestaande
+          event-systemen zonder de oefening
+          te laten crashen als een event niet
+          actief is.
+        */
+
+        if (
+          typeof window.giveEventCurrency ===
+          "function"
+        ) {
+
+          await window.giveEventCurrency(
+            points === 1 ? 2 : 1
+          );
+        }
+
+
+      } catch (error) {
+
+        console.warn(
+          "Event reward kon niet worden toegepast:",
+          error
+        );
+      }
+    }
+
+
+    /* =========================================================
+       EVENTS LADEN
+    ========================================================= */
+
+    async function loadEventsSafely() {
+
+      try {
+
+        /*
+          Wacht eerst tot de gebruiker bekend is.
+          Dit voorkomt Firestore permission errors
+          wanneer events beveiligd zijn.
+        */
+
+        if (
+          typeof getCurrentUser ===
+          "function"
+        ) {
+
+          await getCurrentUser();
+        }
+
+
+        if (
+          typeof loadActiveEvents ===
+          "function"
+        ) {
+
+          await loadActiveEvents();
+        }
+
+
+      } catch (error) {
+
+        console.warn(
+          "Events konden niet geladen worden:",
+          error
+        );
+      }
+    }
+
+
+    /* =========================================================
+       INIT
+    ========================================================= */
+
+    async function init() {
+
+      try {
+
+        document.body.style.display =
+          "flex";
+
+
+        /*
+          Eerst authenticatie.
+        */
+
+        if (
+          typeof getCurrentUser ===
+          "function"
+        ) {
+
+          await getCurrentUser();
+        }
+
+
+        /*
+          Events.
+        */
+
+        await loadEventsSafely();
+
+
+        /*
+          Woorden.
+        */
+
+        await loadWords();
+
+
+        /*
+          Eerste woord.
+        */
+
+        showWord();
+
+
+      } catch (error) {
+
+        console.error(
+          "Fout bij initialiseren:",
+          error
+        );
+
+
+        showNotFound();
+      }
+    }
+
+
+    /* =========================================================
+       EVENT LISTENERS
+    ========================================================= */
+
+    checkBtn.addEventListener(
+      "click",
+      checkAnswer
+    );
+
+
+    nextBtn.addEventListener(
+      "click",
+      nextWord
+    );
+
+
+    answerInput.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Enter"
+        ) {
+
+          event.preventDefault();
+
+
+          if (!checked) {
+
+            checkAnswer();
+
+          } else {
+
+            nextWord();
+          }
+        }
+      }
+    );
+
+
+    /* =========================================================
+       START
+    ========================================================= */
+
+    init();
+
+  </script>
+
+</body>
+</html>
