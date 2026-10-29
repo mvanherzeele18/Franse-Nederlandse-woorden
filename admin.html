@@ -11,146 +11,96 @@
 <style>
 
 :root {
-
   --green: #6BBE3A;
   --green-light: #D4E8B8;
   --green-dark: #2E7D32;
   --yellow: #FDD835;
   --bg: #F1F8E9;
   --white: #FFFFFF;
-
 }
 
 * {
-
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-
-  font-family:'DM Sans', sans-serif;
-  background:var(--bg);
-  min-height:100vh;
-
-  display:none;
-
-  justify-content:center;
-  align-items:center;
-
-  padding:2rem;
-
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
 }
 
 .box {
-
-  background:var(--white);
-  border:3px solid var(--green);
-  border-radius:18px;
-
-  padding:3rem;
-
-  width:100%;
-  max-width:650px;
-
-  box-shadow:
-  0 6px 20px rgba(0,0,0,0.08);
-
+  background: var(--white);
+  border: 3px solid var(--green);
+  border-radius: 18px;
+  padding: 3rem;
+  width: 100%;
+  max-width: 650px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
 h1 {
-
-  font-family:'Playfair Display', serif;
-  color:var(--green-dark);
-
-  text-align:center;
-
-  margin-bottom:0.5rem;
-
+  font-family: 'Playfair Display', serif;
+  color: var(--green-dark);
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
 .subtitle {
-
-  text-align:center;
-  color:var(--green-dark);
-
-  margin-bottom:2rem;
-
+  text-align: center;
+  color: var(--green-dark);
+  margin-bottom: 2rem;
 }
 
 input,
 textarea {
-
-  width:100%;
-
-  padding:1rem;
-
-  border:2px solid var(--green-light);
-
-  border-radius:10px;
-
-  font-family:'DM Sans', sans-serif;
-
-  margin-bottom:1rem;
-
-  font-size:1rem;
-
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid var(--green-light);
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  margin-bottom: 1rem;
+  font-size: 1rem;
 }
 
 textarea {
-
-  resize:vertical;
-  min-height:140px;
-
+  resize: vertical;
+  min-height: 140px;
 }
 
 input:focus,
 textarea:focus {
-
-  outline:none;
-
-  border-color:var(--green);
-
+  outline: none;
+  border-color: var(--green);
 }
 
 .button-group {
-
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
-
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 button {
-
-  background:var(--yellow);
-
-  color:var(--green-dark);
-
-  border:none;
-
-  padding:1rem;
-
-  border-radius:10px;
-
-  font-weight:600;
-
-  cursor:pointer;
-
-  transition:0.3s;
-
-  font-size:0.95rem;
-
+  background: var(--yellow);
+  color: var(--green-dark);
+  border: none;
+  padding: 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 0.95rem;
 }
 
 button:hover {
-
-  background:var(--green-light);
-
-  transform:translateY(-2px);
-
+  background: var(--green-light);
+  transform: translateY(-2px);
 }
 
 .users-section {
@@ -182,11 +132,17 @@ button:hover {
   border: 1px solid var(--green-light);
   border-radius: 10px;
   align-items: center;
+  transition: background-color 0.5s ease;
 }
 
-.user-name {
-  font-weight: 600;
-  color: var(--green-dark);
+/* Visueel effect wanneer een rij recent is geüpdatet */
+@keyframes flashUpdate {
+  0% { background-color: #a3e4d7; border-color: #1abc9c; }
+  100% { background-color: #f8f8f8; border-color: var(--green-light); }
+}
+
+.user-row.updated-flash {
+  animation: flashUpdate 2s ease-out;
 }
 
 .user-email {
@@ -227,16 +183,12 @@ button:hover {
 }
 
 .secondary-btn {
-
-  background:var(--green);
-  color:white;
-
+  background: var(--green);
+  color: white;
 }
 
 .secondary-btn:hover {
-
-  background:var(--green-dark);
-
+  background: var(--green-dark);
 }
 
 </style>
@@ -246,87 +198,60 @@ button:hover {
 
 <div class="box">
 
-<h1>Admin Panel</h1>
+  <h1>Admin Panel</h1>
 
-<p class="subtitle">
-Welkom Matteo!
-</p>
+  <p class="subtitle">
+    Welkom Matteo!
+  </p>
 
-<input
-type="text"
-id="title"
-placeholder="Titel van de aankondiging"
->
+  <input
+    type="text"
+    id="title"
+    placeholder="Titel van de aankondiging"
+  >
 
-<textarea
-id="message"
-placeholder="Typ hier je aankondiging..."
-></textarea>
+  <textarea
+    id="message"
+    placeholder="Typ hier je aankondiging..."
+  ></textarea>
 
-<div class="button-group">
+  <div class="button-group">
+    <button onclick="postAnnouncement()">
+      Aankondiging plaatsen
+    </button>
 
-<button onclick="postAnnouncement()">
-Aankondiging plaatsen
-</button>
+    <button onclick="window.location.href='aankondigingen.html'">
+      Bekijk aankondigingen
+    </button>
 
-<button
-onclick="window.location.href='aankondigingen.html'"
->
-Bekijk aankondigingen
-</button>
+    <button onclick="window.location.href='index.html'">
+      Naar homepage
+    </button>
 
-<button
-onclick="window.location.href='index.html'"
->
-Naar homepage
-</button>
-
-<button onclick="logout()">
-Uitloggen
-</button>
-
-</div>
-
-<div class="users-section">
-
-  <h2>Leerlingen met een account</h2>
-
-  <div id="usersStatus" class="users-status">
-    Gebruikers laden...
+    <button onclick="logout()">
+      Uitloggen
+    </button>
   </div>
 
-  <div id="usersList" class="users-list"></div>
+  <div class="users-section">
+    <h2>Leerlingen met een account</h2>
 
-</div>
+    <div id="usersStatus" class="users-status">
+      Gebruikers laden...
+    </div>
+
+    <div id="usersList"></div>
+  </div>
 
 </div>
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-
-import {
-
-  getAuth,
-  onAuthStateChanged,
-  signOut
-
-}
-from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
-import {
-
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs
-
-}
-from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 const firebaseConfig = {
-
   apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
   authDomain: "vocabulairesite.firebaseapp.com",
   projectId: "vocabulairesite",
@@ -334,91 +259,64 @@ const firebaseConfig = {
   messagingSenderId: "1002919769364",
   appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
   measurementId: "G-5FVEW59WH3"
-
 };
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
-
 const db = getFirestore(app);
 
 const allowedAdmins = [
-
   "vanherzeelematteo@gmail.com",
   "vanherzeele.matteo@groenhoveschool.be"
-
 ];
 
 onAuthStateChanged(auth, (user) => {
-
   if (!user) {
-
-    window.location.href =
-    "/Franse-Nederlandse-woorden/login.html";
-
+    window.location.href = "/Franse-Nederlandse-woorden/login.html";
     return;
-
   }
 
-  if (
-    !allowedAdmins.includes(user.email)
-  ) {
-
+  if (!allowedAdmins.includes(user.email)) {
     alert("Geen toegang");
-
-    window.location.href =
-    "/Franse-Nederlandse-woorden/index.html";
-
+    window.location.href = "/Franse-Nederlandse-woorden/index.html";
     return;
-
   }
 
   document.body.style.display = "flex";
 
-  loadUsers();
-
+  // Start de real-time listener zodra de admin is ingelogd
+  initRealtimeUsers();
 });
 
 window.logout = async function () {
-
   await signOut(auth);
-
-  window.location.href =
-  "/Franse-Nederlandse-woorden/login.html";
-
+  window.location.href = "/Franse-Nederlandse-woorden/login.html";
 };
 
-async function loadUsers() {
+// Bewaar de vorige staat om wijzigingen te detecteren voor de animatie
+let previousUsersMap = new Map();
 
+function initRealtimeUsers() {
   const status = document.getElementById("usersStatus");
   const list = document.getElementById("usersList");
 
-  status.textContent = "Gebruikers laden...";
-  list.innerHTML = "";
+  status.textContent = "Verbinding maken met live gebruikers...";
 
-  try {
-
-    const snapshot = await getDocs(
-      collection(db, "users")
-    );
-
+  // onSnapshot luistert doorlopend naar wijzigingen in de database
+  onSnapshot(collection(db, "users"), (snapshot) => {
     if (snapshot.empty) {
-
       status.textContent = "Geen gebruikersprofielen gevonden.";
+      list.innerHTML = "";
       return;
-
     }
 
     const users = [];
 
     snapshot.forEach((userDoc) => {
-
       const data = userDoc.data();
+      const userId = userDoc.id;
 
-      const email =
-        data.email ||
-        "E-mailadres niet opgeslagen";
+      const email = data.email || "E-mailadres niet opgeslagen";
 
       const xp = Number.isFinite(Number(data.xp))
         ? Math.max(0, Math.floor(Number(data.xp)))
@@ -426,21 +324,17 @@ async function loadUsers() {
 
       function xpForLevel(level) {
         let total = 0;
-
         for (let i = 1; i < level; i++) {
           total += 100 + ((i - 1) * 50);
         }
-
         return total;
       }
 
       function getLevel(xpValue) {
         let level = 1;
-
         while (xpValue >= xpForLevel(level + 1)) {
           level++;
         }
-
         return level;
       }
 
@@ -456,120 +350,100 @@ async function loadUsers() {
         ];
 
         let title = titles[0].name;
-
         for (const titleData of titles) {
           if (level >= titleData.minLevel) {
             title = titleData.name;
           }
         }
-
         return title;
       }
 
       const level = getLevel(xp);
-
       const title =
-        typeof data.customTitle === "string" &&
-        data.customTitle.trim()
+        typeof data.customTitle === "string" && data.customTitle.trim()
           ? data.customTitle.trim()
           : getDefaultTitle(level);
 
       users.push({
+        id: userId,
         email,
         xp,
         level,
         title
       });
-
     });
 
-    users.sort((a, b) =>
-      a.email.localeCompare(b.email, "nl")
-    );
+    users.sort((a, b) => a.email.localeCompare(b.email, "nl"));
 
     status.textContent =
-      users.length === 1
-        ? "1 account"
-        : `${users.length} accounts`;
+      users.length === 1 ? "1 account (Live)" : `${users.length} accounts (Live)`;
+
+    // Leeg de lijst en bouw hem opnieuw op met animatie-check
+    list.innerHTML = "";
 
     users.forEach((user) => {
-
       const row = document.createElement("div");
-
       row.className = "user-row";
 
-      const email = document.createElement("div");
-      email.className = "user-email";
-      email.textContent = user.email;
+      // Controleer of deze gebruiker al bestond en of de XP of titel is veranderd
+      const prevUser = previousUsersMap.get(user.id);
+      if (prevUser && (prevUser.xp !== user.xp || prevUser.title !== user.title)) {
+        row.classList.add("updated-flash"); // Voeg tijdelijk groene gloed toe
+      }
 
-      const xp = document.createElement("div");
-      xp.className = "user-xp";
-      xp.textContent = `⭐ ${user.xp} XP · Lv. ${user.level}`;
+      const emailDiv = document.createElement("div");
+      emailDiv.className = "user-email";
+      emailDiv.textContent = user.email;
 
-      const title = document.createElement("div");
-      title.className = "user-title";
-      title.textContent = `🏅 ${user.title}`;
+      const xpDiv = document.createElement("div");
+      xpDiv.className = "user-xp";
+      xpDiv.textContent = `⭐ ${user.xp} XP · Lv. ${user.level}`;
 
-      row.appendChild(email);
-      row.appendChild(xp);
-      row.appendChild(title);
+      const titleDiv = document.createElement("div");
+      titleDiv.className = "user-title";
+      titleDiv.textContent = `🏅 ${user.title}`;
+
+      row.appendChild(emailDiv);
+      row.appendChild(xpDiv);
+      row.appendChild(titleDiv);
 
       list.appendChild(row);
-
     });
 
-  } catch (error) {
+    // Sla de huidige staat op voor de volgende update-check
+    previousUsersMap.clear();
+    users.forEach(u => previousUsersMap.set(u.id, u));
 
-    console.error("Gebruikers konden niet geladen worden:", error);
-
-    status.textContent =
-      "Gebruikers konden niet geladen worden.";
-
-  }
-
+  }, (error) => {
+    console.error("Fout bij live ophalen van gebruikers:", error);
+    status.textContent = "Fout bij live synchroniseren.";
+  });
 }
 
 window.postAnnouncement = async function () {
-
-  const title =
-  document.getElementById("title").value;
-
-  const message =
-  document.getElementById("message").value;
+  const title = document.getElementById("title").value;
+  const message = document.getElementById("message").value;
 
   if (!title || !message) {
-
     alert("Vul alles in");
     return;
-
   }
 
   try {
-
-    await addDoc(
-      collection(db, "announcements"),
-      {
-
-        title,
-        message,
-        createdAt: Date.now()
-
-      }
-    );
+    await addDoc(collection(db, "announcements"), {
+      title,
+      message,
+      createdAt: Date.now()
+    });
 
     alert("Aankondiging geplaatst!");
-
     document.getElementById("title").value = "";
     document.getElementById("message").value = "";
 
   } catch (error) {
-
     console.log(error);
-
     alert("Error");
-
   }
-
 };
 
 </script>
