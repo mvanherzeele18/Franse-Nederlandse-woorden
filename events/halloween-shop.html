@@ -34,9 +34,7 @@ body {
   color: var(--text);
 }
 
-/* ───────────────────────────────
-   PERFECTE HEADER (identiek)
-─────────────────────────────── */
+/* HEADER */
 header {
   background: linear-gradient(
     135deg,
@@ -87,9 +85,7 @@ header h1 {
   }
 }
 
-/* ───────────────────────────────
-   MAIN
-─────────────────────────────── */
+/* MAIN */
 main {
   max-width: 900px;
   margin: 2rem auto;
@@ -167,9 +163,16 @@ main {
   transition: 0.3s;
 }
 
-.btn-buy:hover {
+.btn-buy:hover:not(:disabled) {
   background: var(--green-light);
   transform: translateY(-2px);
+}
+
+.btn-buy:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Status */
@@ -253,23 +256,40 @@ async function waitForUser() {
   });
 }
 
-/* Load candy */
-async function loadCandy(user) {
+// Houd bezeten titels bij voor het uitschakelen van de koopknoppen
+let ownedTitlesList = [];
+
+/* Load user data (candy + owned titles) */
+async function loadUserData(user) {
   const app = await firebaseBase();
   const { getFirestore, doc, getDoc } =
     await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
 
   const db = getFirestore(app);
 
-  const ref = doc(db, "users", user.uid, "eventCurrencies", halloweenConfig.id);
-  const snap = await getDoc(ref);
+  // Snoepjes ophalen
+  const currencyRef = doc(db, "users", user.uid, "eventCurrencies", halloweenConfig.id);
+  const currencySnap = await getDoc(currencyRef);
 
-  const amount = snap.exists()
-    ? (snap.data()[halloweenConfig.currencyName] || 0)
+  const amount = currencySnap.exists()
+    ? (currencySnap.data()[halloweenConfig.currencyName] || 0)
     : 0;
+
+  // Bezeten titels ophalen
+  const userRef = doc(db, "users", user.uid);
+  const userSnap = await getDoc(userRef);
+
+  if (userSnap.exists() && Array.isArray(userSnap.data().ownedTitles)) {
+    ownedTitlesList = userSnap.data().ownedTitles;
+  } else {
+    ownedTitlesList = [];
+  }
 
   document.getElementById("candyAmount").textContent = amount;
   document.getElementById("statusMessage").textContent = "Shop klaar.";
+
+  // Herteken de shop zodat knoppen van gekochte titels op "Al gekocht" springen
+  renderShop();
 
   return amount;
 }
@@ -282,13 +302,17 @@ function renderShop() {
   for (const key of Object.keys(halloweenConfig.shop)) {
     const item = halloweenConfig.shop[key];
 
+    const isOwned = item.type === "title" && ownedTitlesList.includes(item.titleName);
+
     const div = document.createElement("div");
     div.className = "shop-item";
 
     div.innerHTML = `
       <div class="shop-title">${item.label}</div>
       <div class="shop-meta">🍬 Kost: ${item.cost}</div>
-      <button class="btn-buy" data-id="${key}">Kopen</button>
+      <button class="btn-buy" data-id="${key}" ${isOwned ? "disabled" : ""}>
+        ${isOwned ? "Al gekocht" : "Kopen"}
+      </button>
     `;
 
     grid.appendChild(div);
@@ -304,6 +328,21 @@ async function handlePurchase(id, user) {
     await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
 
   const db = getFirestore(app);
+
+  // Als het een titel is, check nogmaals of de gebruiker deze niet al heeft
+  if (item.type === "title") {
+    const userRefCheck = doc(db, "users", user.uid);
+    const userSnapCheck = await getDoc(userRefCheck);
+    
+    if (userSnapCheck.exists()) {
+      const owned = userSnapCheck.data().ownedTitles || [];
+      if (owned.includes(item.titleName)) {
+        document.getElementById("statusMessage").textContent = "Je bezit deze titel al!";
+        renderShop();
+        return;
+      }
+    }
+  }
 
   const currencyRef = doc(db, "users", user.uid, "eventCurrencies", halloweenConfig.id);
   const currencySnap = await getDoc(currencyRef);
@@ -345,10 +384,15 @@ async function handlePurchase(id, user) {
       ownedTitles: arrayUnion(item.titleName),
       customTitle: item.titleName
     }, { merge: true });
+
+    // Lokaal toevoegen en shop hertekenen
+    ownedTitlesList.push(item.titleName);
   }
 
   document.getElementById("candyAmount").textContent = current;
   document.getElementById("statusMessage").textContent = "Aankoop gelukt!";
+
+  renderShop();
 }
 
 /* Init */
@@ -360,10 +404,10 @@ waitForUser().then(user => {
     return;
   }
 
-  loadCandy(user);
+  loadUserData(user);
 
   document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("btn-buy")) {
+    if (e.target.classList.contains("btn-buy") && !e.target.disabled) {
       handlePurchase(e.target.dataset.id, user);
     }
   });
