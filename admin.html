@@ -289,11 +289,11 @@ button:hover {
     >
 
     <!-- Sectie Actieve Leerlingen -->
-    <div class="section-title">⚡ Actief in de laatste minuut</div>
+    <div class="section-title">Actief in de laatste minuut</div>
     <div id="activeUsersList" class="users-list"></div>
 
     <!-- Sectie Inactieve Leerlingen -->
-    <div class="section-title">💤 Inactief</div>
+    <div class="section-title">Inactief</div>
     <div id="inactiveUsersList" class="users-list"></div>
   </div>
 
@@ -356,6 +356,8 @@ function createUserRow(user, isActive) {
 
   if (user.isUpdatedNow) {
     row.classList.add("updated-flash");
+    // Reset direct nadat het element is gemaakt, zodat de timer van 5s geen valse flitsen triggert
+    user.isUpdatedNow = false;
   }
 
   const emailDiv = document.createElement("div");
@@ -404,7 +406,7 @@ function renderUsers() {
   currentRawUsers.forEach(user => {
     if (!user.email.toLowerCase().includes(searchQuery)) return;
 
-    // Is er een update geweest in de afgelopen 60 seconden?
+    // Check of er in de afgelopen 60 seconden een verandering is geweest
     const timeSinceLastUpdate = now - user.lastSessionChange;
     if (user.lastSessionChange > 0 && timeSinceLastUpdate <= ONE_MINUTE) {
       activeUsers.push(user);
@@ -413,10 +415,10 @@ function renderUsers() {
     }
   });
 
-  // Actieve leerlingen: Meest recent gewijzigd bovenaan
+  // Actief: Meest recent gewijzigd bovenaan
   activeUsers.sort((a, b) => b.lastSessionChange - a.lastSessionChange);
 
-  // Inactieve leerlingen: Alfabetisch
+  // Inactief: Alfabetisch
   inactiveUsers.sort((a, b) => a.email.localeCompare(b.email, "nl"));
 
   // Render Actief
@@ -434,7 +436,7 @@ function renderUsers() {
   }
 }
 
-// Elke 5 seconden herberekenen of de minuut om is voor actieve leerlingen
+// Elke 5 seconden herberekenen of iemand naar 'Inactief' verplaatst moet worden
 setInterval(renderUsers, 5000);
 
 document.getElementById("userSearch").addEventListener("input", renderUsers);
@@ -510,6 +512,7 @@ function initRealtimeUsers() {
       const prevUser = previousUsersMap.get(userId);
       let isUpdatedNow = false;
 
+      // Alleen een flits triggeren als er een échte Firestore-wijziging binnenkomt
       if (prevUser && (prevUser.xp !== xp || prevUser.title !== title)) {
         isUpdatedNow = true;
         sessionUpdatesMap.set(userId, now);
