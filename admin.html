@@ -118,13 +118,32 @@ button:hover {
 .user-search-input {
   padding: 0.6rem 1rem;
   font-size: 0.9rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  margin: 1.2rem 0 0.6rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--green-light);
+  padding-bottom: 0.3rem;
 }
 
 .users-list {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.empty-message {
+  font-size: 0.85rem;
+  color: #777;
+  font-style: italic;
+  padding: 0.3rem 0;
 }
 
 .user-row {
@@ -139,10 +158,14 @@ button:hover {
   transition: background-color 0.5s ease;
 }
 
-/* Visueel effect wanneer een rij recent is geüpdatet */
+.user-row.active-row {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
 @keyframes flashUpdate {
   0% { background-color: #a3e4d7; border-color: #1abc9c; }
-  100% { background-color: #f8f8f8; border-color: var(--green-light); }
+  100% { background-color: #f0fdf4; border-color: #86efac; }
 }
 
 .user-row.updated-flash {
@@ -150,9 +173,31 @@ button:hover {
 }
 
 .user-email {
-  color: #555;
+  color: #333;
   font-size: 0.85rem;
   word-break: break-word;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.badge-active {
+  background: #22c55e;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 1; }
 }
 
 .user-xp,
@@ -185,15 +230,6 @@ button:hover {
   .user-title {
     text-align: left;
   }
-}
-
-.secondary-btn {
-  background: var(--green);
-  color: white;
-}
-
-.secondary-btn:hover {
-  background: var(--green-dark);
 }
 
 </style>
@@ -252,7 +288,13 @@ button:hover {
       placeholder="Zoek leerling op e-mail..."
     >
 
-    <div id="usersList" class="users-list"></div>
+    <!-- Sectie Actieve Leerlingen -->
+    <div class="section-title">⚡ Actief in de laatste minuut</div>
+    <div id="activeUsersList" class="users-list"></div>
+
+    <!-- Sectie Inactieve Leerlingen -->
+    <div class="section-title">💤 Inactief</div>
+    <div id="inactiveUsersList" class="users-list"></div>
   </div>
 
 </div>
@@ -296,7 +338,6 @@ onAuthStateChanged(auth, (user) => {
 
   document.body.style.display = "flex";
 
-  // Start de real-time listener zodra de admin is ingelogd
   initRealtimeUsers();
 });
 
@@ -305,50 +346,97 @@ window.logout = async function () {
   window.location.href = "/Franse-Nederlandse-woorden/login.html";
 };
 
-// Houdt bij welke gebruikers TIJDENS de geopende sessie zijn veranderd
 let sessionUpdatesMap = new Map();
 let previousUsersMap = new Map();
-let currentUsersList = [];
+let currentRawUsers = [];
 
-function renderUsers() {
-  const list = document.getElementById("usersList");
-  const searchQuery = document.getElementById("userSearch").value.toLowerCase().trim();
+function createUserRow(user, isActive) {
+  const row = document.createElement("div");
+  row.className = "user-row" + (isActive ? " active-row" : "");
 
-  list.innerHTML = "";
+  if (user.isUpdatedNow) {
+    row.classList.add("updated-flash");
+  }
 
-  const filteredUsers = currentUsersList.filter(user => 
-    user.email.toLowerCase().includes(searchQuery)
-  );
+  const emailDiv = document.createElement("div");
+  emailDiv.className = "user-email";
 
-  filteredUsers.forEach((user) => {
-    const row = document.createElement("div");
-    row.className = "user-row";
+  const emailSpan = document.createElement("span");
+  emailSpan.textContent = user.email;
+  emailDiv.appendChild(emailSpan);
 
-    if (user.isUpdatedNow) {
-      row.classList.add("updated-flash");
-    }
+  if (isActive) {
+    const badge = document.createElement("span");
+    badge.className = "badge-active";
+    badge.textContent = "🟢 Live";
+    emailDiv.appendChild(badge);
+  }
 
-    const emailDiv = document.createElement("div");
-    emailDiv.className = "user-email";
-    emailDiv.textContent = user.email;
+  const xpDiv = document.createElement("div");
+  xpDiv.className = "user-xp";
+  xpDiv.textContent = `⭐ ${user.xp} XP · Lv. ${user.level}`;
 
-    const xpDiv = document.createElement("div");
-    xpDiv.className = "user-xp";
-    xpDiv.textContent = `⭐ ${user.xp} XP · Lv. ${user.level}`;
+  const titleDiv = document.createElement("div");
+  titleDiv.className = "user-title";
+  titleDiv.textContent = `🏅 ${user.title}`;
 
-    const titleDiv = document.createElement("div");
-    titleDiv.className = "user-title";
-    titleDiv.textContent = `🏅 ${user.title}`;
+  row.appendChild(emailDiv);
+  row.appendChild(xpDiv);
+  row.appendChild(titleDiv);
 
-    row.appendChild(emailDiv);
-    row.appendChild(xpDiv);
-    row.appendChild(titleDiv);
-
-    list.appendChild(row);
-  });
+  return row;
 }
 
-// Zoekbalk koppelen
+function renderUsers() {
+  const activeList = document.getElementById("activeUsersList");
+  const inactiveList = document.getElementById("inactiveUsersList");
+  const searchQuery = document.getElementById("userSearch").value.toLowerCase().trim();
+
+  activeList.innerHTML = "";
+  inactiveList.innerHTML = "";
+
+  const now = Date.now();
+  const ONE_MINUTE = 60 * 1000;
+
+  const activeUsers = [];
+  const inactiveUsers = [];
+
+  currentRawUsers.forEach(user => {
+    if (!user.email.toLowerCase().includes(searchQuery)) return;
+
+    // Is er een update geweest in de afgelopen 60 seconden?
+    const timeSinceLastUpdate = now - user.lastSessionChange;
+    if (user.lastSessionChange > 0 && timeSinceLastUpdate <= ONE_MINUTE) {
+      activeUsers.push(user);
+    } else {
+      inactiveUsers.push(user);
+    }
+  });
+
+  // Actieve leerlingen: Meest recent gewijzigd bovenaan
+  activeUsers.sort((a, b) => b.lastSessionChange - a.lastSessionChange);
+
+  // Inactieve leerlingen: Alfabetisch
+  inactiveUsers.sort((a, b) => a.email.localeCompare(b.email, "nl"));
+
+  // Render Actief
+  if (activeUsers.length === 0) {
+    activeList.innerHTML = `<div class="empty-message">Geen actieve leerlingen op dit moment.</div>`;
+  } else {
+    activeUsers.forEach(user => activeList.appendChild(createUserRow(user, true)));
+  }
+
+  // Render Inactief
+  if (inactiveUsers.length === 0) {
+    inactiveList.innerHTML = `<div class="empty-message">Geen inactieve leerlingen.</div>`;
+  } else {
+    inactiveUsers.forEach(user => inactiveList.appendChild(createUserRow(user, false)));
+  }
+}
+
+// Elke 5 seconden herberekenen of de minuut om is voor actieve leerlingen
+setInterval(renderUsers, 5000);
+
 document.getElementById("userSearch").addEventListener("input", renderUsers);
 
 function initRealtimeUsers() {
@@ -359,7 +447,8 @@ function initRealtimeUsers() {
   onSnapshot(collection(db, "users"), (snapshot) => {
     if (snapshot.empty) {
       status.textContent = "Geen gebruikersprofielen gevonden.";
-      document.getElementById("usersList").innerHTML = "";
+      document.getElementById("activeUsersList").innerHTML = "";
+      document.getElementById("inactiveUsersList").innerHTML = "";
       return;
     }
 
@@ -418,13 +507,12 @@ function initRealtimeUsers() {
           ? data.customTitle.trim()
           : getDefaultTitle(level);
 
-      // Controleer of er een wijziging is t.o.v. de vorige stand in deze geopende sessie
       const prevUser = previousUsersMap.get(userId);
       let isUpdatedNow = false;
 
       if (prevUser && (prevUser.xp !== xp || prevUser.title !== title)) {
         isUpdatedNow = true;
-        sessionUpdatesMap.set(userId, now); // Geef deze gebruiker de huidige tijdstempel
+        sessionUpdatesMap.set(userId, now);
       }
 
       const lastSessionChange = sessionUpdatesMap.get(userId) || 0;
@@ -440,23 +528,12 @@ function initRealtimeUsers() {
       });
     });
 
-    // SORTERING:
-    // 1. Degenen die TIJDENS deze sessie veranderd zijn, komen bovenaan (meest recent eerst)
-    // 2. Alle andere leerlingen staan netjes alfabetisch op e-mailadres
-    users.sort((a, b) => {
-      if (a.lastSessionChange !== b.lastSessionChange) {
-        return b.lastSessionChange - a.lastSessionChange;
-      }
-      return a.email.localeCompare(b.email, "nl");
-    });
-
     status.textContent =
       users.length === 1 ? "1 account (Live)" : `${users.length} accounts (Live)`;
 
-    currentUsersList = users;
+    currentRawUsers = users;
     renderUsers();
 
-    // Sla de staat op voor vergelijking bij een volgende snapshot
     previousUsersMap.clear();
     users.forEach(u => previousUsersMap.set(u.id, { xp: u.xp, title: u.title }));
 
