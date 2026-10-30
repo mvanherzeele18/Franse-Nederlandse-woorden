@@ -15,144 +15,99 @@
   <style>
 
     body {
-
       margin: 0;
-
       min-height: 100vh;
-
       display: flex;
-
       justify-content: center;
-
       align-items: center;
-
       background: #F1F8E9;
-
       font-family: 'DM Sans', sans-serif;
-
     }
 
     .login-box {
-
       background: white;
-
       padding: 3rem;
-
       border-radius: 16px;
-
       border: 3px solid #6BBE3A;
-
       width: 360px;
-
-      box-shadow:
-      0 8px 24px rgba(107,190,58,0.2);
-
+      box-shadow: 0 8px 24px rgba(107,190,58,0.2);
       text-align: center;
-
     }
 
     h1 {
-
-      font-family:
-      'Playfair Display', serif;
-
+      font-family: 'Playfair Display', serif;
       color: #2E7D32;
-
       margin-bottom: 2rem;
-
     }
 
     input {
-
       width: 100%;
-
       padding: 14px;
-
       margin-bottom: 1rem;
-
       border-radius: 8px;
-
       border: 2px solid #C5E1A5;
-
       font-size: 1rem;
-
       box-sizing: border-box;
-
     }
 
     input:focus {
-
       outline: none;
-
       border-color: #6BBE3A;
-
     }
 
     button {
-
       width: 100%;
-
       padding: 14px;
-
       border: none;
-
       border-radius: 8px;
-
       background: #6BBE3A;
-
       color: white;
-
       font-size: 1rem;
-
       font-weight: 600;
-
       cursor: pointer;
-
       transition: all 0.3s;
-
     }
 
     button:hover {
-
       transform: translateY(-2px);
-
-      box-shadow:
-      0 4px 12px rgba(107,190,58,0.25);
-
+      box-shadow: 0 4px 12px rgba(107,190,58,0.25);
       background: #81C784;
+    }
 
+    .forgot-password-link {
+      display: inline-block;
+      margin-top: 0.8rem;
+      color: #558B2F;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .forgot-password-link:hover {
+      color: #2E7D32;
+      text-decoration: underline;
     }
 
     .register-link {
-
-      margin-top: 1.5rem;
-
+      margin-top: 1.2rem;
       display: block;
-
       color: #2E7D32;
-
       text-decoration: none;
-
       font-weight: 500;
-
       transition: 0.3s;
     }
-    .register-link:hover {
 
+    .register-link:hover {
       color: #6BBE3A;
     }
 
     .info {
-
       color: #558B2F;
-
       font-size: 0.9rem;
-
       margin-bottom: 1.5rem;
-
       line-height: 1.5;
-
     }
+
   </style>
 
 </head>
@@ -164,9 +119,7 @@
     <h1>Inloggen</h1>
 
     <p class="info">
-
       Log in bij je account om toegang te krijgen tot de oefeningen en vocabulaire.
-
     </p>
     
     <input
@@ -182,16 +135,16 @@
     >
 
     <button onclick="login()">
-
       Inloggen
-
     </button>
+
+    <a href="#" class="forgot-password-link" onclick="resetPassword(event)">
+      Wachtwoord vergeten?
+    </a>
     
     <a class="register-link"
        href="/Franse-Nederlandse-woorden/register.html">
-
       Nog geen account? Registreren
-
     </a>
 
   </div>
@@ -202,15 +155,10 @@
     from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
     import {
-
       getAuth,
-
       signInWithEmailAndPassword,
-
       sendPasswordResetEmail,
-      
       signOut
-
     }
     from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
@@ -223,7 +171,6 @@
     from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
     const firebaseConfig = {
-
       apiKey:
       "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
 
@@ -244,113 +191,83 @@
 
       measurementId:
       "G-5FVEW59WH3"
-
     };
 
-    const app =
-    initializeApp(firebaseConfig);
-
-    const auth =
-    getAuth(app);
-
-    const db =
-    getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
     window.login = async function () {
-
-      const email =
-      document.getElementById("email").value;
-
-      const password =
-      document.getElementById("password").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
       try {
-
-        const userCredential =
-
-        await signInWithEmailAndPassword(
-
+        const userCredential = await signInWithEmailAndPassword(
           auth,
           email,
           password
-
         );
 
-        if (
-          !userCredential.user.emailVerified
-        ) {
-
+        if (!userCredential.user.emailVerified) {
           await signOut(auth);
-
-          alert(
-            "Controleer eerst je e-mail en verifieer je account."
-          );
-
+          alert("Controleer eerst je e-mail en verifieer je account.");
           return;
-
         }
-
-        /* ================================================
-           USER-PROFIEL AANMAKEN
-           Als deze gebruiker nog geen document heeft in
-           Firestore, maken we het automatisch aan met
-           het e-mailadres en 0 XP.
-        ================================================ */
 
         const user = userCredential.user;
-
-        const userRef =
-          doc(
-            db,
-            "users",
-            user.uid
-          );
-
-        const userSnap =
-          await getDoc(userRef);
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
 
         if (!userSnap.exists()) {
-
-          await setDoc(
-            userRef,
-            {
-              email: user.email || email,
-              xp: 0
-            }
-          );
-
+          await setDoc(userRef, {
+            email: user.email || email,
+            xp: 0
+          });
         }
 
-        const params =
-        new URLSearchParams(
-          window.location.search
-        );
-
-        const redirect =
-        params.get("redirect");
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get("redirect");
 
         if (redirect) {
-
-          window.location.href =
-          redirect;
-
+          window.location.href = redirect;
         } else {
-
-          window.location.href =
-          "/Franse-Nederlandse-woorden/index.html";
-
+          window.location.href = "/Franse-Nederlandse-woorden/index.html";
         }
 
       } catch (error) {
-
-        alert(
-          "Fout e-mailadres of wachtwoord."
-        );
-
+        alert("Fout e-mailadres of wachtwoord.");
         console.log(error);
+      }
+    };
 
+    /* ================================================
+       WACHTWOORD HERSTEL FUNCTIE
+    ================================================ */
+    window.resetPassword = async function (e) {
+      if (e) e.preventDefault();
+
+      let email = document.getElementById("email").value.trim();
+
+      // Als het e-mailveld leeg is, vraag er direct om via een prompt
+      if (!email) {
+        email = prompt("Vul je e-mailadres in om een herstelmail te ontvangen:");
       }
 
+      if (!email) return;
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        alert("Er is een e-mail verstuurd om je wachtwoord te herstellen. Controleer ook je spambox.");
+      } catch (error) {
+        if (error.code === "auth/invalid-email") {
+          alert("Ongeldig e-mailadres ingevuld.");
+        } else if (error.code === "auth/user-not-found") {
+          alert("Er is geen account gevonden met dit e-mailadres.");
+        } else {
+          alert("Er is iets misgegaan bij het versturen van de herstelmail.");
+        }
+        console.error(error);
+      }
     };
 
   </script>
