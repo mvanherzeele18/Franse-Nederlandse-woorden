@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#176b45">
+  <title>Oefeningen | Frans-Nederlands</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.css">
+
+  <style>
+    :root {
+      --green: #218653;
+      --green-dark: #145c3b;
+      --green-deep: #103f2c;
+      --mint: #e8f5ed;
+      --mint-strong: #d1eadb;
+      --yellow: #f5d85b;
+      --ink: #183629;
+      --muted: #718277;
+      --paper: #ffffff;
+      --canvas: #f3f8f4;
+      --red: #c34d4d;
+      --red-bg: #fff0ef;
+      --green-bg: #eaf7ef;
+      --line: #e4eee7;
+      --shadow: 0 18px 55px rgba(23, 76, 49, .10);
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(209,234,219,.65), transparent 28rem),
+        linear-gradient(145deg, #f6faf7 0%, var(--canvas) 60%, #edf6f0 100%);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    button, input { font: inherit; }
+    button:focus-visible, a:focus-visible, input:focus-visible {
+      outline: 3px solid rgba(245,216,91,.9);
+      outline-offset: 3px;
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem clamp(1rem, 4vw, 3.5rem);
+      color: white;
+      background: linear-gradient(110deg, var(--green-deep), var(--green));
+      box-shadow: 0 5px 22px rgba(16,63,44,.16);
+    }
+    .brand { display: flex; align-items: center; gap: .85rem; min-width: 0; }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 14px;
+      background: rgba(255,255,255,.13);
+      font-size: 1.25rem;
+    }
+    .brand-copy { min-width: 0; }
+    .brand-copy strong {
+      display: block;
+      font-family: Manrope, sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .brand-copy span { display: block; margin-top: .12rem; color: rgba(255,255,255,.74); font-size: .78rem; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .7rem 1rem;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 12px;
+      color: white;
+      text-decoration: none;
+      font-size: .88rem;
+      font-weight: 700;
+      transition: background .2s, transform .2s;
+      white-space: nowrap;
+    }
+    .back-link:hover { background: rgba(255,255,255,.13); transform: translateY(-1px); }
+
+    main {
+      width: min(100% - 2rem, 760px);
+      margin: clamp(1.5rem, 5vh, 3.2rem) auto 2.5rem;
+      flex: 1;
+    }
+    .page-intro { margin: 0 0 1.2rem; text-align: center; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .4rem .75rem;
+      border: 1px solid #dcece1;
+      border-radius: 999px;
+      color: var(--green-dark);
+      background: rgba(255,255,255,.75);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .page-intro h1 {
+      margin: .85rem 0 .35rem;
+      color: var(--green-deep);
+      font-family: Manrope, sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.15rem);
+      font-weight: 800;
+      letter-spacing: -.045em;
+    }
+    .page-intro p { margin: 0; color: var(--muted); font-size: .95rem; }
+
+    .exercise-card {
+      overflow: hidden;
+      border: 1px solid rgba(218,234,223,.9);
+      border-radius: 25px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .card-topline { height: 6px; background: linear-gradient(90deg, var(--green), #79c995, var(--yellow)); }
+    .card-content { padding: clamp(1.2rem, 4vw, 2.2rem); }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+    }
+    .progress-copy { display: flex; justify-content: space-between; gap: .75rem; margin-bottom: .55rem; color: var(--muted); font-size: .82rem; font-weight: 700; }
+    .progress-copy strong { color: var(--green-dark); }
+    .progress-track { height: 10px; overflow: hidden; border-radius: 999px; background: #edf3ee; }
+    .progress-fill { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #248653, #83c99a); transition: width .35s ease; }
+    .score-pill {
+      min-width: 82px;
+      padding: .6rem .85rem;
+      border: 1px solid #e4eee7;
+      border-radius: 15px;
+      background: #f8fbf8;
+      text-align: center;
+    }
+    .score-pill span { display: block; color: var(--muted); font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .score-pill strong { display: block; margin-top: .08rem; color: var(--green-dark); font-family: Manrope, sans-serif; font-size: 1.35rem; }
+
+    .prompt-card {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(1.5rem, 5vw, 2.6rem) 1.25rem;
+      border: 1px solid #d9ebdf;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #edf8f0, #e2f2e7);
+      text-align: center;
+    }
+    .prompt-card::after {
+      position: absolute;
+      right: -26px;
+      bottom: -58px;
+      width: 150px;
+      height: 150px;
+      border: 22px solid rgba(33,134,83,.055);
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+    }
+    .prompt-label { margin: 0 0 .7rem; color: #60806c; font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .prompt-word {
+      position: relative;
+      z-index: 1;
+      color: var(--green-deep);
+      font-family: Manrope, sans-serif;
+      font-size: clamp(1.8rem, 7vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -.045em;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+    }
+
+    .answer-area { margin-top: 1.45rem; }
+    .answer-label { display: flex; justify-content: space-between; gap: .5rem; margin-bottom: .55rem; color: #365a45; font-size: .88rem; font-weight: 800; }
+    .answer-input-wrap { position: relative; }
+    .answer-input {
+      width: 100%;
+      min-height: 58px;
+      padding: .95rem 1rem;
+      border: 2px solid #dce9df;
+      border-radius: 14px;
+      color: var(--ink);
+      background: #fff;
+      font-size: 1.02rem;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+    .answer-input::placeholder { color: #a2b2a7; }
+    .answer-input:focus { border-color: var(--green); outline: 0; box-shadow: 0 0 0 4px rgba(33,134,83,.10); }
+    .answer-input:disabled { color: #617468; background: #f7faf7; }
+
+    .small-note { margin: .55rem 0 0; color: var(--muted); font-size: .76rem; line-height: 1.5; }
+    .small-note strong { color: #4c6c58; }
+
+    .feedback {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      margin-top: 1rem;
+      padding: .9rem 1rem;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      font-size: .88rem;
+      line-height: 1.5;
+      animation: feedback-in .22s ease both;
+    }
+    .feedback[hidden] { display: none; }
+    .feedback.correct { border-color: #cce9d5; color: #216b40; background: var(--green-bg); }
+    .feedback.incorrect { border-color: #f1d2d0; color: #9e3c3c; background: var(--red-bg); }
+    .feedback-icon { flex: 0 0 auto; font-size: 1.15rem; line-height: 1.3; }
+    .feedback strong { display: block; margin-bottom: .08rem; }
+
+    .actions { display: flex; gap: .75rem; margin-top: 1.15rem; }
+    .action-btn {
+      display: inline-flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      min-height: 54px;
+      padding: .85rem 1.1rem;
+      border: 0;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: .92rem;
+      font-weight: 800;
+      transition: transform .18s, box-shadow .18s, background .18s;
+    }
+    .action-btn:hover:not(:disabled) { transform: translateY(-2px); }
+    .action-btn:active:not(:disabled) { transform: translateY(0); }
+    .action-btn:disabled { cursor: wait; opacity: .65; }
+    .primary-btn { color: white; background: linear-gradient(110deg, var(--green), #2d9b63); box-shadow: 0 7px 17px rgba(33,134,83,.18); }
+    .primary-btn:hover:not(:disabled) { box-shadow: 0 10px 22px rgba(33,134,83,.25); }
+    .secondary-btn { color: var(--green-deep); background: var(--yellow); box-shadow: 0 7px 17px rgba(197,164,35,.13); }
+    .secondary-btn:hover:not(:disabled) { background: #f8df78; }
+    .hidden { display: none !important; }
+
+    .completion {
+      display: none;
+      padding: clamp(1.5rem, 5vw, 2.5rem);
+      border: 1px solid #d4eadb;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #eff9f2, #e0f2e6);
+      text-align: center;
+      animation: feedback-in .35s ease both;
+    }
+    .completion.show { display: block; }
+    .completion-icon { display: grid; place-items: center; width: 66px; height: 66px; margin: 0 auto 1rem; border-radius: 22px; background: white; box-shadow: 0 8px 22px rgba(33,134,83,.1); font-size: 2rem; }
+    .completion h2 { margin: 0 0 .45rem; color: var(--green-deep); font-family: Manrope, sans-serif; font-size: 1.7rem; }
+    .completion p { margin: .35rem 0; color: #607868; line-height: 1.5; }
+    .final-percent { margin: .8rem 0 .25rem; color: var(--green); font-family: Manrope, sans-serif; font-size: clamp(2.6rem, 10vw, 4rem); font-weight: 800; letter-spacing: -.06em; }
+    .final-stats { display: flex; justify-content: center; flex-wrap: wrap; gap: .6rem; margin: 1rem 0 1.25rem; }
+    .final-stat { padding: .6rem .85rem; border: 1px solid #d8eade; border-radius: 12px; color: #42634e; background: rgba(255,255,255,.7); font-size: .82rem; font-weight: 700; }
+    .completion .back-link-final { display: inline-flex; justify-content: center; padding: .85rem 1.15rem; border-radius: 12px; color: white; background: var(--green); font-weight: 800; text-decoration: none; }
+
+    .not-found, .loading-state {
+      padding: 2.4rem 1.2rem;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: white;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .state-icon { display: block; margin-bottom: .7rem; font-size: 2rem; }
+    .not-found h2, .loading-state h2 { margin: 0 0 .4rem; color: var(--green-deep); font-family: Manrope, sans-serif; }
+    .not-found p, .loading-state p { margin: 0; color: var(--muted); line-height: 1.55; }
+    .not-found a { display: inline-block; margin-top: 1.1rem; color: var(--green); font-weight: 800; }
+    footer { padding: 1.5rem 1rem 2rem; color: #8a9b90; text-align: center; font-size: .75rem; }
+
+    #candyPopup {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 10000;
+      padding: .85rem 1.1rem;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 14px;
+      color: white;
+      background: #e87826;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+      font-weight: 800;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .25s, transform .25s;
+      pointer-events: none;
+    }
+    #candyPopup.show { opacity: 1; transform: translateY(0); }
+    #candyPopup.hidden { display: none; }
+
+    @keyframes feedback-in { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 560px) {
+      .topbar { padding: .9rem 1rem; }
+      .brand-mark { width: 38px; height: 38px; border-radius: 12px; }
+      .brand-copy strong { font-size: .9rem; }
+      .brand-copy span { font-size: .7rem; }
+      .back-link { padding: .65rem .8rem; font-size: .8rem; }
+      main { width: min(100% - 1.1rem, 760px); margin-top: 1.3rem; }
+      .stats-row { grid-template-columns: 1fr auto; gap: .65rem; }
+      .actions { flex-direction: column; }
+      .action-btn { width: 100%; }
+      .score-pill { min-width: 70px; padding: .5rem .65rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+
+<body style="display:none;">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">📚</div>
+      <div class="brand-copy">
+        <strong>Frans-Nederlands</strong>
+        <span>Oefen je woordenschat</span>
+      </div>
+    </div>
+    <a id="backButton" class="back-link" href="javascript:history.back()">← <span>Terug</span></a>
+  </header>
+
+  <main>
+    <section class="page-intro">
+      <span class="eyebrow">✦ Tijd om te oefenen</span>
+      <h1 id="pageTitle">Oefeningen</h1>
+      <p id="introText">Neem rustig de tijd. Je kan dit!</p>
+    </section>
+
+    <div id="loadingState" class="loading-state">
+      <span class="state-icon" aria-hidden="true">⏳</span>
+      <h2>Oefening laden...</h2>
+      <p>We halen de woorden van dit dossier op.</p>
+    </div>
+
+    <div id="notFound" class="not-found" style="display:none;">
+      <span class="state-icon" aria-hidden="true">🔎</span>
+      <h2>Oefening niet gevonden</h2>
+      <p id="errorMessage">Controleer de link en probeer het opnieuw.</p>
+      <a href="javascript:history.back()">Ga terug</a>
+    </div>
+
+    <section id="exerciseCard" class="exercise-card" style="display:none;" aria-labelledby="exerciseTitle">
+      <div class="card-topline"></div>
+      <div class="card-content">
+        <div class="stats-row">
+          <div class="progress-area">
+            <div class="progress-copy">
+              <span>Voortgang</span>
+              <strong id="progressText">0 / 0</strong>
+            </div>
+            <div class="progress-track" role="progressbar" aria-label="Voortgang oefening" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack">
+              <div id="progressBar" class="progress-fill"></div>
+            </div>
+          </div>
+          <div class="score-pill">
+            <span>Juist</span>
+            <strong><span id="score">0</span>/<span id="total">0</span></strong>
+          </div>
+        </div>
+
+        <div class="prompt-card">
+          <p id="questionLabel" class="prompt-label">Nederlands woord</p>
+          <div id="word" class="prompt-word">Laden...</div>
+        </div>
+
+        <div class="answer-area">
+          <label id="answerLabel" class="answer-label" for="answer">
+            <span>Typ je antwoord</span>
+            <span id="questionNumber">Vraag 1</span>
+          </label>
+          <div class="answer-input-wrap">
+            <input id="answer" class="answer-input" type="text" placeholder="Typ je antwoord..." autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="answerHint feedback">
+          </div>
+          <p id="answerHint" class="small-note">Tip: <strong>hoofdletters en extra spaties</strong> maken niet uit. Franse accenten tellen wel mee.</p>
+        </div>
+
+        <div id="feedback" class="feedback" role="status" aria-live="polite" hidden></div>
+
+        <div class="actions">
+          <button id="checkBtn" class="action-btn primary-btn" type="button">✓ <span>Controleer antwoord</span></button>
+          <button id="nextBtn" class="action-btn secondary-btn hidden" type="button">Volgende woord <span aria-hidden="true">→</span></button>
+        </div>
+
+        <div id="completionMessage" class="completion">
+          <div class="completion-icon" aria-hidden="true">🎉</div>
+          <h2>Knap gedaan!</h2>
+          <p>Je hebt alle woorden van dit dossier geoefend.</p>
+          <div id="finalScore" class="final-percent">0%</div>
+          <div class="final-stats">
+            <span class="final-stat">✓ <strong id="finalCorrect">0</strong> juist</span>
+            <span class="final-stat">✕ <strong id="finalWrong">0</strong> fout</span>
+            <span class="final-stat">⌛ <strong id="finalTime">0:00</strong></span>
+          </div>
+          <a id="finishBackButton" class="back-link-final" href="javascript:history.back()">Terug naar het dossier</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="candyPopup" class="hidden" role="status" aria-live="polite"></div>
+  <footer>© 2026 Vanherzeele Matteo</footer>
+
+  <script type="module" src="https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/auth-check.js"></script>
+
+  <script type="module">
+    const params = new URLSearchParams(window.location.search);
+    const code = params.keys().next().value;
+    const notFound = document.getElementById("notFound");
+    const exerciseCard = document.getElementById("exerciseCard");
+    const loadingState = document.getElementById("loadingState");
+
+    function showNotFound(message = "Controleer de link en probeer het opnieuw.") {
+      document.body.style.display = "flex";
+      loadingState.style.display = "none";
+      exerciseCard.style.display = "none";
+      notFound.style.display = "block";
+      document.getElementById("errorMessage").textContent = message;
+    }
+
+    if (!code) {
+      showNotFound("Er staat geen oefening-code in de link.");
+      throw new Error("Geen oefening opgegeven.");
+    }
+
+    // Voorbeelden: 31nlfr = 3de jaar, dossier 1, Nederlands → Frans.
+    const match = code.match(/^([1-9])([0-9]+)(nlfr|frnl)$/);
+    if (!match) {
+      showNotFound("Deze oefening-code is ongeldig.");
+      throw new Error("Ongeldige oefening-code.");
+    }
+
+    const jaarNummer = match[1];
+    const dossier = match[2];
+    const richting = match[3];
+    const jaar = `${jaarNummer}dejaar`;
+    const isNlFr = richting === "nlfr";
+    const sourcePage = isNlFr ? "nederlands-frans.html" : "frans-nederlands.html";
+
+    // De richting bepaalt welk veld gevraagd en welk veld verwacht wordt.
+    const questionKey = isNlFr ? "nl" : "fr";
+    const answerKey = isNlFr ? "fr" : "nl";
+    const directionText = isNlFr ? "Nederlands → Frans" : "Frans → Nederlands";
+
+    document.getElementById("pageTitle").textContent = `Dossier ${dossier}`;
+    document.getElementById("introText").textContent = `${directionText} · ${jaarNummer}de middelbaar`;
+    document.getElementById("questionLabel").textContent = isNlFr ? "Vertaal naar het Frans" : "Vertaal naar het Nederlands";
+    document.getElementById("answerLabel").querySelector("span").textContent = isNlFr ? "Typ het Franse woord" : "Typ het Nederlandse woord";
+    document.getElementById("answer").placeholder = isNlFr ? "Écris le mot en français..." : "Typ het Nederlandse woord...";
+    document.getElementById("backButton").href = `${jaar}/${sourcePage}`;
+
+    let words = [];
+    let currentIndex = 0;
+    let score = 0;
+    let answered = false;
+    let completed = false;
+    let activeEvents = [];
+    const startTime = Date.now();
+    const multiplayerCode = localStorage.getItem("multiplayerCode");
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBS7uI4tD1XihrIbK2p1cNYGk4b1ipLg3o",
+      authDomain: "vocabulairesite.firebaseapp.com",
+      projectId: "vocabulairesite",
+      storageBucket: "vocabulairesite.firebasestorage.app",
+      messagingSenderId: "1002919769364",
+      appId: "1:1002919769364:web:face9ebdbe3cb1db37fe01",
+      measurementId: "G-5FVEW59WH3"
+    };
+
+    async function firebaseBase() {
+      const { initializeApp, getApps, getApp } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js");
+      return getApps().length ? getApp() : initializeApp(firebaseConfig);
+    }
+
+    async function getCurrentUser() {
+      const app = await firebaseBase();
+      const { getAuth, onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
+      const auth = getAuth(app);
+      if (auth.currentUser) return auth.currentUser;
+      return new Promise(resolve => {
+        let unsubscribe = () => {};
+        unsubscribe = onAuthStateChanged(auth, user => {
+          unsubscribe();
+          resolve(user);
+        });
+      });
+    }
+
+    async function loadEvents() {
+      try {
+        const { loadActiveEvents } = await import("https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/events-loader.js");
+        activeEvents = await loadActiveEvents();
+        const { applyHalloweenTheme } = await import("https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/halloween-theme.js");
+        applyHalloweenTheme(activeEvents);
+      } catch (error) {
+        console.error("Events konden niet geladen worden:", error);
+        activeEvents = [];
+      }
+    }
+
+    async function loadWords() {
+      const url = `https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/${jaar}/${sourcePage}`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`De woordenpagina kon niet geladen worden (${response.status}).`);
+      const html = await response.text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const section = doc.querySelector(`[data-dossier="${CSS.escape(dossier)}"]`);
+      if (!section) throw new Error(`Dossier ${dossier} werd niet gevonden.`);
+      const cards = section.querySelectorAll(".word-card");
+      words = [];
+
+      cards.forEach(card => {
+        const nl = card.querySelector(".nl")?.textContent.trim();
+        const fr = card.querySelector(".fr")?.textContent.trim();
+        if (nl && fr) words.push({ nl, fr });
+      });
+
+      if (!words.length) throw new Error("Er staan geen woorden in dit dossier.");
+      shuffle(words);
+      document.getElementById("total").textContent = words.length;
+    }
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // Maakt hoofdletters, accenten-notatie en overtollige witruimte consistent.
+    // Accenten en leestekens blijven bewust behouden om vertalingen juist te oefenen.
+    function normalizeAnswer(value) {
+      return String(value)
+        .normalize("NFC")
+        .toLocaleLowerCase("fr")
+        .trim()
+        .replace(/\s+/g, " ")
+        .replace(/[’‘]/g, "'");
+    }
+
+    function updateProgress() {
+      const percent = words.length ? (currentIndex / words.length) * 100 : 0;
+      document.getElementById("progressBar").style.width = `${percent}%`;
+      document.getElementById("progressText").textContent = `${currentIndex} / ${words.length}`;
+      document.getElementById("progressTrack").setAttribute("aria-valuenow", String(Math.round(percent)));
+      document.getElementById("questionNumber").textContent = `Vraag ${Math.min(currentIndex + 1, words.length)} van ${words.length}`;
+    }
+
+    function showWord() {
+      if (currentIndex >= words.length) {
+        showCompletion();
+        return;
+      }
+      const word = words[currentIndex];
+      document.getElementById("word").textContent = word[questionKey];
+      const input = document.getElementById("answer");
+      input.value = "";
+      input.disabled = false;
+      input.focus();
+      answered = false;
+
+      const feedback = document.getElementById("feedback");
+      feedback.hidden = true;
+      feedback.className = "feedback";
+      feedback.textContent = "";
+
+      document.getElementById("checkBtn").classList.remove("hidden");
+      document.getElementById("checkBtn").disabled = false;
+      document.getElementById("nextBtn").classList.add("hidden");
+      updateProgress();
+    }
+
+    async function addXP(amount) {
+      try {
+        const app = await firebaseBase();
+        const { getFirestore, doc, getDoc, setDoc } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+        const user = await getCurrentUser();
+        if (!user) return;
+        const db = getFirestore(app);
+        const ref = doc(db, "users", user.uid);
+        const snap = await getDoc(ref);
+        const currentXP = snap.exists() ? Number(snap.data().xp) || 0 : 0;
+        await setDoc(ref, { xp: currentXP + amount }, { merge: true });
+      } catch (error) {
+        console.error("XP kon niet worden opgeslagen:", error);
+      }
+    }
+
+    function giveEventCurrency(eventConfig) {
+      const chances = Array.isArray(eventConfig.rewardChances) ? eventConfig.rewardChances : [1];
+      return chances[Math.floor(Math.random() * chances.length)];
+    }
+
+    async function addEventCurrency(eventConfig, amount) {
+      if (amount <= 0) return;
+      try {
+        const app = await firebaseBase();
+        const { getFirestore, doc, getDoc, setDoc } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+        const user = await getCurrentUser();
+        if (!user) return;
+        const db = getFirestore(app);
+        const ref = doc(db, "users", user.uid, "eventCurrencies", eventConfig.id);
+        const snap = await getDoc(ref);
+        const currencyName = eventConfig.currencyName;
+        const current = snap.exists() ? Number(snap.data()[currencyName]) || 0 : 0;
+        await setDoc(ref, { [currencyName]: current + amount }, { merge: true });
+      } catch (error) {
+        console.error("Eventbeloning kon niet worden opgeslagen:", error);
+      }
+    }
+
+    function showCandyPopup(amount) {
+      if (amount <= 0) return;
+      const popup = document.getElementById("candyPopup");
+      popup.textContent = `🎃 +${amount} snoepjes!`;
+      popup.classList.remove("hidden");
+      requestAnimationFrame(() => popup.classList.add("show"));
+      window.setTimeout(() => {
+        popup.classList.remove("show");
+        window.setTimeout(() => popup.classList.add("hidden"), 300);
+      }, 1900);
+    }
+
+    function showFeedback(isCorrect, correctAnswer = "") {
+      const feedback = document.getElementById("feedback");
+      feedback.className = `feedback ${isCorrect ? "correct" : "incorrect"}`;
+      feedback.replaceChildren();
+
+      const icon = document.createElement("span");
+      icon.className = "feedback-icon";
+      icon.textContent = isCorrect ? "✓" : "!";
+      const content = document.createElement("div");
+      const title = document.createElement("strong");
+      title.textContent = isCorrect ? "Helemaal juist!" : "Dat is niet helemaal juist";
+      const detail = document.createElement("span");
+      detail.textContent = isCorrect ? "Goed bezig, ga zo door." : `Het juiste antwoord is: ${correctAnswer}`;
+      content.append(title, detail);
+      feedback.append(icon, content);
+      feedback.hidden = false;
+    }
+
+    async function checkAnswer() {
+      if (answered || !words[currentIndex]) return;
+      const input = document.getElementById("answer");
+      const userAnswer = normalizeAnswer(input.value);
+      const correctAnswer = words[currentIndex][answerKey];
+      if (!userAnswer) {
+        input.focus();
+        input.setAttribute("aria-invalid", "true");
+        return;
+      }
+      input.removeAttribute("aria-invalid");
+      answered = true;
+      input.disabled = true;
+      document.getElementById("checkBtn").disabled = true;
+
+      const isCorrect = userAnswer === normalizeAnswer(correctAnswer);
+      if (isCorrect) {
+        score++;
+        showFeedback(true);
+        await addXP(5);
+        await updateMultiplayerScore();
+
+        for (const event of activeEvents) {
+          const reward = giveEventCurrency(event);
+          await addEventCurrency(event, reward);
+          showCandyPopup(reward);
+        }
+      } else {
+        showFeedback(false, correctAnswer);
+      }
+
+      document.getElementById("score").textContent = String(score);
+      document.getElementById("checkBtn").classList.add("hidden");
+      document.getElementById("nextBtn").classList.remove("hidden");
+      document.getElementById("nextBtn").focus();
+    }
+
+    function nextWord() {
+      if (!answered) return;
+      currentIndex++;
+      showWord();
+    }
+
+    function formatTime(milliseconds) {
+      const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000));
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = String(totalSeconds % 60).padStart(2, "0");
+      return `${minutes}:${seconds}`;
+    }
+
+    async function showCompletion() {
+      if (completed || !words.length) return;
+      completed = true;
+      document.getElementById("progressBar").style.width = "100%";
+      document.getElementById("progressText").textContent = `${words.length} / ${words.length}`;
+      document.getElementById("progressTrack").setAttribute("aria-valuenow", "100");
+      document.getElementById("questionNumber").textContent = "Afgerond";
+
+      const wrong = words.length - score;
+      const percentage = Math.round((score / words.length) * 100);
+      document.getElementById("finalScore").textContent = `${percentage}%`;
+      document.getElementById("finalCorrect").textContent = String(score);
+      document.getElementById("finalWrong").textContent = String(wrong);
+      document.getElementById("finalTime").textContent = formatTime(Date.now() - startTime);
+
+      document.querySelector(".prompt-card").classList.add("hidden");
+      document.querySelector(".answer-area").classList.add("hidden");
+      document.getElementById("feedback").hidden = true;
+      document.querySelector(".actions").classList.add("hidden");
+      document.getElementById("completionMessage").classList.add("show");
+
+      await addXP(25);
+      await updateMultiplayerScore();
+      await finishMultiplayer();
+    }
+
+    async function updateMultiplayerScore() {
+      if (!multiplayerCode) return;
+      try {
+        const app = await firebaseBase();
+        const { getFirestore, doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+        const user = await getCurrentUser();
+        if (!user) return;
+        const db = getFirestore(app);
+        await updateDoc(doc(db, "multiplayerGames", multiplayerCode, "players", user.uid), { score });
+      } catch (error) {
+        console.error("Multiplayer-score kon niet worden opgeslagen:", error);
+      }
+    }
+
+    async function finishMultiplayer() {
+      if (!multiplayerCode) return;
+      try {
+        const app = await firebaseBase();
+        const { getFirestore, doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js");
+        const user = await getCurrentUser();
+        if (!user) return;
+        const db = getFirestore(app);
+        await updateDoc(doc(db, "multiplayerGames", multiplayerCode, "players", user.uid), {
+          score,
+          finished: true,
+          time: Date.now() - startTime
+        });
+        localStorage.removeItem("multiplayerCode");
+      } catch (error) {
+        console.error("Multiplayer-oefening kon niet worden afgesloten:", error);
+      }
+    }
+
+    document.getElementById("checkBtn").addEventListener("click", checkAnswer);
+    document.getElementById("nextBtn").addEventListener("click", nextWord);
+    document.getElementById("answer").addEventListener("keydown", event => {
+      if (event.key !== "Enter") return;
+      event.preventDefault();
+      if (!answered) checkAnswer();
+      else nextWord();
+    });
+
+    async function init() {
+      document.body.style.display = "flex";
+      try {
+        await loadEvents();
+        await loadWords();
+        loadingState.style.display = "none";
+        exerciseCard.style.display = "block";
+        document.getElementById("pageTitle").textContent = `Dossier ${dossier} oefenen`;
+        showWord();
+      } catch (error) {
+        console.error("Oefening laden mislukt:", error);
+        showNotFound(error.message || "De woorden konden niet geladen worden. Probeer later opnieuw.");
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
