@@ -1367,6 +1367,56 @@
 
 
     // ==========================================
+    // KERST: VOORTGANG KERSTDORP
+    // ==========================================
+
+    async function addChristmasProgress() {
+      const christmasEvent = activeEvents.find(
+        event => event.id === "christmas2026"
+      );
+
+      if (!christmasEvent) return;
+
+      try {
+        const app = await firebaseBase();
+        const {
+          getFirestore, doc, getDoc, setDoc, arrayUnion
+        } = await import(
+          "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"
+        );
+
+        const user = await getCurrentUser();
+        if (!user) return;
+
+        const db = getFirestore(app);
+        const progressRef = doc(
+          db, "users", user.uid, "eventProgress", "christmas2026"
+        );
+        const progressSnap = await getDoc(progressRef);
+        const current = progressSnap.exists()
+          ? Number(progressSnap.data().correctAnswers) || 0
+          : 0;
+        const target = christmasEvent.targetCorrectAnswers || 20;
+        const next = Math.min(current + 1, target);
+
+        await setDoc(progressRef, {
+          correctAnswers: next,
+          completed: next >= target,
+          updatedAt: Date.now()
+        }, { merge: true });
+
+        if (next >= target) {
+          await setDoc(doc(db, "users", user.uid), {
+            ownedTitles: arrayUnion("Merry Christmas!")
+          }, { merge: true });
+        }
+      } catch (error) {
+        console.error("Kerstvoortgang kon niet worden opgeslagen:", error);
+      }
+    }
+
+
+    // ==========================================
     // EVENT CURRENCY
     // ==========================================
 
@@ -1587,6 +1637,8 @@
         // 5 XP per juist antwoord
         await addXP(5);
 
+        // Tijdens Kerst bouw je met elk juist antwoord het dorp verder op.
+        await addChristmasProgress();
 
         // Multiplayer
         await updateMultiplayerScore();
