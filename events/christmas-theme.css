@@ -1,0 +1,101 @@
+/* KERSTTHEMA – wordt bovenop de bestaande paginastijlen geladen */
+body.christmas-active {
+  background: linear-gradient(145deg, #eaf4fb 0%, #f4f8fc 48%, #e5f1eb 100%) !important;
+  color: #173b35 !important;
+  --green: #16734f;
+  --green-light: #d9eee3;
+  --green-dark: #104d39;
+  --yellow: #f2d27b;
+  --text: #173b35;
+  --bg: #edf5f8;
+  --white: #ffffff;
+  --shadow: 0 3px 14px rgba(16, 77, 57, .12);
+}
+body.christmas-active header {
+  background: linear-gradient(120deg, #103f35 0%, #16734f 58%, #245d78 100%) !important;
+  border-bottom: 4px solid #e8c96d !important;
+  box-shadow: 0 5px 18px rgba(16, 63, 53, .18) !important;
+}
+body.christmas-active header h1,
+body.christmas-active header p,
+body.christmas-active .header-left h1,
+body.christmas-active .header-left p { color: #fff0bd !important; }
+body.christmas-active .nav-btn,
+body.christmas-active .btn,
+body.christmas-active .event-btn,
+body.christmas-active .exercise-btn,
+body.christmas-active .back-btn,
+body.christmas-active #logoutBtn,
+body.christmas-active #profileBtn,
+body.christmas-active .bug-report-btn,
+body.christmas-active .btn-buy {
+  background: #f0d47e !important;
+  color: #174b3a !important;
+  border-color: #d4b85f !important;
+}
+body.christmas-active .nav-btn:hover,
+body.christmas-active .btn:hover,
+body.christmas-active .event-btn:hover,
+body.christmas-active .exercise-btn:hover,
+body.christmas-active .back-btn:hover,
+body.christmas-active .btn-buy:hover {
+  background: #fff0bd !important;
+  color: #104d39 !important;
+}
+body.christmas-active .choice-card,
+body.christmas-active .word-card,
+body.christmas-active .titles-card,
+body.christmas-active .stat-box,
+body.christmas-active .xp-card,
+body.christmas-active .profile-top,
+body.christmas-active .announcement,
+body.christmas-active .currency-card,
+body.christmas-active .shop-item,
+body.christmas-active .card,
+body.christmas-active .event-card,
+body.christmas-active .box {
+  background: #fff !important;
+  border-color: #8fc5a7 !important;
+  color: #173b35 !important;
+  box-shadow: 0 5px 18px rgba(16, 77, 57, .10) !important;
+}
+body.christmas-active .card h3,
+body.christmas-active .card p,
+body.christmas-active .event-card h2,
+body.christmas-active .event-card p,
+body.christmas-active .section-title,
+body.christmas-active .chapter-title,
+body.christmas-active .profile-name,
+body.christmas-active .stat-label,
+body.christmas-active .shop-title,
+body.christmas-active .shop-meta,
+body.christmas-active .currency-title,
+body.christmas-active .currency-amount,
+body.christmas-active .xp-numbers,
+body.christmas-active .xp-hint { color: #174b3a !important; }
+body.christmas-active .event-banner,
+body.christmas-active .intro,
+body.christmas-active .score-board,
+body.christmas-active .word-display {
+  background: linear-gradient(140deg, #f7fcf9, #e3f2e9) !important;
+  border-color: #8fc5a7 !important;
+  color: #174b3a !important;
+}
+body.christmas-active input,
+body.christmas-active select,
+body.christmas-active textarea,
+body.christmas-active .search-bar-wrapper input {
+  border-color: #8fc5a7 !important;
+}
+body.christmas-active .xp-track,
+body.christmas-active .progress-bar-bg { background: #dcece3 !important; }
+body.christmas-active .xp-fill,
+body.christmas-active .progress-bar {
+  background: linear-gradient(90deg, #16734f, #e8c96d) !important;
+}
+body.christmas-active footer { color: #315f50 !important; }
+body.christmas-active .title-badge,
+body.christmas-active .avatar-circle,
+body.christmas-active .level-bubble {
+  border-color: #8fc5a7 !important;
+}
