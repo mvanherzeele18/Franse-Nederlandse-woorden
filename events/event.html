@@ -271,7 +271,7 @@ main {
     }
 
     try {
-      const events = await loadActiveEvents();
+      const events = await loadActiveEvents(user);
 
       console.log("Actieve events:", events);
 
