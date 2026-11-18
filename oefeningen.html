@@ -1014,8 +1014,11 @@
           "https://mvanherzeele18.github.io/Franse-Nederlandse-woorden/events/events-loader.js"
         );
 
+        const user =
+          await getCurrentUser();
+
         activeEvents =
-          await loadActiveEvents();
+          await loadActiveEvents(user);
 
 
         const {
